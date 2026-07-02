@@ -197,7 +197,6 @@
   .member .mname { font-weight:700; font-size:16px; }
   .member .mrole { color:var(--muted); font-size:12.5px; margin-top:1px; }
   .skilltags { display:flex; flex-wrap:wrap; gap:6px; margin-top:9px; }
-  .pending-badge { font-size:10.5px; font-weight:700; color:var(--gold); background:#ffcb571a; border:1px solid #ffcb5744; padding:3px 8px; border-radius:999px; margin-top:8px; display:inline-block; }
 
   .empty { text-align:center; padding:44px 20px; color:var(--muted); }
   .empty .e-emoji { font-size:44px; margin-bottom:12px; opacity:.9; }
@@ -427,9 +426,10 @@
 
 <div id="toast"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 /* ============================================================
-   SIDEQUEST OS v2 — profiles, ventures & tutorials (localStorage)
+   SIDEQUEST OS v2 — profiles, ventures & tutorials (Supabase-Sync)
    ============================================================ */
 const KEY = "sidequest_os_v2";
 const PROJ_EMOJIS = ["🚀","🎮","📱","🏋️","🌐","🎥","🕹️","🦎","💥","⚔️","🤖","📈","🚗","📄","🛒","🎨","✍️","🎬","💡","🔥","🧩","🎯","🎵","💎","🚘","✂️","🖨️","📍","📊","🎉","🔄"];
@@ -439,9 +439,9 @@ const PROFILES = [
   { id:"christian", name:"Christian", role:"Gründer & Vision", emoji:"👑", color:"#00e5b0", pin:"1010" },
   { id:"oscar",      name:"Oscar",     role:"Organisation & Zahlen", emoji:"🎮", color:"#38bdf8", pin:"2020" },
   { id:"jonas",      name:"Jonas",     role:"Content & Kreativ", emoji:"🎬", color:"#7c5cff", pin:"3030" },
-  { id:"baris",      name:"Baris",     role:"Steckbrief ausstehen", emoji:"🦁", color:"#ffcb57", pin:"4040" },
+  { id:"baris",      name:"Baris",     role:"Technische Leitung", emoji:"🦁", color:"#ffcb57", pin:"4040" },
   { id:"helmut",     name:"Helmut",    role:"Technik & Umsetzung", emoji:"🔧", color:"#fb923c", pin:"5050" },
-  { id:"sebi",       name:"Sebi",      role:"Steckbrief ausstehen", emoji:"🐺", color:"#ff7ac6", pin:"6060" },
+  { id:"sebi",       name:"Sebi",      role:"Allrounder · alle Bereiche", emoji:"🐺", color:"#ff7ac6", pin:"6060" },
 ];
 
 /* ---------- 10 Starter-Ventures: Claude-baubar, viral, Free-Tier-Stack ---------- */
@@ -705,7 +705,7 @@ function seed() {
         done:"Social-Media-Account auf 30.000 Follower aufgebaut", hours:"1-5h (locker nebenbei)",
         workstyle:"Gib mir das Problem — ich finde den Weg selbst", personality:"Nachteule, sehr aktionsorientiert (einfach loslegen)",
         roles:["visionaer","koordinator","kreativ"], tools:"Canva, After Effects, CapCut", needs:"Klare Aufklärung/Ansagen" },
-      { id:"baris", note:"Steckbrief steht noch aus. Laut Jonas ist einer von Baris/Sebi App-Entwickler und kann mit Claude Code arbeiten — bitte Steckbrief ausfüllen lassen, dann ordnen wir gezielt zu." },
+      { id:"baris", note:"Technische Leitung — übernimmt die App-Entwicklung und arbeitet direkt mit Claude Code. Genau der App-Entwickler, den Jonas erwähnt hat." },
       { id:"helmut", hobbies:["🎮 Gaming","🚗 Autos & Technik","🔧 Basteln & Heimwerken"],
         words:"vermutlich loyal & hilfsbereit (laut Selbsteinschätzung)", strength:"Autos, Handy/PC einrichten oder neu aufsetzen",
         skills:{reden:3,design:3,schreiben:2,organisieren:3,technik:4,verkaufen:2,video:2,zahlen:2},
@@ -713,7 +713,7 @@ function seed() {
         done:"Erfolgreich in Krypto investiert", hours:"1-5h (locker nebenbei)",
         workstyle:"Ziel + grobe Richtung geben, Rest macht er selbst", personality:"Ausgeglichen/mittig auf allen Achsen — kein Extrem",
         roles:["macher","allrounder"], tools:"Canva, Gemini, ChatGPT, Framer", needs:"Klare Ansagen, guter Zusammenhalt, gegenseitige Unterstützung bei Problemen" },
-      { id:"sebi", note:"Steckbrief steht noch aus. Laut Jonas ist einer von Baris/Sebi App-Entwickler und kann mit Claude Code arbeiten — bitte Steckbrief ausfüllen lassen, dann ordnen wir gezielt zu." },
+      { id:"sebi", note:"Allrounder für alle Bereiche — springt dort ein, wo gerade Kapazität gebraucht wird." },
     ],
     ideas: [],
   };
@@ -741,6 +741,117 @@ function avatar(id, size){ const m=fullMember(id); if(!m) return ""; return `<di
 function greeting(){ const h=new Date().getHours(); return h<11?"Guten Morgen":h<17?"Guten Tag":h<22?"Guten Abend":"Noch wach"; }
 const ROLE_LABEL = { macher:"🔨 Macher", visionaer:"🚀 Visionär", finisher:"🎯 Finisher", growth:"📈 Growth", koordinator:"🧭 Koordinator", kreativ:"🎨 Kreative", allrounder:"🧩 Allrounder" };
 const SKILL_LABEL = { reden:"🗣️ Reden & Überzeugen", design:"🎨 Design", schreiben:"✍️ Schreiben", organisieren:"🗂️ Organisieren", technik:"💻 Technik", verkaufen:"🤝 Verkaufen", video:"🎬 Video/Social", zahlen:"📊 Zahlen/Logik" };
+
+/* ============================================================
+   CLOUD-SYNC (Supabase) — lokaler State bleibt Cache, DB ist Quelle der Wahrheit
+   ============================================================ */
+const SUPABASE_URL = "https://nowjxiprsbcftaookbjt.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_E9OsBBjD1E8fh6jS2WGtmw_4iqRhXTc";
+const sb = (window.supabase) ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+let cloudReady = false;
+
+function projectRow(p){ return { id:p.id, emoji:p.emoji, name:p.name, type:p.type, tagline:p.tagline||null, why:p.why||null, stack:p.stack||[], status:p.status, progress:p.progress, guided:!!p.guided, members:p.members||[] }; }
+function taskRow(t){ return { id:t.id, title:t.title, project_id:t.projectId||null, assignee:t.assignee||null, status:t.status, prio:t.prio }; }
+
+async function cloudUpsertProject(p){ if(!sb||!p) return; try{ await sb.from("projects").upsert(projectRow(p)); }catch(e){} }
+async function cloudDeleteProject(id){ if(!sb) return; try{ await sb.from("projects").delete().eq("id", id); }catch(e){} }
+async function cloudUpsertTask(t){ if(!sb||!t) return; try{ await sb.from("tasks").upsert(taskRow(t)); }catch(e){} }
+async function cloudDeleteTask(id){ if(!sb) return; try{ await sb.from("tasks").delete().eq("id", id); }catch(e){} }
+async function cloudUpsertIdea(i){ if(!sb) return; try{ await sb.from("ideas").upsert(i); }catch(e){} }
+async function cloudDeleteIdea(id){ if(!sb) return; try{ await sb.from("ideas").delete().eq("id", id); }catch(e){} }
+async function cloudSetSub(pid,title,done){ if(!sb) return; try{ await sb.from("subtasks_done").upsert({ project_id:pid, subtask_title:title, done }); }catch(e){} }
+async function cloudSetSetting(key,value){ if(!sb) return; try{ await sb.from("settings").upsert({ key, value }); }catch(e){} }
+async function cloudResetAll(){
+  if(!sb) return;
+  try {
+    await sb.from("tasks").delete().neq("id","__never__");
+    await sb.from("subtasks_done").delete().neq("project_id","__never__");
+    await sb.from("ideas").delete().neq("id","__never__");
+    await sb.from("projects").delete().neq("id","__never__");
+    await sb.from("settings").delete().neq("key","__never__");
+    await sb.from("projects").upsert(state.projects.map(projectRow));
+    await sb.from("tasks").upsert(state.tasks.map(taskRow));
+  } catch(e){}
+}
+
+async function initCloud(){
+  if(!sb) return;
+  try {
+    const [{data:projRows}, {data:taskRows}, {data:ideaRows}, {data:subRows}, {data:setRows}] = await Promise.all([
+      sb.from("projects").select("*"), sb.from("tasks").select("*"), sb.from("ideas").select("*"),
+      sb.from("subtasks_done").select("*"), sb.from("settings").select("*"),
+    ]);
+
+    if(!projRows || projRows.length===0){
+      await sb.from("projects").upsert(state.projects.map(projectRow));
+      await sb.from("tasks").upsert(state.tasks.map(taskRow));
+    } else {
+      const byId = Object.fromEntries(projRows.map(r=>[r.id,r]));
+      state.projects.forEach(p=>{ const r=byId[p.id]; if(r){ p.status=r.status; p.progress=r.progress; p.members=r.members||[]; if(r.name) p.name=r.name; if(r.type) p.type=r.type; } });
+      const knownIds = new Set(state.projects.map(p=>p.id));
+      projRows.filter(r=>!knownIds.has(r.id)).forEach(r=>{
+        state.projects.push({ id:r.id, emoji:r.emoji, name:r.name, type:r.type, tagline:r.tagline, why:r.why, stack:r.stack||[], status:r.status, progress:r.progress, guided:r.guided, members:r.members||[] });
+      });
+    }
+    if(taskRows && taskRows.length){ state.tasks = taskRows.map(r=>({ id:r.id, title:r.title, projectId:r.project_id||"", assignee:r.assignee||"", status:r.status, prio:r.prio })); }
+    if(ideaRows){ state.ideas = ideaRows.map(r=>({ id:r.id, text:r.text })); }
+    if(subRows){
+      state.subtasksDone = {};
+      subRows.forEach(r=>{ state.subtasksDone[subKey(r.project_id,r.subtask_title)] = r.done; });
+      state.projects.filter(p=>p.guided&&p.subtasks).forEach(p=>{ const done=p.subtasks.filter(s=>isSubDone(p.id,s.title)).length; p.progress=Math.round(done/p.subtasks.length*100); });
+    }
+    if(setRows){ const org = setRows.find(r=>r.key==="org"); if(org) state.org = org.value; }
+
+    persist();
+    cloudReady = true;
+    if($("#app").style.display!=="none"){ render(); renderMeBtn(); $("#brandName").innerHTML=esc(state.org)+"<small>Mission Control</small>"; }
+    subscribeRealtime();
+  } catch(e) { console.warn("Cloud-Sync nicht verfügbar, arbeite lokal weiter.", e); }
+}
+
+function subscribeRealtime(){
+  if(!sb) return;
+  sb.channel("sq-sync")
+    .on("postgres_changes", { event:"*", schema:"public", table:"projects" }, handleRealtimeProject)
+    .on("postgres_changes", { event:"*", schema:"public", table:"tasks" }, handleRealtimeTask)
+    .on("postgres_changes", { event:"*", schema:"public", table:"ideas" }, handleRealtimeIdea)
+    .on("postgres_changes", { event:"*", schema:"public", table:"subtasks_done" }, handleRealtimeSub)
+    .subscribe();
+}
+function handleRealtimeProject(payload){
+  if(payload.eventType==="DELETE"){ state.projects = state.projects.filter(p=>p.id!==payload.old.id); }
+  else {
+    const r=payload.new; let p=project(r.id);
+    if(p){ p.status=r.status; p.progress=r.progress; p.members=r.members||[]; if(r.name) p.name=r.name; if(r.type) p.type=r.type; }
+    else { state.projects.push({ id:r.id, emoji:r.emoji, name:r.name, type:r.type, tagline:r.tagline, why:r.why, stack:r.stack||[], status:r.status, progress:r.progress, guided:r.guided, members:r.members||[] }); }
+  }
+  persist();
+  if(tab==="projects"||tab==="home") render();
+}
+function handleRealtimeTask(payload){
+  if(payload.eventType==="DELETE"){ state.tasks = state.tasks.filter(t=>t.id!==payload.old.id); }
+  else {
+    const r=payload.new; let t=state.tasks.find(x=>x.id===r.id);
+    const mapped={ id:r.id, title:r.title, projectId:r.project_id||"", assignee:r.assignee||"", status:r.status, prio:r.prio };
+    if(t){ Object.assign(t,mapped); } else { state.tasks.unshift(mapped); }
+  }
+  persist();
+  if(tab==="tasks"||tab==="home") render();
+}
+function handleRealtimeIdea(payload){
+  if(payload.eventType==="DELETE"){ state.ideas = state.ideas.filter(i=>i.id!==payload.old.id); }
+  else { const r=payload.new; if(!state.ideas.find(i=>i.id===r.id)) state.ideas.unshift({id:r.id,text:r.text}); }
+  persist();
+}
+function handleRealtimeSub(payload){
+  const r = payload.eventType==="DELETE" ? payload.old : payload.new;
+  state.subtasksDone = state.subtasksDone||{};
+  state.subtasksDone[subKey(r.project_id, r.subtask_title)] = payload.eventType==="DELETE" ? false : r.done;
+  const p = project(r.project_id);
+  if(p && p.guided && p.subtasks){ const done=p.subtasks.filter(s=>isSubDone(p.id,s.title)).length; p.progress=Math.round(done/p.subtasks.length*100); }
+  persist();
+  if(tab==="projects"||tab==="home") render();
+}
 
 /* ============================================================
    PROFILE GATE
@@ -932,7 +1043,7 @@ function taskMini(t){
 function moveTask(id,dir){
   const t=state.tasks.find(x=>x.id===id); if(!t) return;
   const order=["todo","doing","done"]; let i=order.indexOf(t.status)+dir;
-  i=Math.max(0,Math.min(2,i)); const was=t.status; t.status=order[i]; persist();
+  i=Math.max(0,Math.min(2,i)); const was=t.status; t.status=order[i]; persist(); cloudUpsertTask(t);
   if(t.status==="done"&&was!=="done"){ confetti(); toast("🎉 Erledigt! Stark."); }
   render();
 }
@@ -951,7 +1062,6 @@ function renderTeam(){
 function memberCard(id){
   const m=fullMember(id);
   const tasks=state.tasks.filter(t=>t.assignee===id&&t.status!=="done").length;
-  const pending = !m.skills && !m.note?.includes("bereits") && (id==="baris"||id==="sebi");
   const skillBars = m.skills ? Object.entries(m.skills).sort((a,b)=>b[1]-a[1]).slice(0,4).map(([k,v])=>`<span class="tag">${SKILL_LABEL[k]} ${v}/5</span>`).join("") : "";
   const roleTags = (m.roles||[]).map(r=>`<span class="tag">${ROLE_LABEL[r]}</span>`).join("");
   return `<div class="card member" onclick="openMemberDetail('${id}')">
@@ -960,7 +1070,6 @@ function memberCard(id){
       <div class="mname">${esc(m.name)}</div>
       <div class="mrole">${esc(m.role)}</div>
       <div class="skilltags">${skillBars || roleTags}</div>
-      ${pending?'<div class="pending-badge">⏳ Steckbrief ausstehen</div>':''}
     </div>
     <div style="text-align:center;flex:0 0 auto"><div style="font-size:19px;font-weight:800;color:var(--accent)">${tasks}</div><div style="font-size:10px;color:var(--muted)">offen</div></div>
   </div>`;
@@ -985,7 +1094,7 @@ function openMemberDetail(id){
     body += `<div class="kv"><span class="k">Braucht vom Team</span><span class="v" style="text-align:right;max-width:60%">${esc(m.needs||"—")}</span></div>`;
     if(m.hobbies?.length) body += `<div class="section-h" style="margin:14px 2px 8px"><h3>Hobbys</h3></div><div class="stack-row">${m.hobbies.map(h=>`<span class="tag">${esc(h)}</span>`).join("")}</div>`;
   } else {
-    body = `<div class="why-box">${esc(m.note||"Steckbrief steht noch aus.")}</div><div class="sh-actions" style="margin-top:14px"><button class="btn btn-p" onclick="openQuestionnaire()">📋 Steckbrief öffnen</button></div>`;
+    body = `<div class="why-box">${esc(m.note||"")}</div><div class="sh-actions" style="margin-top:14px"><button class="btn btn-p" onclick="openQuestionnaire()">📋 Ausführlichen Steckbrief ergänzen</button></div>`;
   }
   openSheet(`<div class="detail-head"><div class="dh-emoji" style="background:${m.color}22">${m.emoji}</div><div><div class="dh-name">${esc(m.name)}</div><div style="color:var(--muted);font-size:13px;margin-top:2px">${esc(m.role)}</div></div></div>${body}`);
 }
@@ -1033,11 +1142,16 @@ function saveProject(id){
   const name=$("#pname").value.trim(); if(!name){ toast("Gib einen Namen ein"); return; }
   const members=[...document.querySelectorAll("#pmembers .pk.on")].map(x=>x.dataset.id);
   const data={ emoji:$("#pemoji").value, name, type:$("#ptype").value.trim()||"Projekt", status:$("#pstatus").value, progress:+$("#pprog").value, members };
-  if(id){ Object.assign(project(id),data); toast("✓ Gespeichert"); }
-  else { state.projects.unshift({ id:uid("p"), guided:false, ...data }); toast("🚀 Projekt angelegt"); }
-  persist(); closeSheet(); if(tab!=="projects")nav("projects"); else render();
+  let saved;
+  if(id){ saved=Object.assign(project(id),data); toast("✓ Gespeichert"); }
+  else { saved={ id:uid("p"), guided:false, ...data }; state.projects.unshift(saved); toast("🚀 Projekt angelegt"); }
+  persist(); cloudUpsertProject(saved); closeSheet(); if(tab!=="projects")nav("projects"); else render();
 }
-function delProject(id){ if(!confirm("Projekt wirklich löschen?"))return; state.projects=state.projects.filter(p=>p.id!==id); state.tasks=state.tasks.filter(t=>t.projectId!==id); persist(); closeSheet(); render(); toast("Gelöscht"); }
+function delProject(id){ if(!confirm("Projekt wirklich löschen?"))return;
+  const relatedTaskIds = state.tasks.filter(t=>t.projectId===id).map(t=>t.id);
+  state.projects=state.projects.filter(p=>p.id!==id); state.tasks=state.tasks.filter(t=>t.projectId!==id);
+  persist(); cloudDeleteProject(id); relatedTaskIds.forEach(cloudDeleteTask);
+  closeSheet(); render(); toast("Gelöscht"); }
 
 function openProject(id){
   const p=project(id); if(!p)return; const st=STATUS[p.status];
@@ -1074,7 +1188,7 @@ function toggleSub(pid,title){
   const p=project(pid);
   const done = p.subtasks.filter(s=>isSubDone(pid,s.title)).length;
   p.progress = Math.round(done/p.subtasks.length*100);
-  persist();
+  persist(); cloudSetSub(pid,title,now); cloudUpsertProject(p);
   if(now){ confetti(); toast("✓ Schritt erledigt!"); }
   openProject(pid);
 }
@@ -1127,11 +1241,12 @@ function editTask(id, presetProj){
 function saveTask(id){
   const title=$("#ttitle").value.trim(); if(!title){ toast("Gib eine Aufgabe ein"); return; }
   const data={ title, projectId:$("#tproj").value, assignee:$("#tassignee").value, prio:$("#tprio").value };
-  if(id){ Object.assign(state.tasks.find(x=>x.id===id),data); toast("✓ Gespeichert"); }
-  else { state.tasks.unshift({ id:uid("t"), status:"todo", ...data }); toast("✅ Aufgabe angelegt"); }
-  persist(); closeSheet(); if(tab==="tasks"){ taskCol=id?state.tasks.find(x=>x.id===id).status:"todo"; render(); } else nav("tasks");
+  let saved;
+  if(id){ saved=Object.assign(state.tasks.find(x=>x.id===id),data); toast("✓ Gespeichert"); }
+  else { saved={ id:uid("t"), status:"todo", ...data }; state.tasks.unshift(saved); toast("✅ Aufgabe angelegt"); }
+  persist(); cloudUpsertTask(saved); closeSheet(); if(tab==="tasks"){ taskCol=saved.status; render(); } else nav("tasks");
 }
-function delTask(id){ if(!confirm("Aufgabe löschen?"))return; state.tasks=state.tasks.filter(t=>t.id!==id); persist(); closeSheet(); render(); toast("Gelöscht"); }
+function delTask(id){ if(!confirm("Aufgabe löschen?"))return; state.tasks=state.tasks.filter(t=>t.id!==id); persist(); cloudDeleteTask(id); closeSheet(); render(); toast("Gelöscht"); }
 function openTask(id){ editTask(id); }
 
 function addIdea(){
@@ -1140,8 +1255,8 @@ function addIdea(){
     ${state.ideas.length?`<div class="section-h" style="margin:6px 2px 8px"><h3>Gesammelte Ideen (${state.ideas.length})</h3></div>${state.ideas.map(i=>`<div class="card idea" style="cursor:default"><span class="bulb">💡</span><span class="itext">${esc(i.text)}</span><span onclick="delIdea('${i.id}')" style="color:var(--danger);cursor:pointer;padding:0 4px">✕</span></div>`).join("")}`:""}
     <div class="sh-actions"><button class="btn btn-p" onclick="saveIdea()">Idee sichern</button></div>`);
 }
-function saveIdea(){ const t=$("#itext").value.trim(); if(!t){ toast("Schreib was rein 🙂"); return; } state.ideas.unshift({ id:uid("i"), text:t }); persist(); toast("💡 Idee gesichert"); addIdea(); }
-function delIdea(id){ state.ideas=state.ideas.filter(i=>i.id!==id); persist(); addIdea(); }
+function saveIdea(){ const t=$("#itext").value.trim(); if(!t){ toast("Schreib was rein 🙂"); return; } const idea={ id:uid("i"), text:t }; state.ideas.unshift(idea); persist(); cloudUpsertIdea(idea); toast("💡 Idee gesichert"); addIdea(); }
+function delIdea(id){ state.ideas=state.ideas.filter(i=>i.id!==id); persist(); cloudDeleteIdea(id); addIdea(); }
 
 function openSettings(){
   const m=fullMember(activeProfile);
@@ -1149,7 +1264,7 @@ function openSettings(){
     <label class="f"><span>Name des HQ</span><input id="sorg" value="${esc(state.org)}"></label>
     <div class="sh-actions" style="margin-bottom:14px"><button class="btn btn-p" onclick="saveSettings()">Speichern</button></div>
     <button class="btn btn-g" style="width:100%;margin-bottom:11px" onclick="switchProfile()">👤 Profil wechseln</button>
-    <div class="sync-note"><span class="sync-dot"></span> Daten liegen aktuell lokal auf diesem Gerät — Cloud-Sync folgt.</div>
+    <div class="sync-note"><span class="sync-dot" style="background:${cloudReady?'var(--accent)':'var(--gold)'}"></span> ${cloudReady?'Live synchronisiert mit dem ganzen Team':'Läuft lokal — verbinde mit der Cloud…'}</div>
     <div class="section-h" style="margin:16px 2px 8px"><h3>Daten</h3></div>
     <div class="sh-actions" style="flex-wrap:wrap">
       <button class="btn btn-g" style="flex:1" onclick="exportData()">⬇︎ Backup exportieren</button>
@@ -1158,10 +1273,10 @@ function openSettings(){
     <button class="btn btn-d" style="width:100%;margin-top:11px" onclick="resetAll()">Alles zurücksetzen</button>
     <div style="text-align:center;color:var(--muted-2);font-size:11.5px;margin-top:18px">Sidequest OS · v2</div>`);
 }
-function saveSettings(){ state.org=$("#sorg").value.trim()||"Sidequest HQ"; persist(); $("#brandName").innerHTML=esc(state.org)+"<small>Mission Control</small>"; closeSheet(); render(); toast("✓ Gespeichert"); }
+function saveSettings(){ state.org=$("#sorg").value.trim()||"Sidequest HQ"; persist(); cloudSetSetting("org", state.org); $("#brandName").innerHTML=esc(state.org)+"<small>Mission Control</small>"; closeSheet(); render(); toast("✓ Gespeichert"); }
 function exportData(){ const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"}); const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="sidequest-os-backup.json"; a.click(); toast("Backup heruntergeladen"); }
 function importData(){ const inp=document.createElement("input"); inp.type="file"; inp.accept=".json"; inp.onchange=e=>{ const f=e.target.files[0]; if(!f)return; const r=new FileReader(); r.onload=()=>{ try{ const d=JSON.parse(r.result); if(d.projects){ state=d; persist(); closeSheet(); render(); toast("✓ Backup geladen"); } else toast("Ungültige Datei"); }catch(x){ toast("Fehler beim Laden"); } }; r.readAsText(f); }; inp.click(); }
-function resetAll(){ if(!confirm("Wirklich ALLES zurücksetzen? (Startdaten werden geladen)"))return; state=seed(); persist(); closeSheet(); nav("home"); toast("Zurückgesetzt"); }
+function resetAll(){ if(!confirm("Wirklich ALLES zurücksetzen? Das betrifft ALLE Geräte im Team, nicht nur dieses!"))return; state=seed(); persist(); cloudResetAll(); closeSheet(); nav("home"); toast("Zurückgesetzt"); }
 function openQuestionnaire(){ window.open("https://christiansowi-ux.github.io/sidequest-team/","_blank"); }
 
 /* ============================================================
@@ -1188,6 +1303,7 @@ $("#app").style.display="none";
 if(activeProfile && profileOf(activeProfile)){ bootApp(); } else { renderGate(); }
 setTimeout(()=>$("#splash").classList.add("hide"),950);
 if("serviceWorker" in navigator && location.protocol.startsWith("http")){ navigator.serviceWorker.register("sw.js").catch(()=>{}); }
+initCloud();
 </script>
 </body>
 </html>
