@@ -42,7 +42,6 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ===== App frame (phone-width, centered) ===== */
   #app {
     position: relative;
     max-width: 480px;
@@ -63,7 +62,6 @@
       box-shadow: 0 0 120px -20px #000; }
   }
 
-  /* ===== Top bar ===== */
   .topbar {
     flex: 0 0 auto;
     padding: calc(var(--safe-top) + 14px) 18px 12px;
@@ -87,8 +85,10 @@
   }
   .icon-btn:active { transform: scale(.92); }
   .icon-btn svg { width: 19px; height: 19px; }
+  .me-btn { display:flex; align-items:center; gap:8px; border:1px solid var(--line); background:var(--card); border-radius:999px; padding:5px 12px 5px 5px; cursor:pointer; }
+  .me-btn .mav-sm { width:26px;height:26px;border-radius:50%; display:grid; place-items:center; font-size:13px; }
+  .me-btn span { font-size:12.5px; font-weight:700; }
 
-  /* ===== Scrollable view ===== */
   #view {
     flex: 1 1 auto; overflow-y: auto; overflow-x: hidden;
     padding: 6px 16px 120px;
@@ -105,13 +105,11 @@
   .section-h h3 { font-size: 14px; font-weight: 700; letter-spacing: .3px; text-transform: uppercase; color: var(--muted); }
   .section-h a { font-size: 13px; color: var(--accent); font-weight: 600; cursor: pointer; }
 
-  /* ===== Greeting / hero ===== */
   .hero { margin: 6px 0 4px; }
   .hero .hi { color: var(--muted); font-size: 14px; }
   .hero .big { font-size: 27px; font-weight: 800; letter-spacing: -0.6px; line-height: 1.15; margin-top: 2px; }
   .hero .big .grad { background: linear-gradient(110deg, #fff, var(--accent) 70%, var(--accent-2)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 
-  /* ===== Stat tiles ===== */
   .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 11px; margin-top: 16px; }
   .stat {
     background: linear-gradient(160deg, var(--card), var(--bg-2));
@@ -126,7 +124,6 @@
   .stat .lbl { color: var(--muted); font-size: 12.5px; font-weight: 600; margin-top: 1px; }
   .stat .ic { position:absolute; top:14px; right:14px; font-size:16px; opacity:.8; }
 
-  /* ===== Cards ===== */
   .card {
     background: linear-gradient(165deg, var(--card), var(--bg-2));
     border: 1px solid var(--line); border-radius: 16px; padding: 15px;
@@ -135,7 +132,6 @@
   }
   .card:active { transform: scale(.985); border-color: #33385c; }
 
-  /* Project card */
   .proj { display: flex; gap: 13px; align-items: flex-start; }
   .proj .emoji {
     flex: 0 0 auto; width: 46px; height: 46px; border-radius: 13px;
@@ -146,6 +142,7 @@
   .proj .row1 { display: flex; align-items: center; gap: 8px; }
   .proj .pname { font-weight: 700; font-size: 15.5px; letter-spacing: -0.2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .proj .ptype { color: var(--muted); font-size: 12px; margin-top: 1px; }
+  .proj .ptag { color: var(--muted); font-size: 12px; margin-top: 3px; line-height:1.4; }
   .pill {
     flex: 0 0 auto; font-size: 10.5px; font-weight: 700; padding: 3px 9px; border-radius: 999px;
     text-transform: uppercase; letter-spacing: .4px; border: 1px solid transparent;
@@ -154,6 +151,7 @@
   .pill.doing { color: var(--blue); background: #38bdf81f; border-color: #38bdf844; }
   .pill.idea { color: var(--gold); background: #ffcb571a; border-color: #ffcb5744; }
   .pill.paused { color: var(--muted); background: #ffffff0a; border-color: var(--line); }
+  .pill.new { color: #cbbcff; background: #7c5cff1f; border-color: #7c5cff44; }
   .progress { margin-top: 11px; }
   .progress .bar { height: 7px; border-radius: 999px; background: #ffffff10; overflow: hidden; }
   .progress .fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); width: 0; transition: width .8s cubic-bezier(.2,.8,.2,1); }
@@ -164,7 +162,6 @@
     display: grid; place-items: center; font-size: 10px; font-weight: 800; color: #06121a;
   }
 
-  /* Chips filter */
   .filters { display: flex; gap: 8px; overflow-x: auto; padding: 2px 0 4px; margin-bottom: 6px; scrollbar-width: none; }
   .filters::-webkit-scrollbar { display: none; }
   .fchip {
@@ -173,7 +170,6 @@
   }
   .fchip.on { background: var(--accent-glow); border-color: var(--accent); color: var(--accent); }
 
-  /* Task segmented */
   .seg { display: flex; background: var(--card); border: 1px solid var(--line); border-radius: 13px; padding: 4px; margin: 4px 0 16px; gap: 4px; }
   .seg button { flex: 1; border: none; background: transparent; color: var(--muted); font-weight: 700; font-size: 13px; padding: 9px 4px; border-radius: 10px; cursor: pointer; transition: all .15s; position: relative; }
   .seg button .cnt { display:inline-block; min-width:18px; margin-left:4px; font-size:11px; padding:1px 5px; border-radius:999px; background:#ffffff12; }
@@ -190,29 +186,27 @@
   .task .tmeta { display:flex; align-items:center; gap:7px; margin-top:8px; flex-wrap:wrap; }
   .tag { font-size:11px; font-weight:650; padding:3px 8px; border-radius:7px; background:#ffffff0c; color:var(--muted); border:1px solid var(--line-soft); }
   .tag.pj { color:#cbbcff; background:#7c5cff18; border-color:#7c5cff33; }
+  .tag.me { color:#06121a; background:var(--accent); border-color:transparent; }
   .task .move { display:flex; gap:6px; margin-top:11px; }
   .mbtn { flex:1; border:1px solid var(--line); background:var(--bg-2); color:var(--muted); font-weight:700; font-size:12.5px; padding:8px; border-radius:9px; cursor:pointer; transition:all .13s; }
   .mbtn:active { transform:scale(.95); }
   .mbtn.done { color: var(--accent); border-color:#00e5b040; }
 
-  /* Team */
   .member { display:flex; gap:13px; align-items:center; }
   .member .mav { flex:0 0 auto; width:50px; height:50px; border-radius:15px; display:grid; place-items:center; font-size:22px; font-weight:800; color:#06121a; }
   .member .mname { font-weight:700; font-size:16px; }
   .member .mrole { color:var(--muted); font-size:12.5px; margin-top:1px; }
   .skilltags { display:flex; flex-wrap:wrap; gap:6px; margin-top:9px; }
+  .pending-badge { font-size:10.5px; font-weight:700; color:var(--gold); background:#ffcb571a; border:1px solid #ffcb5744; padding:3px 8px; border-radius:999px; margin-top:8px; display:inline-block; }
 
-  /* Empty state */
   .empty { text-align:center; padding:44px 20px; color:var(--muted); }
   .empty .e-emoji { font-size:44px; margin-bottom:12px; opacity:.9; }
   .empty p { font-size:14px; }
 
-  /* Idea card */
   .idea { display:flex; gap:12px; align-items:flex-start; }
   .idea .bulb { font-size:20px; }
   .idea .itext { flex:1; font-size:14.5px; }
 
-  /* ===== Bottom nav ===== */
   .tabbar {
     flex: 0 0 auto;
     position: absolute; left: 0; right: 0; bottom: 0; z-index: 40;
@@ -242,7 +236,6 @@
   .fab svg { width:26px; height:26px; }
   @keyframes fabpulse { 0%,100%{ box-shadow:0 10px 26px -8px var(--accent),0 0 0 5px #0a0b14,0 0 0 0 var(--accent-glow);} 50%{ box-shadow:0 10px 26px -8px var(--accent),0 0 0 5px #0a0b14,0 0 0 8px transparent;} }
 
-  /* ===== Bottom sheet ===== */
   .sheet-wrap { position: fixed; inset: 0; z-index: 100; display: none; }
   .sheet-wrap.show { display: block; }
   .sheet-bg { position:absolute; inset:0; background:#000a; opacity:0; transition:opacity .3s; backdrop-filter: blur(2px); }
@@ -291,27 +284,48 @@
   .qa .qt { font-weight:700; font-size:15px; margin-top:8px; }
   .qa .qd { color:var(--muted); font-size:12px; margin-top:2px; }
 
-  .detail-head { display:flex; gap:14px; align-items:center; margin-bottom:18px; }
+  .detail-head { display:flex; gap:14px; align-items:center; margin-bottom:14px; }
   .detail-head .dh-emoji { width:58px; height:58px; border-radius:16px; display:grid; place-items:center; font-size:28px; background:var(--bg-2); border:1px solid var(--line); }
   .detail-head .dh-name { font-size:20px; font-weight:800; letter-spacing:-.3px; }
+  .detail-tagline { color:var(--muted); font-size:13.5px; margin:-6px 0 16px; line-height:1.5; }
+  .why-box { background:#7c5cff14; border:1px solid #7c5cff33; border-radius:13px; padding:12px 14px; font-size:13px; color:#d8d2ff; margin-bottom:14px; line-height:1.5; }
+  .why-box b { color:#fff; }
+  .stack-row { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:16px; }
   .kv { display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid var(--line-soft); font-size:14px; }
   .kv .k { color:var(--muted); }
   .kv .v { font-weight:650; }
   .mini-task { display:flex; align-items:center; gap:9px; padding:10px 0; border-bottom:1px solid var(--line-soft); font-size:14px; }
   .mini-task .dotp { width:7px;height:7px;border-radius:50%; flex:0 0 auto; }
 
+  .sub-item { display:flex; gap:12px; align-items:flex-start; padding:13px 0; border-bottom:1px solid var(--line-soft); }
+  .sub-item:last-child { border-bottom:none; }
+  .sub-check { flex:0 0 auto; width:26px; height:26px; border-radius:8px; border:1.5px solid var(--line); background:var(--bg-2); display:grid; place-items:center; cursor:pointer; margin-top:1px; transition:all .15s; }
+  .sub-check.on { background:linear-gradient(135deg,var(--accent),var(--accent-2)); border-color:transparent; }
+  .sub-check svg { width:14px; height:14px; color:#06121a; opacity:0; transition:opacity .1s; }
+  .sub-check.on svg { opacity:1; }
+  .sub-body { flex:1; min-width:0; }
+  .sub-title { font-weight:650; font-size:14.5px; }
+  .sub-title.done { color:var(--muted); text-decoration:line-through; }
+  .sub-tool { color:var(--muted); font-size:11.5px; margin-top:2px; }
+  .sub-tut { display:inline-flex; align-items:center; gap:5px; margin-top:8px; font-size:12px; font-weight:700; color:var(--accent); cursor:pointer; }
+
+  .tut-step { display:flex; gap:11px; padding:11px 0; border-bottom:1px dashed var(--line-soft); }
+  .tut-step:last-child { border-bottom:none; }
+  .tut-num { flex:0 0 auto; width:24px; height:24px; border-radius:50%; background:var(--accent-glow); color:var(--accent); font-size:12px; font-weight:800; display:grid; place-items:center; }
+  .tut-text { font-size:14px; padding-top:2px; line-height:1.5; }
+  .prompt-box { background:#06070f; border:1px solid var(--line); border-radius:12px; padding:13px 14px; margin-top:14px; font-size:12.5px; font-family:"SF Mono",ui-monospace,Consolas,monospace; color:#a8e8d8; line-height:1.6; position:relative; white-space:pre-wrap; }
+  .prompt-lbl { font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; margin:16px 0 7px; }
+
   .slider-wrap { display:flex; align-items:center; gap:12px; }
   input[type=range] { -webkit-appearance:none; height:8px; border-radius:999px; background:#ffffff14; padding:0; }
   input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:22px; height:22px; border-radius:50%; background:linear-gradient(135deg,var(--accent),var(--accent-2)); box-shadow:0 2px 8px -1px var(--accent); cursor:pointer; }
   .slider-val { flex:0 0 auto; width:44px; text-align:right; font-weight:800; color:var(--accent); }
 
-  /* Toast */
   #toast { position:fixed; left:50%; bottom: calc(var(--safe-bottom) + 100px); transform:translateX(-50%) translateY(20px); z-index:200;
     background:#10121f; border:1px solid var(--line); color:var(--txt); padding:12px 20px; border-radius:13px; font-size:14px; font-weight:600;
     opacity:0; transition:all .3s; pointer-events:none; box-shadow:0 12px 30px -8px #000; max-width:84%; }
   #toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
 
-  /* Splash */
   #splash { position:fixed; inset:0; z-index:500; background:var(--bg); display:grid; place-items:center; transition:opacity .5s; }
   #splash.hide { opacity:0; pointer-events:none; }
   #splash .s-logo { width:84px; height:84px; border-radius:24px; background:linear-gradient(135deg,var(--accent),var(--accent-2)); display:grid; place-items:center; font-size:44px; box-shadow:0 20px 50px -10px var(--accent); animation:pop .6s cubic-bezier(.2,1.4,.4,1); }
@@ -319,13 +333,44 @@
   #splash .s-name small { display:block; color:var(--muted); font-weight:500; font-size:12px; letter-spacing:2px; text-transform:uppercase; margin-top:3px; }
   @keyframes pop { from { transform:scale(.3); opacity:0; } to { transform:scale(1); opacity:1; } }
 
-  /* Confetti */
   .conf { position:fixed; z-index:300; width:9px; height:9px; border-radius:2px; pointer-events:none; }
+
+  /* ===== Profile gate ===== */
+  #gate { position:fixed; inset:0; z-index:400; background:
+      radial-gradient(700px 380px at 85% -8%, var(--purple-glow), transparent 60%),
+      radial-gradient(600px 340px at -10% 4%, var(--accent-glow), transparent 55%), var(--bg);
+    display:flex; flex-direction:column; align-items:center; padding: calc(var(--safe-top) + 40px) 24px calc(var(--safe-bottom) + 30px);
+    max-width:480px; margin:0 auto; overflow-y:auto; }
+  #gate.hide { display:none; }
+  .gate-logo { width:64px; height:64px; border-radius:19px; background:linear-gradient(135deg,var(--accent),var(--accent-2)); display:grid; place-items:center; font-size:32px; box-shadow:0 14px 34px -8px var(--accent); margin-bottom:18px; }
+  .gate-title { font-size:24px; font-weight:800; letter-spacing:-.4px; text-align:center; }
+  .gate-sub { color:var(--muted); font-size:13.5px; text-align:center; margin-top:6px; margin-bottom:28px; }
+  .avatar-grid { display:grid; grid-template-columns:1fr 1fr; gap:13px; width:100%; }
+  .avatar-card { background:linear-gradient(165deg,var(--card),var(--bg-2)); border:1px solid var(--line); border-radius:18px; padding:20px 10px; display:flex; flex-direction:column; align-items:center; gap:9px; cursor:pointer; transition:all .15s; }
+  .avatar-card:active { transform:scale(.95); }
+  .avatar-card .aav { width:54px; height:54px; border-radius:16px; display:grid; place-items:center; font-size:26px; }
+  .avatar-card .aname { font-weight:750; font-size:14.5px; }
+  .avatar-card .arole { color:var(--muted); font-size:10.5px; text-align:center; line-height:1.3; }
+  .pin-wrap { width:100%; max-width:300px; margin: 0 auto; text-align:center; }
+  .pin-who { display:flex; flex-direction:column; align-items:center; gap:10px; margin-bottom: 30px; }
+  .pin-who .aav { width:70px; height:70px; border-radius:20px; display:grid; place-items:center; font-size:32px; }
+  .pin-dots { display:flex; justify-content:center; gap:16px; margin-bottom:34px; }
+  .pin-dot { width:16px; height:16px; border-radius:50%; border:1.5px solid var(--line); transition:all .15s; }
+  .pin-dot.filled { background:var(--accent); border-color:var(--accent); box-shadow:0 0 10px var(--accent); }
+  .pin-dot.err { background:var(--danger); border-color:var(--danger); }
+  .pin-pad { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; width:100%; }
+  .pin-key { aspect-ratio:1; border-radius:18px; background:var(--card); border:1px solid var(--line); color:var(--txt); font-size:22px; font-weight:700; cursor:pointer; display:grid; place-items:center; transition:all .1s; }
+  .pin-key:active { background:var(--card-2); transform:scale(.94); }
+  .pin-key.ghost { background:none; border:none; }
+  .back-link { margin-top:26px; color:var(--muted); font-size:13px; font-weight:650; cursor:pointer; }
 
   .install-banner { display:none; align-items:center; gap:12px; background:linear-gradient(135deg,#7c5cff1f,#00e5b014); border:1px solid #7c5cff40; border-radius:15px; padding:13px 15px; margin:14px 0 2px; }
   .install-banner.show { display:flex; }
   .install-banner .ib-t { flex:1; font-size:13.5px; font-weight:600; }
   .install-banner button { border:none; background:var(--accent); color:#06121a; font-weight:750; padding:9px 15px; border-radius:10px; font-size:13px; cursor:pointer; }
+
+  .sync-note { display:flex; align-items:center; gap:8px; font-size:11.5px; color:var(--muted); background:var(--bg-2); border:1px solid var(--line-soft); border-radius:10px; padding:9px 12px; margin-top:10px; }
+  .sync-dot { width:7px; height:7px; border-radius:50%; background:var(--gold); flex:0 0 auto; }
 </style>
 </head>
 <body>
@@ -337,15 +382,20 @@
   </div>
 </div>
 
+<div id="gate">
+  <div class="gate-logo">⚡</div>
+  <div class="gate-title">Sidequest OS</div>
+  <div class="gate-sub" id="gateSub">Wer bist du?</div>
+  <div id="gateBody" style="width:100%"></div>
+</div>
+
 <div id="app">
   <div class="topbar">
     <div class="brand">
       <div class="logo">⚡</div>
-      <div class="name" id="brandName">Sidequest OS<small>Mission Control</small></div>
+      <div class="name" id="brandName">Sidequest HQ<small>Mission Control</small></div>
     </div>
-    <button class="icon-btn" onclick="openSettings()" aria-label="Einstellungen">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-    </button>
+    <div class="me-btn" onclick="openSettings()" id="meBtn"></div>
   </div>
 
   <main id="view"></main>
@@ -356,7 +406,7 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg><span>Start</span>
     </button>
     <button class="tab" data-tab="projects" onclick="nav('projects')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>Projekte</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>Ventures</span>
     </button>
     <button class="fab" onclick="openQuickAdd()" aria-label="Neu">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
@@ -379,56 +429,300 @@
 
 <script>
 /* ============================================================
-   SIDEQUEST OS — single-file mission control (localStorage)
+   SIDEQUEST OS v2 — profiles, ventures & tutorials (localStorage)
    ============================================================ */
-const KEY = "sidequest_os_v1";
-const PALETTE = ["#00e5b0","#7c5cff","#38bdf8","#ffcb57","#ff7ac6","#8b5cf6","#34d399","#fb923c"];
-const PROJ_EMOJIS = ["🚀","🎮","📱","🏋️","🌐","🎥","🕹️","🦎","💥","⚔️","🤖","📈","🚗","📄","🛒","🎨","✍️","🎬","💡","🔥","🧩","🎯","🎵","💎"];
-const MEM_EMOJIS = ["🦊","🐼","🦁","🐯","🐨","🦄","🐺","🦉","🐝","🦅","🐬","🐲","👑","🎯","⚡","🌟"];
+const KEY = "sidequest_os_v2";
+const PROJ_EMOJIS = ["🚀","🎮","📱","🏋️","🌐","🎥","🕹️","🦎","💥","⚔️","🤖","📈","🚗","📄","🛒","🎨","✍️","🎬","💡","🔥","🧩","🎯","🎵","💎","🚘","✂️","🖨️","📍","📊","🎉","🔄"];
 
-/* ---------- Seed (their real venture line-up) ---------- */
+/* ---------- Hardcoded profiles + PINs (simple, no accounts) ---------- */
+const PROFILES = [
+  { id:"christian", name:"Christian", role:"Gründer & Vision", emoji:"👑", color:"#00e5b0", pin:"1010" },
+  { id:"oscar",      name:"Oscar",     role:"Organisation & Zahlen", emoji:"🎮", color:"#38bdf8", pin:"2020" },
+  { id:"jonas",      name:"Jonas",     role:"Content & Kreativ", emoji:"🎬", color:"#7c5cff", pin:"3030" },
+  { id:"baris",      name:"Baris",     role:"Steckbrief ausstehen", emoji:"🦁", color:"#ffcb57", pin:"4040" },
+  { id:"helmut",     name:"Helmut",    role:"Technik & Umsetzung", emoji:"🔧", color:"#fb923c", pin:"5050" },
+  { id:"sebi",       name:"Sebi",      role:"Steckbrief ausstehen", emoji:"🐺", color:"#ff7ac6", pin:"6060" },
+];
+
+/* ---------- 10 Starter-Ventures: Claude-baubar, viral, Free-Tier-Stack ---------- */
+function ventures() {
+  return [
+    { id:"v1", emoji:"🧩", name:"PromptForge Market", type:"Business · Digitale Produkte",
+      tagline:"Verkaufst geprüfte KI-Prompt-Packs & Make.com-Vorlagen an andere, die Claude/ChatGPT nutzen wollen, aber nicht wissen wie.",
+      why:"Der Markt für „fertige KI-Rezepte“ explodiert 2026, weil jeder mit KI arbeiten will, aber die wenigsten gute Prompts schreiben können. Du verkaufst Abkürzungen, kein Vaporware.",
+      stack:["Gumroad (0€ Startgebühr)","Notion (Katalog)","Canva (Cover)","Claude Code"],
+      fit:["oscar","christian"], status:"idea", progress:0, guided:true,
+      subtasks:[
+        { title:"Nische wählen & 3 Konkurrenten auf Gumroad checken", tool:"Gumroad Discover",
+          steps:["Auf gumroad.com/discover nach „prompts“ / „AI templates“ suchen","3 Bestseller anschauen: Preis, Beschreibung, Bewertungen notieren","Eine Nische wählen, die noch dünn besetzt ist (z.B. „Prompts für Handwerker-Marketing“)","In Notion eine Seite „Nische + Zielgruppe“ anlegen"],
+          prompt:"Ich will Prompt-Packs für [Nische] verkaufen. Liste mir 15 konkrete Anwendungsfälle auf, für die jemand in dieser Nische täglich ChatGPT/Claude brauchen könnte." },
+        { title:"10 Prompts schreiben & mit Claude testen", tool:"Claude Code",
+          steps:["Für jeden Anwendungsfall einen Prompt mit klaren Platzhaltern [IN KLAMMERN] schreiben","Jeden Prompt 2x mit echten Beispieldaten testen","Schlechte Ergebnisse verfeinern, bis die Ausgabe wirklich brauchbar ist","In einem Google Doc sauber formatiert sammeln"],
+          prompt:"Hier ist mein Prompt: [PROMPT EINFÜGEN]. Teste ihn gedanklich für [3 Beispiel-Situationen] und zeig mir, wo er noch ungenau oder verbesserungswürdig ist." },
+        { title:"Cover & Produktseite bauen", tool:"Canva + Gumroad",
+          steps:["Canva: Vorlage „eBook Cover“ nehmen, Titel + 3 Bullet-Benefits reinschreiben","Gumroad-Produkt anlegen, Preis 9-19€ testen","Beschreibung: Problem → Lösung → was genau man bekommt","Vorschau-Screenshot von 2 Prompts als Freebie-Teaser einfügen"],
+          prompt:"Schreib mir eine Gumroad-Produktbeschreibung für ein Prompt-Pack namens [NAME], das [Zielgruppe] hilft, [Ergebnis] zu erreichen. Locker, konkret, keine Buzzwords." },
+        { title:"Ersten Verkaufspost in 2 Communities teilen", tool:"Reddit / Facebook-Gruppen",
+          steps:["2 passende Subreddits oder Facebook-Gruppen zur Nische finden","Regeln lesen — viele verbieten Werbung, dann als „ich hab das gebaut, Feedback?“ posten","Ehrlich erklären, welches Problem es löst, Link am Ende","Reaktionen sammeln, Produkt danach nachschärfen"],
+          prompt:"Schreib mir einen ehrlichen, nicht-werblichen Community-Post, in dem ich mein Prompt-Pack [NAME] vorstelle und um Feedback bitte, ohne aufdringlich zu wirken." },
+        { title:"Zweites Pack launchen, Katalog aufbauen", tool:"Gumroad + Notion",
+          steps:["Auswerten: welche Prompts aus Pack 1 kamen am besten an?","Zweites Pack zu angrenzender Nische bauen","Bundle-Preis für „beide Packs“ anbieten (höherer Warenkorbwert)","Notion-Dashboard: Verkäufe, Feedback, nächste Nischen-Ideen"],
+          prompt:"Ich habe [X] von Pack 1 verkauft, Feedback war [FEEDBACK]. Welche angrenzende Nische sollte Pack 2 bedienen, um bestehende Käufer zum Bundle zu bewegen?" },
+      ]},
+    { id:"v2", emoji:"🚘", name:"Schrauber Radar", type:"Bot · Nischen-Business",
+      tagline:"Telegram-Bot, der Kleinanzeigen & eBay rund um die Uhr nach seltenen Autoteilen durchsucht und dich sofort bei Treffern anpingt.",
+      why:"Schrauber & Sammler zahlen für Zeitvorteil — wer ein seltenes Teil 10 Minuten früher sieht als alle anderen, bekommt den Deal. Das ist ein echtes, fühlbares Problem, kein Nice-to-have.",
+      stack:["Make.com (Free: 1.000 Ops/Monat)","Telegram Bot API (kostenlos)","Supabase (Deal-Historie)","Claude Code"],
+      fit:["helmut"], status:"idea", progress:0, guided:true,
+      subtasks:[
+        { title:"Telegram-Bot registrieren", tool:"Telegram @BotFather",
+          steps:["In Telegram „@BotFather“ öffnen, /newbot senden","Namen & Username vergeben (z.B. SchrauberRadarBot)","Den API-Token kopieren und sicher speichern","Bot einmal anschreiben, damit er eine Chat-ID bekommt"],
+          prompt:"Erklär mir in einfachen Worten, wie ich mit dem Telegram Bot API Token über Make.com automatisch Nachrichten an mich selbst schicken kann." },
+        { title:"Make.com-Szenario: Kleinanzeigen-Suche automatisieren", tool:"Make.com",
+          steps:["Neues Szenario anlegen, Trigger „Schedule“ alle 30 Minuten","RSS/HTTP-Modul auf die Such-URL deiner Wunschteile richten","Filter: nur neue Ergebnisse seit letztem Lauf durchlassen","Telegram-Modul dranhängen, das den Treffer als Nachricht sendet"],
+          prompt:"Ich will in Make.com ein Szenario bauen, das alle 30 Minuten eine Kleinanzeigen-Suchseite abruft und mir neue Treffer per Telegram schickt. Welche Module brauche ich und wie verhindere ich doppelte Benachrichtigungen?" },
+        { title:"Deal-Historie in Supabase speichern", tool:"Supabase",
+          steps:["Kostenloses Supabase-Projekt anlegen","Tabelle „deals“ mit Titel, Preis, Link, Fundzeit erstellen","Make.com per HTTP-Request neue Treffer eintragen lassen","Später: Preis-Trend pro Teil auswerten"],
+          prompt:"Schreib mir das SQL, um in Supabase eine Tabelle „deals“ mit Feldern id, title, price, url, found_at zu erstellen." },
+        { title:"Filter für 3 Wunschteile einrichten & 1 Woche laufen lassen", tool:"Make.com",
+          steps:["3 konkrete Teile definieren, nach denen gesucht wird","Für jedes Teil ein eigenes Szenario oder einen Filter-Zweig bauen","Eine Woche beobachten: kommen sinnvolle Treffer, keine Duplikate?","Fehlalarme rausfiltern (falsche Marke/Modell)"],
+          prompt:"Ich bekomme zu viele irrelevante Treffer für [Teil]. Wie baue ich in Make.com einen Filter, der nur Titel mit [Marke] UND [Modell] durchlässt?" },
+        { title:"Premium-Variante für andere Schrauber anbieten", tool:"Stripe / PayPal-Link",
+          steps:["In 1-2 Auto-Foren/Facebook-Gruppen fragen, ob Interesse an einem Alert-Bot besteht","Einfachen Zahlungslink (Stripe Payment Link, kostenlos einrichtbar) für „Premium-Suche einrichten“ anbieten","Onboarding-Formular (Airtable) für neue Kunden bauen: welche Teile, welches Budget","Ersten zahlenden Kunden einrichten und Feedback einholen"],
+          prompt:"Entwirf mir eine kurze, ehrliche Nachricht für eine Auto-Facebook-Gruppe, in der ich einen automatisierten Teile-Alert-Service für 5€/Monat anbiete." },
+      ]},
+    { id:"v3", emoji:"⚡", name:"Reflex Rush", type:"Game · Viral",
+      tagline:"Neues virales 1-Tap-Browserspiel im VOLT-Stil, aber komplett eigenes IP — gebaut für TikTok-Clips als Wachstumsmotor.",
+      why:"Ultra-simple 1-Tap-Games verbreiten sich fast von selbst über Highscore-Clips. Niedrige Baukosten (reines HTML/Canvas), riesiges Upside wenn ein Clip zieht.",
+      stack:["Single-File HTML/Canvas (0€)","Supabase (Leaderboard, free tier)","CapCut (Clips)"],
+      fit:["jonas","baris","sebi"], status:"idea", progress:0, guided:true,
+      subtasks:[
+        { title:"Spielmechanik in 1 Satz festlegen & Prototyp bauen", tool:"Claude Code",
+          steps:["Eine simple Regel finden: 1 Taste/Tap, sofort verständlich, in 3 Sek. erklärt","Von Claude Code eine erste spielbare HTML-Canvas-Version bauen lassen","5 Minuten selbst spielen — macht es süchtig oder frustet es nur?","Schwierigkeitskurve anpassen, bis „nochmal!“-Gefühl entsteht"],
+          prompt:"Baue mir ein Single-File HTML/Canvas 1-Tap-Browsergame: [DEINE IDEE, z.B. „ausweichen vor fallenden Objekten, Tempo steigt“]. Mobile-first, Highscore lokal speichern, Neon-Look." },
+        { title:"Skins & kleine Belohnungen einbauen", tool:"Claude Code",
+          steps:["3-5 freischaltbare Skins/Farben definieren","Freischaltung an Score-Meilensteine koppeln","Kleine Screen-Shake/Partikel-Effekte für Belohnungsgefühl ergänzen","Testen: fühlt sich Fortschritt gut an?"],
+          prompt:"Erweitere mein Spiel um 4 freischaltbare Farb-Skins, die bei Score 100/500/1000/5000 automatisch freigeschaltet werden, plus ein kurzes Konfetti-Feedback beim Freischalten." },
+        { title:"Online-Leaderboard mit Supabase", tool:"Supabase",
+          steps:["Kostenloses Supabase-Projekt anlegen","Tabelle „scores“ mit Name + Punktzahl + Datum anlegen","Am Spielende Score automatisch hochladen lassen","Top-10-Liste im Spiel anzeigen"],
+          prompt:"Zeig mir Schritt für Schritt, wie ich aus meinem Browserspiel per JavaScript einen Score in eine Supabase-Tabelle „scores“ schreibe und die Top 10 wieder auslese." },
+        { title:"5 Highscore-Clips für TikTok/Reels drehen", tool:"CapCut",
+          steps:["Bildschirmaufnahme von 5 spannenden Runden (knapper Fail, neuer Highscore)","In CapCut auf 15-25 Sek. schneiden, Trend-Sound unterlegen","Text-Overlay: „Schaffst du mehr als 500?“","Link/QR zum Spiel in Bio, nicht im Video selbst"],
+          prompt:"Schreib mir 5 kurze, knackige Hook-Texte für TikTok-Videos, die Zuschauer dazu bringen, ein simples 1-Tap-Highscore-Game auszuprobieren." },
+        { title:"Launch-Tag: alle Kanäle gleichzeitig bespielen", tool:"Alle Social-Kanäle",
+          steps:["Spiel final testen auf 3 verschiedenen Handys/Browsern","An einem Tag auf allen privaten Social-Kanälen gleichzeitig posten","Freunde bitten, ihren Highscore zu posten/zu teilen (sozialer Druck)","Kommentare/Feedback sammeln, Bugs sofort fixen"],
+          prompt:"Erstell mir eine Launch-Checkliste für den Tag, an dem wir das Spiel zum ersten Mal öffentlich teilen — was muss vorher getestet sein, was posten wir wann?" },
+      ]},
+    { id:"v4", emoji:"✂️", name:"ShortSnap AI", type:"SaaS · Creator-Tools",
+      tagline:"Verkauft an andere Creator: lange Videos/Podcasts automatisch in fertige vertikale Shorts mit Untertiteln schneiden — dein Know-how aus dem Videotool, aber als eigenes Produkt für Kunden.",
+      why:"Jeder Creator hat zu viel Rohmaterial und zu wenig Zeit zum Schneiden. Ein Tool, das das automatisiert, verkauft sich als Abo, nicht als Einmal-Kauf — planbarer Umsatz.",
+      stack:["AssemblyAI/Whisper (free tier für Transkription)","ffmpeg (kostenlos)","Supabase (Nutzer & Jobs)","Stripe (später fürs Abo)"],
+      fit:["baris","sebi","jonas"], status:"idea", progress:0, guided:true,
+      subtasks:[
+        { title:"Manuellen Workflow einmal komplett durchspielen", tool:"Whisper + ffmpeg",
+          steps:["1 Testvideo hochladen, Transkript mit Whisper/AssemblyAI erzeugen","Spannendste 3 Momente per Hand markieren","Mit ffmpeg diese 3 Clips zuschneiden + auf 9:16 croppen","Untertitel manuell einbrennen, um den Zielzustand zu kennen"],
+          prompt:"Erklär mir Schritt für Schritt, wie ich mit ffmpeg aus einem 16:9-Video einen 9:16-Ausschnitt mit eingebrannten Untertiteln erzeuge." },
+        { title:"Automatisierung: Transkript → Highlight-Erkennung", tool:"Claude Code",
+          steps:["Transkript in Claude einspeisen lassen","Prompt bauen, der die 3-5 spannendsten Ausschnitte (Zeitstempel) vorschlägt","Ergebnis mit den eigenen manuellen Markierungen vergleichen","Prompt so lange verfeinern, bis Vorschläge wirklich brauchbar sind"],
+          prompt:"Hier ist ein Transkript mit Zeitstempeln: [TRANSKRIPT]. Finde die 5 Momente mit dem höchsten „Aha“- oder Emotions-Faktor und gib mir Start/Ende jedes Ausschnitts." },
+        { title:"Web-Oberfläche für Upload & Download bauen", tool:"Claude Code + Supabase",
+          steps:["Einfache Upload-Seite bauen: Datei rein, Job landet in Supabase-Tabelle „jobs“","Backend-Funktion, die Whisper + Claude + ffmpeg hintereinander ausführt","Fertige Clips zum Download bereitstellen","Ladebalken/Status („wird transkribiert… wird geschnitten…“) einbauen"],
+          prompt:"Baue mir eine einfache Web-App: Nutzer lädt ein Video hoch, im Hintergrund läuft Transkription + Highlight-Erkennung + Zuschnitt, am Ende bekommt er 3 fertige 9:16-Clips zum Download." },
+        { title:"5 kostenlose Test-Läufe mit echten Creators", tool:"Direkt-Nachrichten",
+          steps:["5 kleine Creator (1k-20k Follower) direkt anschreiben, kostenlosen Test anbieten","Ihre Videos durch das Tool laufen lassen","Ehrliches Feedback einholen: Zeit gespart? Qualität der Clips?","Größte Kritikpunkte priorisiert fixen"],
+          prompt:"Schreib mir eine kurze, persönliche Direktnachricht an einen Creator, in der ich anbiete, kostenlos 3 Short-Clips aus seinem letzten Video zu erstellen, im Tausch für ehrliches Feedback." },
+        { title:"Abo-Modell & Stripe-Checkout einrichten", tool:"Stripe",
+          steps:["Preisstufen festlegen (z.B. 5 Videos/Monat gratis, dann Abo)","Stripe-Checkout-Link für monatliches Abo einrichten","Nutzerkonto in Supabase mit Abo-Status verknüpfen","Ersten zahlenden Kunden aus den 5 Testern gewinnen"],
+          prompt:"Zeig mir, wie ich mit einem Stripe Payment Link ein einfaches monatliches Abo für mein Tool anbiete und den Zahlungsstatus in Supabase speichere." },
+      ]},
+    { id:"v5", emoji:"🎯", name:"Habit Squad", type:"App · Community",
+      tagline:"Gamifizierte Gruppen-Habit-App: Streaks, kleine Wetten im Freundeskreis, viral durch Gruppeneinladungen.",
+      why:"Habit-Tracker allein floppen meist — sozialer Druck in der Gruppe ist der eigentliche Motor. Perfekt als erstes gemeinsames Ship, weil jeder im Team mitbauen kann.",
+      stack:["Supabase (Auth + DB, free tier)","Vercel (Hosting, kostenlos)","Claude Code"],
+      fit:["christian","oscar","jonas","helmut","baris","sebi"], status:"idea", progress:0, guided:true,
+      subtasks:[
+        { title:"Kern-Loop festlegen: 1 Habit, 1 Gruppe, 1 Streak", tool:"Claude Code",
+          steps:["Genau definieren: was passiert, wenn jemand „erledigt“ drückt?","Was passiert, wenn jemand einen Tag verpasst — Streak weg oder „Herz“ verlieren?","Erste Version nur für euer eigenes Team-Chat als Zielgruppe denken","Claude Code eine erste Version mit 1 Habit pro Gruppe bauen lassen"],
+          prompt:"Baue mir eine einfache Web-App: Nutzer erstellen eine Gruppe, laden Freunde per Link ein, und jeder trackt täglich 1 gemeinsame Habit mit Streak-Zähler." },
+        { title:"Supabase-Login & Gruppen-Einladelinks", tool:"Supabase Auth",
+          steps:["Supabase Magic-Link-Login einrichten (kein Passwort nötig)","Tabelle „groups“ + „memberships“ + „checkins“ anlegen","Einladelink generieren, der neue Nutzer direkt in die Gruppe holt","Testen: 2 eigene Accounts, gemeinsame Gruppe, gegenseitige Checkins sehen"],
+          prompt:"Zeig mir das Supabase-Datenmodell (Tabellen + Beziehungen) für Gruppen, Mitgliedschaften und tägliche Checkins, plus wie ein Einladelink funktioniert." },
+        { title:"Streak-Grafik & kleine Belohnungen", tool:"Claude Code",
+          steps:["Kalender-Ansicht bauen: grüner Punkt pro erledigtem Tag","Aktuelle Streak-Zahl prominent anzeigen","Kleine Feier-Animation bei 7/30/100 Tagen","Push-/Browser-Benachrichtigung als Tages-Erinnerung"],
+          prompt:"Baue eine Kalender-Komponente, die für jeden Tag im Monat einen grünen Punkt zeigt, wenn ein Checkin existiert, plus eine große Streak-Zahl oben." },
+        { title:"Mit dem eigenen Team 2 Wochen live testen", tool:"euer Team",
+          steps:["Alle 6 Team-Mitglieder in eine Test-Gruppe holen","Gemeinsame Habit wählen (z.B. „täglich 30 Min am Sidequest-Projekt arbeiten“)","2 Wochen durchziehen, Reibungspunkte im Alltag notieren","App danach an den echten Problemen nachschärfen"],
+          prompt:"Wir testen unsere eigene Habit-App im Team. Welche 5 Kennzahlen sollten wir tracken, um zu wissen, ob die App wirklich hilft (nicht nur benutzt wird)?" },
+        { title:"Für eine zweite Gruppe außerhalb des Teams öffnen", tool:"Vercel + Link teilen",
+          steps:["App auf Vercel live schalten (kostenlos)","Eine befreundete Gruppe (Sportfreunde, Studien-Gruppe) einladen","Feedback von echten Außenstehenden einholen","Onboarding vereinfachen, bis Fremde ohne Erklärung reinkommen"],
+          prompt:"Wie mache ich den Einstieg in meine App so einfach, dass eine fremde Gruppe ohne Erklärung durch mich selbst startklar ist? Schau dir meinen aktuellen Ablauf an: [BESCHREIBUNG]." },
+      ]},
+    { id:"v6", emoji:"🖨️", name:"MerchMind", type:"E-Commerce · Print-on-Demand",
+      tagline:"Print-on-Demand-Shop mit KI-generierten Designs für Micro-Nischen wie Auto-Memes oder Gaming-Sprüche — 0€ Lagerkosten, 0€ Vorabinvestition.",
+      why:"Print-on-Demand hat keine Lagerrisiken und KI macht Design-Erstellung 10x schneller. Wer eine wirklich enge Nische trifft (nicht „Katzen“, sondern „Diesel-Schrauber-Humor“), kann ohne Werbebudget über Nischen-Communities verkaufen.",
+      stack:["Printful/Printify (kostenlose Integration)","Etsy oder Shopify-Trial","Ideogram/Midjourney (Design-Bilder)"],
+      fit:["helmut","jonas"], status:"idea", progress:0, guided:true,
+      subtasks:[
+        { title:"Micro-Nische festlegen (nicht zu breit!)", tool:"Recherche",
+          steps:["An eine Community denken, die ihr selbst gut kennt (z.B. Schrauber-Humor)","3 Insider-Sprüche/Memes sammeln, die nur diese Gruppe versteht","Auf Etsy prüfen: gibt es das schon, wie viele Bewertungen haben die Shops?","Nische so lange verengen, bis sie sich „zu spitz“ anfühlt — genau richtig"],
+          prompt:"Ich kenne mich gut aus mit [Thema/Community]. Gib mir 10 Insider-Sprüche oder Running-Gags aus dieser Szene, die sich gut als T-Shirt-Spruch eignen." },
+        { title:"10 Designs mit KI erstellen", tool:"Ideogram / Midjourney",
+          steps:["Für jeden Spruch ein einfaches, druckfreundliches Layout generieren lassen","Auf Kontrast und Lesbarkeit auf Stoff achten (kein zu feines Detail)","Hintergrund transparent exportieren (PNG)","Die 10 besten Designs auswählen, Rest verwerfen"],
+          prompt:"Erstelle mir ein minimalistisches T-Shirt-Design (transparenter Hintergrund) mit dem Text „[SPRUCH]“ im Stil von [Stil, z.B. Vintage-Garage-Schild]." },
+        { title:"Printful mit Etsy/Shopify verbinden", tool:"Printful",
+          steps:["Kostenlosen Printful-Account anlegen","Mit Etsy oder Shopify verknüpfen (offizielle Integration)","Erstes Design auf T-Shirt + Tasse als Mockup hochladen","Preise so setzen, dass nach Druckkosten eine gesunde Marge bleibt"],
+          prompt:"Erklär mir, welche Marge ich bei Printful-Produkten realistisch einplanen sollte und wie ich meine Verkaufspreise entsprechend setze." },
+        { title:"Shop-Branding & erste 10 Produkte live schalten", tool:"Etsy/Shopify",
+          steps:["Shop-Namen & Logo passend zur Nische wählen","10 Produkte mit guten Titeln & SEO-Keywords online stellen","Mockup-Fotos statt nur Design-Screenshots verwenden","Versandzeiten & Rückgabe klar kommunizieren (Vertrauen schaffen)"],
+          prompt:"Schreib mir 10 SEO-optimierte Etsy-Produkttitel und -Beschreibungen für T-Shirts mit dem Motiv „[BESCHREIBUNG]“, zielgruppengerecht für [Nische]." },
+        { title:"In der Nischen-Community organisch bewerben", tool:"Foren / Facebook-Gruppen",
+          steps:["3-5 Communities der Zielgruppe identifizieren (Foren, Gruppen, Subreddits)","Nicht plump verkaufen — als „schaut mal, was ich gebaut hab“ posten","Rabattcode für die ersten 20 Käufer anbieten","Käuferfotos (falls sie welche schicken) für Social Proof nutzen"],
+          prompt:"Schreib mir einen authentischen, nicht aufdringlichen Post für eine Nischen-Facebook-Gruppe, in dem ich meinen neuen Merch-Shop vorstelle." },
+      ]},
+    { id:"v7", emoji:"📍", name:"LeadPilot", type:"Business · Agentur-Produkt",
+      tagline:"Automatisierte Lead-Gen-as-a-Service für lokale Handwerker & Dienstleister — macht aus Medientrupp-Wissen ein eigenständig verkaufbares Produkt.",
+      why:"Lokale Betriebe (Dachdecker, Kfz-Werkstätten, Physios) haben Geld, aber keine Zeit für Akquise. Ein automatisiertes System, das ihnen warme Leads liefert, ist leicht zu verkaufen, weil der ROI sofort sichtbar ist.",
+      stack:["Make.com (Scraping/Automation)","Airtable (Lead-Datenbank, free tier)","Instantly/Mailmeteor (Cold-Mail, free tier)"],
+      fit:["christian","oscar"], status:"idea", progress:0, guided:true,
+      subtasks:[
+        { title:"1 Zielbranche & Region festlegen", tool:"Recherche",
+          steps:["Eine Branche wählen, die ihr aus Medientrupp-Erfahrung schon versteht","Region eingrenzen (Start lokal, z.B. eigene Stadt + Umkreis 50km)","Auf Google Maps/Gelbe Seiten 20 Beispielbetriebe sammeln","Gemeinsamkeiten in deren Online-Auftritt notieren (oft: alte Website, keine Google-Ads)"],
+          prompt:"Ich will Handwerksbetriebe der Branche [Branche] als Kunden für automatisierte Lead-Generierung gewinnen. Welche 5 Anzeichen zeigen mir, dass ein Betrieb dafür offen wäre?" },
+        { title:"Lead-Datenbank in Airtable aufbauen", tool:"Airtable",
+          steps:["Airtable-Base mit Spalten: Firma, Kontakt, Website-Status, E-Mail, Telefon anlegen","Die 20 recherchierten Betriebe eintragen","Priorisierung nach „wie dringend brauchen sie Hilfe“","Später: Make.com automatisch neue Firmen eintragen lassen"],
+          prompt:"Entwirf mir eine Airtable-Struktur, um lokale Handwerksbetriebe als Vertriebs-Leads zu verwalten, inklusive Status-Pipeline von „Neu“ bis „Kunde“." },
+        { title:"Automatisierte Erstansprache per Make.com", tool:"Make.com + Instantly",
+          steps:["Personalisierte E-Mail-Vorlage schreiben, die ein konkretes Problem ansprich (z.B. „Ihre Website hat kein Kontaktformular“)","Make.com-Szenario: neue Airtable-Zeile → automatisch E-Mail über Instantly/Mailmeteor senden","Antworten in Airtable-Status widerspiegeln (Interesse/kein Interesse)","Testlauf mit 10 Betrieben, Öffnungs-/Antwortrate messen"],
+          prompt:"Schreib mir eine kurze, persönliche Cold-Mail an einen lokalen Handwerksbetrieb, die ein konkretes Problem mit seinem Online-Auftritt ansprich und ein kostenloses Erstgespräch anbietet." },
+        { title:"Erstes Angebot & Pilotkunde gewinnen", tool:"Direktgespräch",
+          steps:["Aus den Antworten den interessiertesten Betrieb auswählen","Kostenlosen 2-Wochen-Testlauf anbieten (Vertrauen aufbauen)","Klar definieren, was „Lead“ in diesem Testlauf bedeutet","Ergebnisse dokumentieren für spätere Referenz"],
+          prompt:"Erstelle mir eine einfache 1-Seiten-Angebotsvorlage für einen kostenlosen 2-Wochen-Testlauf unseres Lead-Gen-Services für einen lokalen Handwerksbetrieb." },
+        { title:"Skalieren: Preis & zweite Branche", tool:"Airtable + Make.com",
+          steps:["Ergebnisse vom Pilotkunden in ein Case-Study-Dokument packen","Monatspreis basierend auf gelieferten Leads festlegen","Den kompletten Workflow für eine zweite Branche dupliziert einrichten","Case Study für Akquise bei neuen Kunden nutzen"],
+          prompt:"Ich habe für einen Handwerksbetrieb in 2 Wochen [X] Leads generiert. Hilf mir, daraus eine kurze, überzeugende Case Study für die Kaltakquise neuer Kunden zu bauen." },
+      ]},
+    { id:"v8", emoji:"📊", name:"SignalStack", type:"Community · Bildung",
+      tagline:"Bildungs-Community + Bot für Trading-Analysen und Marktbeobachtung — Wissen teilen, kein Finanzberatungs-Anspruch.",
+      why:"Trading-Communities sind eines der zahlungsbereitesten Nischen-Abo-Modelle überhaupt. Der Wert liegt nicht in „Geheimtipps“, sondern in Struktur, Disziplin und Nachvollziehbarkeit — genau das, was die meisten Trading-Anfänger nicht haben.",
+      stack:["Telegram-Bot (kostenlos)","Supabase (Nutzer & Inhalte)","Stripe (Abo, später)"],
+      fit:["oscar"], status:"idea", progress:0, guided:true,
+      subtasks:[
+        { title:"Positionierung klären: Bildung statt Versprechen", tool:"Konzept",
+          steps:["Klar festlegen: es werden Analysen & Denkweise geteilt, keine Finanzberatung/Gewinngarantien","Rechtlichen Disclaimer-Text für Bio/Kanal formulieren","Eigenen Trading-Ansatz in 1 Satz zusammenfassen (Strategie, Zeithorizont, Risiko-Regeln)","Zielgruppe festlegen: absolute Anfänger oder fortgeschrittene Trader?"],
+          prompt:"Formuliere mir einen klaren, rechtlich sauberen Disclaimer für eine Trading-Bildungs-Community, der deutlich macht, dass es sich um keine Finanzberatung handelt." },
+        { title:"Telegram-Kanal & ersten Content-Rhythmus aufsetzen", tool:"Telegram",
+          steps:["Öffentlichen Telegram-Kanal erstellen (kostenlos, kein Bot nötig für den Start)","Festen Rhythmus festlegen (z.B. täglicher Markt-Überblick um 8 Uhr)","Erste 2 Wochen lang täglich ehrlich dokumentieren, nicht nur Erfolge","Community bitten, eigene Fragen/Setups zu teilen"],
+          prompt:"Entwirf mir eine Vorlage für einen täglichen Markt-Überblick-Post (Telegram), der in 5 Minuten Lesezeit die wichtigsten Punkte für Trading-Einsteiger zusammenfasst." },
+        { title:"Automatisierte Kurs-Alerts per Bot", tool:"Make.com + Telegram Bot API",
+          steps:["Kostenlose Kurs-API (z.B. für Krypto/Aktien) anbinden","Make.com-Szenario: bei definierten Kursschwellen automatisch Alert senden","Bot so einstellen, dass er nur relevante, nicht-spammy Signale schickt","1 Woche Testlauf, Feedback der ersten Follower einholen"],
+          prompt:"Wie baue ich in Make.com einen automatisierten Alert, der mir eine Telegram-Nachricht schickt, wenn ein Kurs eine bestimmte Schwelle über- oder unterschreitet?" },
+        { title:"Kostenlose vs. Premium-Inhalte abgrenzen", tool:"Konzept",
+          steps:["Definieren, was im freien Kanal bleibt (Bildung, Grundlagen)","Definieren, was ins Premium-Abo wandert (detaillierte Analysen, direkter Austausch)","Preis testen (typisch 15-40€/Monat für Nischen-Trading-Communities)","Ersten 10 Interessenten aus dem freien Kanal Frühbucher-Preis anbieten"],
+          prompt:"Wie sollte ich kostenlose und Premium-Inhalte in einer Trading-Bildungs-Community sinnvoll abgrenzen, damit der freie Teil noch Mehrwert bietet, aber Premium klar attraktiver ist?" },
+        { title:"Stripe-Abo & Premium-Gruppe einrichten", tool:"Stripe + Telegram",
+          steps:["Stripe Payment Link für monatliches Abo einrichten","Separaten privaten Telegram-Kanal/Gruppe für Zahler anlegen","Zugang nach Zahlung (manuell oder per Zapier/Make automatisiert) freischalten","Ersten Monat Feedback sammeln, Angebot nachschärfen"],
+          prompt:"Zeig mir eine einfache Möglichkeit, nach einer Stripe-Zahlung automatisch jemanden zu einer privaten Telegram-Gruppe einzuladen, ohne dass ich das jedes Mal händisch machen muss." },
+      ]},
+    { id:"v9", emoji:"🎉", name:"PartyByte", type:"Game · Multiplayer",
+      tagline:"Browser-Multiplayer-Partygame im Jackbox-Stil für Discord- und Streamer-Communities — ein Handy als Controller reicht.",
+      why:"Streamer suchen ständig neue interaktive Formate für ihre Community. Ein Partygame, das direkt im Browser läuft (kein Download), ist die niedrigste Einstiegshürde — und Streamer bringen kostenlose Reichweite mit.",
+      stack:["Supabase Realtime (Rooms & Sync, free tier)","Vercel (Hosting, kostenlos)","Claude Code"],
+      fit:["baris","sebi","jonas"], status:"idea", progress:0, guided:true,
+      subtasks:[
+        { title:"1 einfaches Minispiel als Kern wählen", tool:"Konzept",
+          steps:["Ein simples Party-Format wählen (z.B. „lustigste Antwort gewinnt“ oder Zeichnen-Raten)","Regeln auf 3 Sätze eindampfen — muss ohne Erklärung verständlich sein","Rundenlänge kurz halten (60-90 Sek. pro Runde)","Auf Papier/Whiteboard den kompletten Rundenablauf durchspielen"],
+          prompt:"Ich will ein browserbasiertes Partygame im Jackbox-Stil bauen. Beschreibe mir einen kompletten Rundenablauf für [Spielidee], der ganz ohne Erklärung verständlich ist." },
+        { title:"Host-Screen + Handy-Controller-Prototyp", tool:"Claude Code",
+          steps:["Zwei Ansichten bauen: großer „TV/Host“-Screen + einfacher Handy-Screen zum Mitspielen","Raum-Code-System: Host erstellt Code, Spieler geben ihn auf dem Handy ein","Erste Testrunde mit 2 Geräten im selben Raum spielen","UI so vereinfachen, dass auch Nicht-Gamer sofort durchsteigen"],
+          prompt:"Baue mir ein Grundgerüst: eine „Host“-Webseite zeigt einen Raum-Code, Mitspieler geben ihn auf ihrem Handy ein und joinen denselben Raum. Nutze Supabase Realtime für die Verbindung." },
+        { title:"Echtzeit-Sync mit Supabase Realtime", tool:"Supabase",
+          steps:["Supabase-Projekt mit Realtime-Feature aktivieren","Tabelle „rooms“ + „players“ + „answers“ anlegen","Live-Updates testen: Antwort auf Handy erscheint sofort auf Host-Screen","Mit 4-6 Testgeräten gleichzeitig eine komplette Runde spielen"],
+          prompt:"Erklär mir Schritt für Schritt, wie ich mit Supabase Realtime dafür sorge, dass neue Einträge in einer Tabelle „answers“ sofort und live auf einem anderen Bildschirm erscheinen." },
+        { title:"Mit dem eigenen Team + Freunden testen", tool:"Discord/Zoom",
+          steps:["Eine Testrunde mit 6-8 Leuten über Video-Call organisieren","Host-Screen teilen, alle joinen per Handy","Beobachten, wo Verwirrung oder Wartezeiten entstehen","Timing und Anzahl Runden basierend auf Feedback anpassen"],
+          prompt:"Wir haben unser Partygame gerade mit 6 Leuten getestet und diese Probleme gehabt: [PROBLEME]. Wie würdest du das Spiel-Design anpassen, um das zu lösen?" },
+        { title:"Einem kleinen Streamer zum Testen anbieten", tool:"Discord/Twitter-DM",
+          steps:["3-5 kleine Streamer (unter 500 Zuschauer) identifizieren, die Partygames mit Chat spielen","Kostenlosen Test anbieten, Link + kurze Anleitung schicken","Clip/Ausschnitt vom Stream für eigenes Marketing erbitten (mit Erlaubnis)","Feedback direkt in die nächste Version einbauen"],
+          prompt:"Schreib mir eine kurze, freundliche Nachricht an einen kleinen Twitch-Streamer, in der ich unser neues browserbasiertes Partygame für seinen Chat vorstelle." },
+      ]},
+    { id:"v10", emoji:"🔄", name:"SkillSwap Guild", type:"Plattform · Community",
+      tagline:"Community-Plattform zum Skill-Tausch nach Zeit-Bank-Prinzip: 1 Stunde Hilfe geben = 1 Stunde Hilfe bekommen, kein Geld nötig.",
+      why:"Skill-Sharing-Plattformen leben vom Netzwerkeffekt — je mehr Leute, desto wertvoller für alle. Der Zeit-Bank-Ansatz (statt Geld) macht die erste Hürde zum Mitmachen sehr niedrig, was Wachstum am Anfang leichter macht.",
+      stack:["Supabase (Nutzer, Skills, Matching)","Airtable (MVP-Matching-Logik am Anfang)","Make.com (Benachrichtigungen)"],
+      fit:["christian","oscar"], status:"idea", progress:0, guided:true,
+      subtasks:[
+        { title:"Zeit-Bank-Regeln festlegen", tool:"Konzept",
+          steps:["Grundregel definieren: 1 Stunde geben = 1 „Credit“, unabhängig vom Skill-Typ","Regeln für Streit/Nichterscheinen festlegen (fair & einfach halten)","Erste Skill-Kategorien definieren (z.B. Nachhilfe, Handwerk, Design, Coaching)","Alles in einem kurzen „So funktioniert's“-Dokument zusammenfassen"],
+          prompt:"Entwirf mir ein einfaches, faires Regelwerk für eine Zeit-Bank-Plattform, bei der Nutzer Fähigkeiten gegen Zeit-Credits statt Geld tauschen." },
+        { title:"MVP als Airtable-Formular + manuelles Matching", tool:"Airtable",
+          steps:["Airtable-Formular: Name, angebotener Skill, gesuchter Skill, Verfügbarkeit","Erste 15-20 Anmeldungen von Freunden/Bekannten sammeln","Von Hand 3-5 sinnvolle Matches erstellen und vorstellen","Beobachten: kommt der erste Tausch wirklich zustande?"],
+          prompt:"Entwirf mir ein Airtable-Formular für eine Skill-Tausch-Plattform, das erfasst, was jemand anbietet, was er sucht, und wann er verfügbar ist." },
+        { title:"Erste echte Matches begleiten & Feedback holen", tool:"Direktkontakt",
+          steps:["Die 3-5 gematchten Paare persönlich vorstellen (Chat-Gruppe oder E-Mail)","Nach dem ersten Treffen kurz nachfragen: hat es funktioniert?","Größte Reibungspunkte im Ablauf notieren","Zeit-Credit-System einmal komplett von Hand durchrechnen"],
+          prompt:"Ich habe die ersten Skill-Tausch-Matches per Hand gemacht. Welche 5 Fragen sollte ich den Nutzern nach dem ersten Treffen stellen, um die Plattform zu verbessern?" },
+        { title:"Web-App mit echtem Matching bauen", tool:"Claude Code + Supabase",
+          steps:["Supabase-Tabellen für Nutzer, Skills, Credits, Matches anlegen","Einfachen Matching-Algorithmus bauen (Skill-Suche + Filter nach Verfügbarkeit)","Credit-Kontostand pro Nutzer automatisch verwalten","Airtable-Prozess komplett durch die App ersetzen"],
+          prompt:"Baue mir eine Web-App mit Supabase-Backend, in der Nutzer Skills anbieten/suchen können und ein Zeit-Credit-Konto haben, das sich nach jedem abgeschlossenen Tausch automatisch anpasst." },
+        { title:"Wachstum: bestehende Nutzer bringen neue mit", tool:"Make.com + In-App",
+          steps:["Einladungs-Mechanik einbauen: wer 1 Freund einlädt, der beitritt, bekommt Bonus-Credit","Automatisierte E-Mail/Push nach abgeschlossenem Tausch: „Bewerte deinen Partner“","Erfolgsgeschichten (mit Erlaubnis) für Marketing sammeln","Nächste Zielgruppe/Stadt für Expansion festlegen"],
+          prompt:"Wie baue ich einen einfachen Einladungs-Bonus ein, der bestehende Nutzer motiviert, Freunde zu einer Skill-Tausch-Plattform einzuladen, ohne dass es sich nach Pyramidensystem anfühlt?" },
+      ]},
+  ];
+}
+
+/* ---------- Seed ---------- */
 function seed() {
   return {
     org: "Sidequest HQ",
-    user: "Boss",
     projects: [
-      { id:"p1", emoji:"🏋️", name:"Dwayne Coaching App", type:"App · Kunde", status:"live", progress:90, members:["m1"] },
-      { id:"p2", emoji:"🌐", name:"dwaynept.de Migration", type:"Web", status:"doing", progress:60, members:["m1"] },
-      { id:"p3", emoji:"💪", name:"Formsystem", type:"Plattform", status:"doing", progress:70, members:["m1","m2"] },
-      { id:"p4", emoji:"🎥", name:"VIYO", type:"App", status:"doing", progress:45, members:["m2"] },
-      { id:"p5", emoji:"🎮", name:"VOLT", type:"Game", status:"live", progress:100, members:["m3"] },
-      { id:"p6", emoji:"🕹️", name:"PixelPort", type:"Game · Plattform", status:"doing", progress:65, members:["m3"] },
-      { id:"p7", emoji:"🦎", name:"CHROMA (Roblox)", type:"Game", status:"doing", progress:50, members:["m3"] },
-      { id:"p8", emoji:"💥", name:"DemolitionArena", type:"Game", status:"doing", progress:40, members:[] },
-      { id:"p9", emoji:"⚔️", name:"Operation Blitzschlag", type:"Game", status:"idea", progress:25, members:[] },
-      { id:"p10", emoji:"🎬", name:"MysteryForge Studio", type:"Content-Tool", status:"live", progress:85, members:["m2"] },
-      { id:"p11", emoji:"🤖", name:"Hermes Social OS", type:"Tool", status:"doing", progress:55, members:[] },
-      { id:"p12", emoji:"📈", name:"Medientrupp Akquise", type:"Business", status:"doing", progress:60, members:["m1"] },
+      { id:"pA", emoji:"💥", name:"DemolitionArena", type:"Game · PS1 Car-Combat", status:"doing", progress:55, members:[], guided:false,
+        tagline:"PS1-Style Car-Combat-Derby. Phase-1-MVP steht, Phase 2 (Multiplayer) ist offen." },
+      { id:"pB", emoji:"🕹️", name:"PixelPort", type:"Game · Plattform", status:"doing", progress:65, members:[], guided:false,
+        tagline:"Cozy Iso-Pixelgame + 4-Säulen-Campus-Plattform. v2 fertig+getestet, v3 (Accounts/PWA) offen." },
+      { id:"pC", emoji:"🎬", name:"MysteryForge Studio", type:"Content-Tool", status:"live", progress:85, members:[], guided:false,
+        tagline:"TikTok-Video-Fabrik für @mysteryelite. Web-UI + Learning-Loop live, fertig getestet." },
+      ...ventures(),
     ],
     tasks: [
-      { id:"t1", title:"Sidequest-Fragebögen auswerten", projectId:"p12", assignee:"m1", status:"doing", prio:"h" },
-      { id:"t2", title:"DNS-Cutover dwaynept.de", projectId:"p2", assignee:"m1", status:"doing", prio:"h" },
-      { id:"t3", title:"VIYO Store-Build (Capacitor + IAP)", projectId:"p4", assignee:"m2", status:"todo", prio:"m" },
-      { id:"t4", title:"CHROMA Shop & Publish", projectId:"p7", assignee:"m3", status:"todo", prio:"m" },
-      { id:"t5", title:"Blitzschlag Phase C starten", projectId:"p9", assignee:"", status:"todo", prio:"l" },
-      { id:"t6", title:"DemolitionArena Multiplayer (Phase 2)", projectId:"p8", assignee:"", status:"todo", prio:"m" },
-      { id:"t7", title:"VOLT Monetarisierung planen", projectId:"p5", assignee:"m3", status:"todo", prio:"m" },
-      { id:"t8", title:"VOLT v1.0 gelauncht", projectId:"p5", assignee:"m3", status:"done", prio:"m" },
-      { id:"t9", title:"PEAK Flyer-Paket abgeliefert", projectId:"p12", assignee:"m2", status:"done", prio:"l" },
+      { id:"t1", title:"Phase 2 (Multiplayer) Konzept skizzieren", projectId:"pA", assignee:"", status:"todo", prio:"m" },
+      { id:"t2", title:"PixelPort v3: echter Ingest & Accounts planen", projectId:"pB", assignee:"", status:"todo", prio:"m" },
+      { id:"t3", title:"MysteryForge Learning-Loop Ergebnisse auswerten", projectId:"pC", assignee:"", status:"todo", prio:"l" },
+      { id:"t4", title:"Sidequest-Fragebögen von Baris & Sebi einsammeln", projectId:"", assignee:"christian", status:"doing", prio:"h" },
     ],
     team: [
-      { id:"m1", name:"Du (Boss)", role:"Gründer & Vision", color:"#00e5b0", emoji:"👑", skills:["Strategie","Produkt","Vertrieb"] },
-      { id:"m2", name:"Creative Lead", role:"Design & Content", color:"#7c5cff", emoji:"🎨", skills:["Design","Video","Social"] },
-      { id:"m3", name:"Dev Lead", role:"Umsetzung & Games", color:"#38bdf8", emoji:"🦊", skills:["Code","Games","KI"] },
+      { id:"christian", note:"Serieller Gründer — hat bereits mehrere Apps, Games & ein Business (Medientrupp) aufgebaut. Kein eigener Steckbrief nötig, Rolle ist aus der Praxis bekannt." },
+      { id:"oscar", hobbies:["🎮 Gaming","💪 Sport & Fitness","🎬 Filme & Serien","🎲 Brett- & Kartenspiele"],
+        words:"Ehrlich, freundlich, strukturiert, verlässlich", strength:"Finanzen, Rat, Hilfe bei Problemen",
+        skills:{reden:0,design:0,schreiben:5,organisieren:5,technik:3,verkaufen:2,video:3,zahlen:5},
+        level:"Hobbymäßig erfahren", interests:"Fast alles außer Design — Apps, Games, Shops, KI, Plattformen, Agentur, Marketing, Texte",
+        done:"Community aufgebaut, Programme geschrieben, Automationen, etwas Trading", hours:"40h+ (all-in)",
+        workstyle:"Schritt-für-Schritt-Anleitung gewünscht", personality:"Morgenmensch, plant lieber erst gründlich, leicht unabhängig",
+        roles:["macher","koordinator","allrounder"], tools:"KI, OpenOffice", needs:"Teamfähigkeit, klare Aufgabenverteilung, Support, Mentoring, Motivation" },
+      { id:"jonas", hobbies:["🎮 Gaming","💪 Sport & Fitness","🎵 Musik","🐾 Tiere & Natur","🎬 Filme & Serien","📱 Social Media"],
+        words:"lustig, verrückt, unvorhersehbar", strength:"—",
+        skills:null, skillsNote:"Hat sich überall 0/5 gegeben — aber sein Track Record (30k-Social-Account, After Effects/CapCut) zeigt: das ist zu tief gegriffen. Praktisch stärker in Video/Content einstufen.",
+        level:"—", interests:"Spiele/Gaming", wantsToLearn:"Blender, Trading", passion:"VFX",
+        done:"Social-Media-Account auf 30.000 Follower aufgebaut", hours:"1-5h (locker nebenbei)",
+        workstyle:"Gib mir das Problem — ich finde den Weg selbst", personality:"Nachteule, sehr aktionsorientiert (einfach loslegen)",
+        roles:["visionaer","koordinator","kreativ"], tools:"Canva, After Effects, CapCut", needs:"Klare Aufklärung/Ansagen" },
+      { id:"baris", note:"Steckbrief steht noch aus. Laut Jonas ist einer von Baris/Sebi App-Entwickler und kann mit Claude Code arbeiten — bitte Steckbrief ausfüllen lassen, dann ordnen wir gezielt zu." },
+      { id:"helmut", hobbies:["🎮 Gaming","🚗 Autos & Technik","🔧 Basteln & Heimwerken"],
+        words:"vermutlich loyal & hilfsbereit (laut Selbsteinschätzung)", strength:"Autos, Handy/PC einrichten oder neu aufsetzen",
+        skills:{reden:3,design:3,schreiben:2,organisieren:3,technik:4,verkaufen:2,video:2,zahlen:2},
+        level:"Hobbymäßig erfahren", interests:"Gaming, Online-Shops, KI-Tools, Dienstleistung/Agentur",
+        done:"Erfolgreich in Krypto investiert", hours:"1-5h (locker nebenbei)",
+        workstyle:"Ziel + grobe Richtung geben, Rest macht er selbst", personality:"Ausgeglichen/mittig auf allen Achsen — kein Extrem",
+        roles:["macher","allrounder"], tools:"Canva, Gemini, ChatGPT, Framer", needs:"Klare Ansagen, guter Zusammenhalt, gegenseitige Unterstützung bei Problemen" },
+      { id:"sebi", note:"Steckbrief steht noch aus. Laut Jonas ist einer von Baris/Sebi App-Entwickler und kann mit Claude Code arbeiten — bitte Steckbrief ausfüllen lassen, dann ordnen wir gezielt zu." },
     ],
-    ideas: [
-      { id:"i1", text:"KI-Tool das aus 1 Idee automatisch Landingpage + Ad baut" },
-      { id:"i2", text:"Abo-Community für unsere Games (Early Access + Skins)" },
-    ],
+    ideas: [],
   };
 }
 
 let state = load();
+let activeProfile = localStorage.getItem("sq_active_profile") || null;
+let gatePin = "";
+let gateSelected = null;
 let tab = "home";
 let projFilter = "all";
 let taskCol = "todo";
@@ -438,12 +732,80 @@ function uid(p){ return p + Math.random().toString(36).slice(2,8); }
 const $ = s => document.querySelector(s);
 const esc = s => (s||"").replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
-/* ---------- helpers ---------- */
 const STATUS = { live:{l:"Live",c:"live"}, doing:{l:"In Arbeit",c:"doing"}, idea:{l:"Idee",c:"idea"}, paused:{l:"Pausiert",c:"paused"} };
-const member = id => state.team.find(m=>m.id===id);
+const profileOf = id => PROFILES.find(p=>p.id===id);
+const teamOf = id => state.team.find(m=>m.id===id);
 const project = id => state.projects.find(p=>p.id===id);
-function avatar(m, size){ if(!m) return ""; return `<div class="av" style="width:${size||24}px;height:${size||24}px;background:${m.color}" title="${esc(m.name)}">${m.emoji||m.name[0]}</div>`; }
+function fullMember(id){ const p=profileOf(id), t=teamOf(id)||{}; return p?{...p, ...t}:null; }
+function avatar(id, size){ const m=fullMember(id); if(!m) return ""; return `<div class="av" style="width:${size||24}px;height:${size||24}px;background:${m.color}" title="${esc(m.name)}">${m.emoji}</div>`; }
 function greeting(){ const h=new Date().getHours(); return h<11?"Guten Morgen":h<17?"Guten Tag":h<22?"Guten Abend":"Noch wach"; }
+const ROLE_LABEL = { macher:"🔨 Macher", visionaer:"🚀 Visionär", finisher:"🎯 Finisher", growth:"📈 Growth", koordinator:"🧭 Koordinator", kreativ:"🎨 Kreative", allrounder:"🧩 Allrounder" };
+const SKILL_LABEL = { reden:"🗣️ Reden & Überzeugen", design:"🎨 Design", schreiben:"✍️ Schreiben", organisieren:"🗂️ Organisieren", technik:"💻 Technik", verkaufen:"🤝 Verkaufen", video:"🎬 Video/Social", zahlen:"📊 Zahlen/Logik" };
+
+/* ============================================================
+   PROFILE GATE
+   ============================================================ */
+function renderGate(){
+  gateSelected=null; gatePin="";
+  $("#gateSub").textContent="Wer bist du?";
+  const grid = PROFILES.map(p=>`
+    <div class="avatar-card" onclick="selectProfile('${p.id}')">
+      <div class="aav" style="background:${p.color}">${p.emoji}</div>
+      <div class="aname">${esc(p.name)}</div>
+      <div class="arole">${esc(p.role)}</div>
+    </div>`).join("");
+  $("#gateBody").innerHTML = `<div class="avatar-grid">${grid}</div>`;
+}
+function selectProfile(id){
+  gateSelected = profileOf(id); gatePin="";
+  $("#gateSub").textContent="Gib deine PIN ein";
+  renderPinPad();
+}
+function renderPinPad(){
+  const dots = [0,1,2,3].map(i=>`<div class="pin-dot ${i<gatePin.length?'filled':''}" id="pd${i}"></div>`).join("");
+  $("#gateBody").innerHTML = `
+    <div class="pin-wrap">
+      <div class="pin-who"><div class="aav" style="background:${gateSelected.color}">${gateSelected.emoji}</div><div style="font-weight:700;font-size:16px">${esc(gateSelected.name)}</div></div>
+      <div class="pin-dots" id="pinDots">${dots}</div>
+      <div class="pin-pad">
+        ${[1,2,3,4,5,6,7,8,9].map(n=>`<button class="pin-key" onclick="pinPress('${n}')">${n}</button>`).join("")}
+        <div class="pin-key ghost"></div>
+        <button class="pin-key" onclick="pinPress('0')">0</button>
+        <button class="pin-key" onclick="pinBack()">⌫</button>
+      </div>
+      <div class="back-link" onclick="renderGate()">← Anderes Profil wählen</div>
+    </div>`;
+}
+function pinPress(d){
+  if(gatePin.length>=4) return;
+  gatePin+=d;
+  document.getElementById("pd"+(gatePin.length-1))?.classList.add("filled");
+  if(gatePin.length===4){
+    setTimeout(()=>{
+      if(gatePin===gateSelected.pin){
+        activeProfile = gateSelected.id;
+        localStorage.setItem("sq_active_profile", activeProfile);
+        bootApp();
+      } else {
+        document.querySelectorAll(".pin-dot").forEach(d=>d.classList.add("err"));
+        setTimeout(()=>{ gatePin=""; renderPinPad(); }, 420);
+      }
+    }, 120);
+  }
+}
+function pinBack(){ gatePin=gatePin.slice(0,-1); renderPinPad(); [...document.querySelectorAll(".pin-dot")].forEach((d,i)=>d.classList.toggle("filled", i<gatePin.length)); }
+function switchProfile(){ activeProfile=null; localStorage.removeItem("sq_active_profile"); closeSheet(); $("#app").style.display="none"; $("#gate").classList.remove("hide"); renderGate(); }
+
+function bootApp(){
+  $("#gate").classList.add("hide");
+  $("#app").style.display="flex";
+  renderMeBtn();
+  nav("home");
+}
+function renderMeBtn(){
+  const m=fullMember(activeProfile);
+  $("#meBtn").innerHTML = `<div class="mav-sm" style="background:${m.color}">${m.emoji}</div><span>${esc(m.name)}</span>`;
+}
 
 /* ============================================================
    RENDER
@@ -457,16 +819,17 @@ function render(){
 }
 
 function renderHome(){
+  const me = fullMember(activeProfile);
   const live = state.projects.filter(p=>p.status==="live").length;
   const active = state.projects.filter(p=>p.status==="doing").length;
+  const myTasks = state.tasks.filter(t=>t.assignee===activeProfile&&t.status!=="done");
   const open = state.tasks.filter(t=>t.status!=="done").length;
-  const doneW = state.tasks.filter(t=>t.status==="done").length;
   const inWork = state.projects.filter(p=>p.status==="doing").sort((a,b)=>b.progress-a.progress).slice(0,3);
-  const next = state.tasks.filter(t=>t.status!=="done").sort((a,b)=>({h:0,m:1,l:2}[a.prio]-{h:0,m:1,l:2}[b.prio])).slice(0,4);
+  const next = (myTasks.length?myTasks:state.tasks.filter(t=>t.status!=="done")).sort((a,b)=>({h:0,m:1,l:2}[a.prio]-{h:0,m:1,l:2}[b.prio])).slice(0,4);
   const avg = Math.round(state.projects.reduce((s,p)=>s+p.progress,0)/(state.projects.length||1));
   return `
     <div class="hero">
-      <div class="hi">${greeting()}, ${esc(state.user)} 👋</div>
+      <div class="hi">${greeting()}, ${esc(me.name)} ${me.emoji}</div>
       <div class="big">Willkommen im <span class="grad">Hauptquartier</span></div>
     </div>
     <div class="install-banner" id="installBanner">
@@ -475,7 +838,7 @@ function renderHome(){
       <button onclick="doInstall()">Installieren</button>
     </div>
     <div class="stats">
-      <div class="stat"><span class="ic">🚀</span><div class="num">${state.projects.length}</div><div class="lbl">Projekte gesamt</div></div>
+      <div class="stat"><span class="ic">🚀</span><div class="num">${state.projects.length}</div><div class="lbl">Projekte &amp; Ventures</div></div>
       <div class="stat p2"><span class="ic">🔨</span><div class="num">${active}</div><div class="lbl">Gerade in Arbeit</div></div>
       <div class="stat p3"><span class="ic">✅</span><div class="num">${open}</div><div class="lbl">Offene Aufgaben</div></div>
       <div class="stat p4"><span class="ic">🟢</span><div class="num">${live}</div><div class="lbl">Live geschaltet</div></div>
@@ -483,25 +846,25 @@ function renderHome(){
 
     <div class="section-h"><h3>Momentum</h3><span style="font-size:12px;color:var(--muted)">Ø ${avg}% fertig</span></div>
     <div class="card" style="cursor:default">
-      <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:9px"><span style="font-weight:700">Gesamt-Fortschritt</span><span style="color:var(--accent);font-weight:800">${doneW} Wins 🏆</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:9px"><span style="font-weight:700">Gesamt-Fortschritt</span></div>
       <div class="progress"><div class="bar"><div class="fill" data-w="${avg}"></div></div></div>
     </div>
 
     <div class="section-h"><h3>Top in Arbeit</h3><a onclick="nav('projects')">Alle →</a></div>
     ${inWork.length?inWork.map(projCard).join(""):emptyMini("Noch nichts in Arbeit")}
 
-    <div class="section-h"><h3>Nächste Aufgaben</h3><a onclick="nav('tasks')">Board →</a></div>
+    <div class="section-h"><h3>${myTasks.length?"Deine nächsten Aufgaben":"Nächste Aufgaben"}</h3><a onclick="nav('tasks')">Board →</a></div>
     ${next.length?next.map(taskMini).join(""):emptyMini("Alles erledigt — stark! 🎉")}
   `;
 }
 
 function projCard(p){
   const st=STATUS[p.status]||STATUS.idea;
-  const avs=(p.members||[]).map(member).filter(Boolean).slice(0,4).map(m=>avatar(m)).join("");
+  const avs=(p.members||[]).map(id=>avatar(id)).join("");
   return `<div class="card proj" onclick="openProject('${p.id}')">
     <div class="emoji">${p.emoji}</div>
     <div class="body">
-      <div class="row1"><div class="pname">${esc(p.name)}</div><div class="pill ${st.c}">${st.l}</div></div>
+      <div class="row1"><div class="pname">${esc(p.name)}</div>${p.guided?'<span class="pill new">Neu</span>':`<div class="pill ${st.c}">${st.l}</div>`}</div>
       <div class="ptype">${esc(p.type)}</div>
       <div class="progress"><div class="bar"><div class="fill" data-w="${p.progress}"></div></div>
         <div class="meta"><span>${p.progress}% fertig</span>${avs?`<div class="avatars">${avs}</div>`:'<span>—</span>'}</div>
@@ -512,11 +875,11 @@ function projCard(p){
 
 function renderProjects(){
   const f=projFilter;
-  const list = state.projects.filter(p=> f==="all"?true:p.status===f);
-  const chips=[["all","Alle"],["doing","In Arbeit"],["live","Live"],["idea","Ideen"],["paused","Pausiert"]];
+  const list = state.projects.filter(p=> f==="all"?true: f==="guided"?p.guided : p.status===f);
+  const chips=[["all","Alle"],["guided","🆕 Ventures"],["doing","In Arbeit"],["live","Live"],["idea","Ideen"]];
   return `
-    <h2 class="page-title">Projekte</h2>
-    <div class="page-sub">Euer Imperium auf einen Blick · ${state.projects.length} Ventures</div>
+    <h2 class="page-title">Ventures</h2>
+    <div class="page-sub">3 laufende Projekte + 10 neue Business-Ideen zum Durchstarten · ${state.projects.length} gesamt</div>
     <div class="filters">
       ${chips.map(c=>`<button class="fchip ${f===c[0]?'on':''}" onclick="setFilter('${c[0]}')">${c[1]}</button>`).join("")}
     </div>
@@ -541,14 +904,15 @@ function renderTasks(){
 function setCol(c){ taskCol=c; render(); }
 
 function taskCard(t){
-  const p=project(t.projectId), m=member(t.assignee);
+  const p=project(t.projectId), m=fullMember(t.assignee);
+  const mine = t.assignee===activeProfile;
   return `<div class="card task" onclick="openTask('${t.id}')">
     <div class="prio ${t.prio}"></div>
     <div class="tbody">
       <div class="ttitle">${esc(t.title)}</div>
       <div class="tmeta">
         ${p?`<span class="tag pj">${p.emoji} ${esc(p.name)}</span>`:""}
-        ${m?`<span class="tag">${m.emoji} ${esc(m.name.split(" ")[0])}</span>`:`<span class="tag">nicht zugewiesen</span>`}
+        ${m?`<span class="tag ${mine?'me':''}">${m.emoji} ${esc(m.name)}${mine?' · Du':''}</span>`:`<span class="tag">nicht zugewiesen</span>`}
       </div>
       <div class="move" onclick="event.stopPropagation()">
         ${t.status!=="todo"?`<button class="mbtn" onclick="moveTask('${t.id}',-1)">← zurück</button>`:""}
@@ -576,25 +940,54 @@ function moveTask(id,dir){
 function renderTeam(){
   return `
     <h2 class="page-title">Team</h2>
-    <div class="page-sub">Die Crew hinter dem Imperium · ${state.team.length} Leute</div>
-    ${state.team.map(memberCard).join("")}
+    <div class="page-sub">Die Crew hinter dem Imperium · ${PROFILES.length} Leute</div>
+    ${PROFILES.map(p=>memberCard(p.id)).join("")}
     <div class="card" style="text-align:center;cursor:pointer;border-style:dashed" onclick="openQuestionnaire()">
-      <div style="font-size:14px;font-weight:700">📋 Neues Mitglied? Steckbrief ausfüllen lassen</div>
+      <div style="font-size:14px;font-weight:700">📋 Steckbrief fehlt noch? Hier ausfüllen lassen</div>
       <div style="color:var(--muted);font-size:12.5px;margin-top:3px">Öffnet den Sidequest-Fragebogen</div>
     </div>
   `;
 }
-function memberCard(m){
-  const tasks=state.tasks.filter(t=>t.assignee===m.id&&t.status!=="done").length;
-  return `<div class="card member" onclick="openMember('${m.id}')">
-    <div class="mav" style="background:${m.color}">${m.emoji||m.name[0]}</div>
+function memberCard(id){
+  const m=fullMember(id);
+  const tasks=state.tasks.filter(t=>t.assignee===id&&t.status!=="done").length;
+  const pending = !m.skills && !m.note?.includes("bereits") && (id==="baris"||id==="sebi");
+  const skillBars = m.skills ? Object.entries(m.skills).sort((a,b)=>b[1]-a[1]).slice(0,4).map(([k,v])=>`<span class="tag">${SKILL_LABEL[k]} ${v}/5</span>`).join("") : "";
+  const roleTags = (m.roles||[]).map(r=>`<span class="tag">${ROLE_LABEL[r]}</span>`).join("");
+  return `<div class="card member" onclick="openMemberDetail('${id}')">
+    <div class="mav" style="background:${m.color}">${m.emoji}</div>
     <div style="flex:1;min-width:0">
       <div class="mname">${esc(m.name)}</div>
       <div class="mrole">${esc(m.role)}</div>
-      <div class="skilltags">${(m.skills||[]).slice(0,4).map(s=>`<span class="tag">${esc(s)}</span>`).join("")}</div>
+      <div class="skilltags">${skillBars || roleTags}</div>
+      ${pending?'<div class="pending-badge">⏳ Steckbrief ausstehen</div>':''}
     </div>
     <div style="text-align:center;flex:0 0 auto"><div style="font-size:19px;font-weight:800;color:var(--accent)">${tasks}</div><div style="font-size:10px;color:var(--muted)">offen</div></div>
   </div>`;
+}
+function openMemberDetail(id){
+  const m=fullMember(id);
+  let body = "";
+  if(m.skills){
+    body += `<div class="kv"><span class="k">Level</span><span class="v">${esc(m.level||"—")}</span></div>`;
+    body += `<div class="section-h" style="margin:14px 2px 8px"><h3>Stärken</h3></div>`;
+    body += Object.entries(m.skills).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div class="kv"><span class="k">${SKILL_LABEL[k]}</span><span class="v">${v}/5</span></div>`).join("");
+    if(m.skillsNote) body += `<div class="why-box" style="margin-top:14px">💡 ${esc(m.skillsNote)}</div>`;
+    body += `<div class="kv"><span class="k">Kommt zu ihm/ihr wegen</span><span class="v" style="text-align:right;max-width:60%">${esc(m.strength||"—")}</span></div>`;
+    body += `<div class="kv"><span class="k">Interessiert an</span><span class="v" style="text-align:right;max-width:60%">${esc(m.interests||"—")}</span></div>`;
+    if(m.wantsToLearn) body += `<div class="kv"><span class="k">Möchte lernen</span><span class="v">${esc(m.wantsToLearn)}</span></div>`;
+    if(m.passion) body += `<div class="kv"><span class="k">Leidenschaft</span><span class="v">${esc(m.passion)}</span></div>`;
+    body += `<div class="kv"><span class="k">Bisher erreicht</span><span class="v" style="text-align:right;max-width:60%">${esc(m.done||"—")}</span></div>`;
+    body += `<div class="kv"><span class="k">Zeit/Woche</span><span class="v">${esc(m.hours||"—")}</span></div>`;
+    body += `<div class="kv"><span class="k">Arbeitsstil</span><span class="v" style="text-align:right;max-width:60%">${esc(m.workstyle||"—")}</span></div>`;
+    body += `<div class="kv"><span class="k">Persönlichkeit</span><span class="v" style="text-align:right;max-width:60%">${esc(m.personality||"—")}</span></div>`;
+    body += `<div class="kv"><span class="k">3 Worte</span><span class="v">${esc(m.words||"—")}</span></div>`;
+    body += `<div class="kv"><span class="k">Braucht vom Team</span><span class="v" style="text-align:right;max-width:60%">${esc(m.needs||"—")}</span></div>`;
+    if(m.hobbies?.length) body += `<div class="section-h" style="margin:14px 2px 8px"><h3>Hobbys</h3></div><div class="stack-row">${m.hobbies.map(h=>`<span class="tag">${esc(h)}</span>`).join("")}</div>`;
+  } else {
+    body = `<div class="why-box">${esc(m.note||"Steckbrief steht noch aus.")}</div><div class="sh-actions" style="margin-top:14px"><button class="btn btn-p" onclick="openQuestionnaire()">📋 Steckbrief öffnen</button></div>`;
+  }
+  openSheet(`<div class="detail-head"><div class="dh-emoji" style="background:${m.color}22">${m.emoji}</div><div><div class="dh-name">${esc(m.name)}</div><div style="color:var(--muted);font-size:13px;margin-top:2px">${esc(m.role)}</div></div></div>${body}`);
 }
 
 function empty(e,t,s){ return `<div class="empty"><div class="e-emoji">${e}</div><div style="font-weight:700;color:var(--txt);font-size:15px">${t}</div><p>${s}</p></div>`; }
@@ -606,23 +999,20 @@ function emptyMini(t){ return `<div class="card" style="cursor:default;text-alig
 function openSheet(html){ $("#sheet").innerHTML='<div class="grabber"></div>'+html; $("#sheetWrap").classList.add("show"); }
 function closeSheet(){ $("#sheetWrap").classList.remove("show"); }
 
-/* ---- Quick add ---- */
 function openQuickAdd(){
   openSheet(`<h3 class="sh-title">Was möchtest du anlegen?</h3><div class="sh-sub">Schnell erfasst, sofort im Board.</div>
     <div class="qa-grid">
       <div class="qa" onclick="editProject()"><div class="qi">🚀</div><div class="qt">Projekt</div><div class="qd">App, Game, Business…</div></div>
       <div class="qa" onclick="editTask()"><div class="qi">✅</div><div class="qt">Aufgabe</div><div class="qd">To-Do zuweisen</div></div>
-      <div class="qa" onclick="editMember()"><div class="qi">🧑‍🚀</div><div class="qt">Teammitglied</div><div class="qd">Crew erweitern</div></div>
       <div class="qa" onclick="addIdea()"><div class="qi">💡</div><div class="qt">Idee</div><div class="qd">Geistesblitz sichern</div></div>
     </div>`);
 }
 
-/* ---- Project form ---- */
 function editProject(id){
   const p = id?project(id):{ id:"", emoji:"🚀", name:"", type:"App", status:"idea", progress:10, members:[] };
   const emo = PROJ_EMOJIS.map(e=>`<div class="ep ${e===p.emoji?'on':''}" onclick="pickEmoji(this,'pemoji')">${e}</div>`).join("");
   const statOpts = Object.entries(STATUS).map(([k,v])=>`<option value="${k}" ${p.status===k?'selected':''}>${v.l}</option>`).join("");
-  const memPk = state.team.map(m=>`<div class="pk ${p.members.includes(m.id)?'on':''}" data-id="${m.id}" onclick="this.classList.toggle('on')">${m.emoji} ${esc(m.name.split(" ")[0])}</div>`).join("");
+  const memPk = PROFILES.map(m=>`<div class="pk ${(p.members||[]).includes(m.id)?'on':''}" data-id="${m.id}" onclick="this.classList.toggle('on')">${m.emoji} ${esc(m.name)}</div>`).join("");
   openSheet(`<h3 class="sh-title">${id?"Projekt bearbeiten":"Neues Projekt"}</h3><div class="sh-sub">${id?"Passe die Details an.":"Leg ein neues Venture an."}</div>
     <input type="hidden" id="pemoji" value="${p.emoji}">
     <label class="f"><span>Icon</span><div class="emoji-pick" style="max-height:112px;overflow-y:auto">${emo}</div></label>
@@ -632,7 +1022,7 @@ function editProject(id){
       <label class="f"><span>Status</span><select id="pstatus">${statOpts}</select></label>
     </div>
     <label class="f"><span>Fortschritt</span><div class="slider-wrap"><input type="range" id="pprog" min="0" max="100" step="5" value="${p.progress}" style="flex:1" oninput="$('#pprogv').textContent=this.value+'%'"><span class="slider-val" id="pprogv">${p.progress}%</span></div></label>
-    <label class="f"><span>Team zuweisen</span><div class="picker" id="pmembers">${memPk||'<span style="color:var(--muted);font-size:13px">Noch keine Mitglieder</span>'}</div></label>
+    <label class="f"><span>Team zuweisen</span><div class="picker" id="pmembers">${memPk}</div></label>
     <div class="sh-actions">
       ${id?`<button class="btn btn-d" onclick="delProject('${id}')">Löschen</button>`:""}
       <button class="btn btn-p" onclick="saveProject('${id}')">${id?"Speichern":"Anlegen"}</button>
@@ -644,31 +1034,83 @@ function saveProject(id){
   const members=[...document.querySelectorAll("#pmembers .pk.on")].map(x=>x.dataset.id);
   const data={ emoji:$("#pemoji").value, name, type:$("#ptype").value.trim()||"Projekt", status:$("#pstatus").value, progress:+$("#pprog").value, members };
   if(id){ Object.assign(project(id),data); toast("✓ Gespeichert"); }
-  else { state.projects.unshift({ id:uid("p"), ...data }); toast("🚀 Projekt angelegt"); }
+  else { state.projects.unshift({ id:uid("p"), guided:false, ...data }); toast("🚀 Projekt angelegt"); }
   persist(); closeSheet(); if(tab!=="projects")nav("projects"); else render();
 }
 function delProject(id){ if(!confirm("Projekt wirklich löschen?"))return; state.projects=state.projects.filter(p=>p.id!==id); state.tasks=state.tasks.filter(t=>t.projectId!==id); persist(); closeSheet(); render(); toast("Gelöscht"); }
 
 function openProject(id){
   const p=project(id); if(!p)return; const st=STATUS[p.status];
-  const tks=state.tasks.filter(t=>t.projectId===id);
-  const mem=(p.members||[]).map(member).filter(Boolean);
-  openSheet(`
+  const mem=(p.members||[]).map(m=>fullMember(m)).filter(Boolean);
+  let body = `
     <div class="detail-head"><div class="dh-emoji">${p.emoji}</div><div><div class="dh-name">${esc(p.name)}</div><div class="pill ${st.c}" style="margin-top:6px">${st.l}</div></div></div>
+    ${p.tagline?`<div class="detail-tagline">${esc(p.tagline)}</div>`:""}
+    ${p.why?`<div class="why-box"><b>Warum das jetzt zieht:</b> ${esc(p.why)}</div>`:""}
+    ${p.stack?.length?`<div class="stack-row">${p.stack.map(s=>`<span class="tag">${esc(s)}</span>`).join("")}</div>`:""}
     <div class="progress" style="margin-bottom:6px"><div class="bar"><div class="fill" data-w="${p.progress}" style="width:${p.progress}%"></div></div><div class="meta"><span>${p.progress}% fertig</span><span>${esc(p.type)}</span></div></div>
-    <div class="kv"><span class="k">Team</span><span class="v">${mem.length?mem.map(m=>m.emoji+" "+esc(m.name.split(" ")[0])).join(", "):"—"}</span></div>
-    <div class="kv"><span class="k">Aufgaben</span><span class="v">${tks.filter(t=>t.status!=="done").length} offen · ${tks.filter(t=>t.status==="done").length} erledigt</span></div>
-    ${tks.length?`<div class="section-h" style="margin:16px 2px 4px"><h3>Aufgaben</h3></div>${tks.map(t=>`<div class="mini-task"><span class="dotp prio ${t.prio}" style="margin:0"></span><span style="flex:1">${esc(t.title)}</span><span class="tag">${STATUS_T(t.status)}</span></div>`).join("")}`:""}
-    <div class="sh-actions" style="margin-top:20px"><button class="btn btn-g" onclick="editTask(null,'${id}')">+ Aufgabe</button><button class="btn btn-p" onclick="editProject('${id}')">Bearbeiten</button></div>
-  `);
+    <div class="kv"><span class="k">Team</span><span class="v">${mem.length?mem.map(m=>m.emoji+" "+esc(m.name)).join(", "):"—"}</span></div>
+  `;
+  if(p.guided && p.subtasks){
+    body += `<div class="section-h" style="margin:16px 2px 8px"><h3>Fahrplan (${p.subtasks.filter(s=>isSubDone(p.id,s.title)).length}/${p.subtasks.length})</h3></div>`;
+    body += p.subtasks.map((s,i)=>subtaskRow(p.id,s,i)).join("");
+  } else {
+    const tks=state.tasks.filter(t=>t.projectId===id);
+    body += `<div class="kv"><span class="k">Aufgaben</span><span class="v">${tks.filter(t=>t.status!=="done").length} offen · ${tks.filter(t=>t.status==="done").length} erledigt</span></div>`;
+    if(tks.length) body += `<div class="section-h" style="margin:16px 2px 4px"><h3>Aufgaben</h3></div>` + tks.map(t=>`<div class="mini-task"><span class="dotp prio ${t.prio}" style="margin:0"></span><span style="flex:1">${esc(t.title)}</span><span class="tag">${STATUS_T(t.status)}</span></div>`).join("");
+  }
+  body += `<div class="sh-actions" style="margin-top:20px"><button class="btn btn-g" onclick="editTask(null,'${id}')">+ Aufgabe</button><button class="btn btn-p" onclick="editProject('${id}')">Bearbeiten</button></div>`;
+  openSheet(body);
 }
 function STATUS_T(s){ return s==="done"?"✓":s==="doing"?"läuft":"todo"; }
 
-/* ---- Task form ---- */
+/* ---- Guided venture subtasks + tutorials ---- */
+function subKey(pid,title){ return pid+"::"+title; }
+function isSubDone(pid,title){ return (state.subtasksDone||{})[subKey(pid,title)]===true; }
+function toggleSub(pid,title){
+  state.subtasksDone = state.subtasksDone||{};
+  const k=subKey(pid,title);
+  const now = !state.subtasksDone[k];
+  state.subtasksDone[k]=now;
+  const p=project(pid);
+  const done = p.subtasks.filter(s=>isSubDone(pid,s.title)).length;
+  p.progress = Math.round(done/p.subtasks.length*100);
+  persist();
+  if(now){ confetti(); toast("✓ Schritt erledigt!"); }
+  openProject(pid);
+}
+function subtaskRow(pid,s,i){
+  const done = isSubDone(pid,s.title);
+  return `<div class="sub-item">
+    <div class="sub-check ${done?'on':''}" onclick="toggleSub('${pid}','${s.title.replace(/'/g,"\\'")}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></div>
+    <div class="sub-body">
+      <div class="sub-title ${done?'done':''}">${i+1}. ${esc(s.title)}</div>
+      <div class="sub-tool">🛠 ${esc(s.tool)}</div>
+      <div class="sub-tut" onclick="openTutorial('${pid}',${i})">📖 Anleitung ansehen →</div>
+    </div>
+  </div>`;
+}
+function openTutorial(pid,i){
+  const p=project(pid); const s=p.subtasks[i];
+  const steps = s.steps.map((st,idx)=>`<div class="tut-step"><div class="tut-num">${idx+1}</div><div class="tut-text">${esc(st)}</div></div>`).join("");
+  openSheet(`
+    <h3 class="sh-title">📖 ${esc(s.title)}</h3>
+    <div class="sh-sub">🛠 Tool: ${esc(s.tool)} · Teil von ${p.emoji} ${esc(p.name)}</div>
+    ${steps}
+    <div class="prompt-lbl">✨ Fertiger Claude-Prompt zum Kopieren</div>
+    <div class="prompt-box" onclick="copyPrompt(this)">${esc(s.prompt)}</div>
+    <div class="sh-actions" style="margin-top:16px">
+      <button class="btn btn-g" onclick="openProject('${pid}')">← Zurück</button>
+      <button class="btn btn-p" onclick="toggleSub('${pid}','${s.title.replace(/'/g,"\\'")}'); openProject('${pid}')">${isSubDone(pid,s.title)?'Als offen markieren':'✓ Erledigt markieren'}</button>
+    </div>`);
+}
+function copyPrompt(el){
+  navigator.clipboard?.writeText(el.textContent).then(()=>toast("✓ Prompt kopiert — einfach bei Claude einfügen")).catch(()=>{});
+}
+
 function editTask(id, presetProj){
   const t = id?state.tasks.find(x=>x.id===id):{ id:"", title:"", projectId:presetProj||"", assignee:"", status:"todo", prio:"m" };
   const projOpts=`<option value="">— kein Projekt —</option>`+state.projects.map(p=>`<option value="${p.id}" ${t.projectId===p.id?'selected':''}>${p.emoji} ${esc(p.name)}</option>`).join("");
-  const memOpts=`<option value="">— niemand —</option>`+state.team.map(m=>`<option value="${m.id}" ${t.assignee===m.id?'selected':''}>${m.emoji} ${esc(m.name)}</option>`).join("");
+  const memOpts=`<option value="">— niemand —</option>`+PROFILES.map(m=>`<option value="${m.id}" ${t.assignee===m.id?'selected':''}>${m.emoji} ${esc(m.name)}</option>`).join("");
   const prios=[["h","🔴 Hoch"],["m","🟡 Mittel"],["l","⚪ Niedrig"]];
   openSheet(`<h3 class="sh-title">${id?"Aufgabe bearbeiten":"Neue Aufgabe"}</h3><div class="sh-sub">Klar formuliert = schneller erledigt.</div>
     <label class="f"><span>Was ist zu tun?</span><input id="ttitle" value="${esc(t.title)}" placeholder="z.B. Landingpage texten"></label>
@@ -692,35 +1134,6 @@ function saveTask(id){
 function delTask(id){ if(!confirm("Aufgabe löschen?"))return; state.tasks=state.tasks.filter(t=>t.id!==id); persist(); closeSheet(); render(); toast("Gelöscht"); }
 function openTask(id){ editTask(id); }
 
-/* ---- Member form ---- */
-function editMember(id){
-  const m = id?member(id):{ id:"", name:"", role:"", emoji:"🦊", color:PALETTE[state.team.length%PALETTE.length], skills:[] };
-  const emo=MEM_EMOJIS.map(e=>`<div class="ep ${e===m.emoji?'on':''}" onclick="pickEmoji(this,'memoji')">${e}</div>`).join("");
-  const cols=PALETTE.map(c=>`<div class="ep ${c===m.color?'on':''}" style="background:${c}" data-c="${c}" onclick="pickColor(this)"></div>`).join("");
-  openSheet(`<h3 class="sh-title">${id?"Mitglied bearbeiten":"Neues Teammitglied"}</h3><div class="sh-sub">Wer gehört zur Crew?</div>
-    <input type="hidden" id="memoji" value="${m.emoji}"><input type="hidden" id="mcolor" value="${m.color}">
-    <label class="f"><span>Avatar</span><div class="emoji-pick">${emo}</div></label>
-    <label class="f"><span>Farbe</span><div class="emoji-pick">${cols}</div></label>
-    <label class="f"><span>Name</span><input id="mname" value="${esc(m.name)}" placeholder="z.B. Max"></label>
-    <label class="f"><span>Rolle</span><input id="mrole" value="${esc(m.role)}" placeholder="z.B. Design & Content"></label>
-    <label class="f"><span>Skills (mit Komma trennen)</span><input id="mskills" value="${esc((m.skills||[]).join(', '))}" placeholder="Design, Video, Social"></label>
-    <div class="sh-actions">
-      ${id&&id!=="m1"?`<button class="btn btn-d" onclick="delMember('${id}')">Löschen</button>`:""}
-      <button class="btn btn-p" onclick="saveMember('${id}')">${id?"Speichern":"Hinzufügen"}</button>
-    </div>`);
-}
-function pickColor(el){ el.parentElement.querySelectorAll(".ep").forEach(x=>x.classList.remove("on")); el.classList.add("on"); $("#mcolor").value=el.dataset.c; }
-function saveMember(id){
-  const name=$("#mname").value.trim(); if(!name){ toast("Gib einen Namen ein"); return; }
-  const data={ name, role:$("#mrole").value.trim()||"Teammitglied", emoji:$("#memoji").value, color:$("#mcolor").value, skills:$("#mskills").value.split(",").map(s=>s.trim()).filter(Boolean) };
-  if(id){ Object.assign(member(id),data); toast("✓ Gespeichert"); }
-  else { state.team.push({ id:uid("m"), ...data }); toast("🧑‍🚀 Willkommen im Team!"); }
-  persist(); closeSheet(); if(tab==="team")render(); else nav("team");
-}
-function delMember(id){ if(!confirm("Mitglied entfernen?"))return; state.team=state.team.filter(m=>m.id!==id); state.tasks.forEach(t=>{ if(t.assignee===id)t.assignee=""; }); state.projects.forEach(p=>p.members=(p.members||[]).filter(x=>x!==id)); persist(); closeSheet(); render(); toast("Entfernt"); }
-function openMember(id){ editMember(id); }
-
-/* ---- Ideas ---- */
 function addIdea(){
   openSheet(`<h3 class="sh-title">💡 Neue Idee</h3><div class="sh-sub">Bevor sie verfliegt — sichern.</div>
     <label class="f"><span>Deine Idee</span><textarea id="itext" placeholder="Woran denkst du gerade?"></textarea></label>
@@ -730,25 +1143,25 @@ function addIdea(){
 function saveIdea(){ const t=$("#itext").value.trim(); if(!t){ toast("Schreib was rein 🙂"); return; } state.ideas.unshift({ id:uid("i"), text:t }); persist(); toast("💡 Idee gesichert"); addIdea(); }
 function delIdea(id){ state.ideas=state.ideas.filter(i=>i.id!==id); persist(); addIdea(); }
 
-/* ---- Settings ---- */
 function openSettings(){
-  openSheet(`<h3 class="sh-title">Einstellungen</h3><div class="sh-sub">Dein Hauptquartier, deine Regeln.</div>
+  const m=fullMember(activeProfile);
+  openSheet(`<h3 class="sh-title">Einstellungen</h3><div class="sh-sub">Angemeldet als ${m.emoji} ${esc(m.name)}</div>
     <label class="f"><span>Name des HQ</span><input id="sorg" value="${esc(state.org)}"></label>
-    <label class="f"><span>Dein Name</span><input id="suser" value="${esc(state.user)}"></label>
     <div class="sh-actions" style="margin-bottom:14px"><button class="btn btn-p" onclick="saveSettings()">Speichern</button></div>
-    <div class="section-h" style="margin:8px 2px"><h3>Daten</h3></div>
+    <button class="btn btn-g" style="width:100%;margin-bottom:11px" onclick="switchProfile()">👤 Profil wechseln</button>
+    <div class="sync-note"><span class="sync-dot"></span> Daten liegen aktuell lokal auf diesem Gerät — Cloud-Sync folgt.</div>
+    <div class="section-h" style="margin:16px 2px 8px"><h3>Daten</h3></div>
     <div class="sh-actions" style="flex-wrap:wrap">
       <button class="btn btn-g" style="flex:1" onclick="exportData()">⬇︎ Backup exportieren</button>
       <button class="btn btn-g" style="flex:1" onclick="importData()">⬆︎ Backup laden</button>
     </div>
     <button class="btn btn-d" style="width:100%;margin-top:11px" onclick="resetAll()">Alles zurücksetzen</button>
-    <div style="text-align:center;color:var(--muted-2);font-size:11.5px;margin-top:18px">Sidequest OS · v1 · Daten liegen lokal auf diesem Gerät</div>`);
+    <div style="text-align:center;color:var(--muted-2);font-size:11.5px;margin-top:18px">Sidequest OS · v2</div>`);
 }
-function saveSettings(){ state.org=$("#sorg").value.trim()||"Sidequest HQ"; state.user=$("#suser").value.trim()||"Boss"; persist(); $("#brandName").innerHTML=esc(state.org)+"<small>Mission Control</small>"; closeSheet(); render(); toast("✓ Gespeichert"); }
+function saveSettings(){ state.org=$("#sorg").value.trim()||"Sidequest HQ"; persist(); $("#brandName").innerHTML=esc(state.org)+"<small>Mission Control</small>"; closeSheet(); render(); toast("✓ Gespeichert"); }
 function exportData(){ const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"}); const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="sidequest-os-backup.json"; a.click(); toast("Backup heruntergeladen"); }
 function importData(){ const inp=document.createElement("input"); inp.type="file"; inp.accept=".json"; inp.onchange=e=>{ const f=e.target.files[0]; if(!f)return; const r=new FileReader(); r.onload=()=>{ try{ const d=JSON.parse(r.result); if(d.projects){ state=d; persist(); closeSheet(); render(); toast("✓ Backup geladen"); } else toast("Ungültige Datei"); }catch(x){ toast("Fehler beim Laden"); } }; r.readAsText(f); }; inp.click(); }
 function resetAll(){ if(!confirm("Wirklich ALLES zurücksetzen? (Startdaten werden geladen)"))return; state=seed(); persist(); closeSheet(); nav("home"); toast("Zurückgesetzt"); }
-
 function openQuestionnaire(){ window.open("https://christiansowi-ux.github.io/sidequest-team/","_blank"); }
 
 /* ============================================================
@@ -765,14 +1178,14 @@ function confetti(){
   }
 }
 
-/* ---- PWA install ---- */
 let deferredPrompt=null;
 window.addEventListener("beforeinstallprompt",e=>{ e.preventDefault(); deferredPrompt=e; const b=$("#installBanner"); if(b)b.classList.add("show"); });
 function doInstall(){ if(!deferredPrompt){ toast("Menü des Browsers → „Zum Startbildschirm"); return; } deferredPrompt.prompt(); deferredPrompt.userChoice.finally(()=>{ deferredPrompt=null; const b=$("#installBanner"); if(b)b.classList.remove("show"); }); }
 
 /* ---- boot ---- */
 $("#brandName").innerHTML=esc(state.org)+"<small>Mission Control</small>";
-nav("home");
+$("#app").style.display="none";
+if(activeProfile && profileOf(activeProfile)){ bootApp(); } else { renderGate(); }
 setTimeout(()=>$("#splash").classList.add("hide"),950);
 if("serviceWorker" in navigator && location.protocol.startsWith("http")){ navigator.serviceWorker.register("sw.js").catch(()=>{}); }
 </script>
