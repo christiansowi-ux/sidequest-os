@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no" />
+<meta name="theme-color" content="#0a0b14" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Sidequest OS" />
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="apple-touch-icon" href="icon.svg" />
+<title>Sidequest OS</title>
+<style>
+  :root {
+    --bg: #0a0b14;
+    --bg-2: #0d0f1c;
+    --card: #141627;
+    --card-2: #1a1d33;
+    --line: #262a45;
+    --line-soft: #1e2138;
+    --txt: #e8eaf6;
+    --muted: #8b90b5;
+    --muted-2: #656a8f;
+    --accent: #00e5b0;
+    --accent-2: #7c5cff;
+    --accent-glow: #00e5b033;
+    --purple-glow: #7c5cff2a;
+    --gold: #ffcb57;
+    --danger: #ff5470;
+    --blue: #38bdf8;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--txt);
+    line-height: 1.5;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== App frame (phone-width, centered) ===== */
+  #app {
+    position: relative;
+    max-width: 480px;
+    margin: 0 auto;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    background:
+      radial-gradient(700px 380px at 85% -8%, var(--purple-glow), transparent 60%),
+      radial-gradient(600px 340px at -10% 4%, var(--accent-glow), transparent 55%),
+      var(--bg);
+    overflow: hidden;
+  }
+  @media (min-width: 500px) {
+    body { background:
+      radial-gradient(900px 500px at 50% -5%, #14162a, transparent 60%), #05060c; }
+    #app { border-left: 1px solid var(--line-soft); border-right: 1px solid var(--line-soft);
+      box-shadow: 0 0 120px -20px #000; }
+  }
+
+  /* ===== Top bar ===== */
+  .topbar {
+    flex: 0 0 auto;
+    padding: calc(var(--safe-top) + 14px) 18px 12px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: linear-gradient(var(--bg), transparent);
+    position: relative; z-index: 5;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand .logo {
+    width: 34px; height: 34px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    display: grid; place-items: center; font-size: 18px;
+    box-shadow: 0 6px 18px -6px var(--accent);
+  }
+  .brand .name { font-weight: 800; font-size: 16px; letter-spacing: -0.3px; }
+  .brand .name small { display: block; font-weight: 500; font-size: 10.5px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
+  .icon-btn {
+    width: 38px; height: 38px; border-radius: 11px; border: 1px solid var(--line);
+    background: var(--card); color: var(--muted); display: grid; place-items: center; cursor: pointer;
+    transition: all .15s;
+  }
+  .icon-btn:active { transform: scale(.92); }
+  .icon-btn svg { width: 19px; height: 19px; }
+
+  /* ===== Scrollable view ===== */
+  #view {
+    flex: 1 1 auto; overflow-y: auto; overflow-x: hidden;
+    padding: 6px 16px 120px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+  #view::-webkit-scrollbar { width: 0; }
+  .view-anim { animation: viewIn .35s cubic-bezier(.2,.7,.3,1); }
+  @keyframes viewIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+  h2.page-title { font-size: 26px; font-weight: 800; letter-spacing: -0.6px; margin: 8px 0 2px; }
+  .page-sub { color: var(--muted); font-size: 13.5px; margin-bottom: 16px; }
+  .section-h { display: flex; align-items: center; justify-content: space-between; margin: 22px 2px 12px; }
+  .section-h h3 { font-size: 14px; font-weight: 700; letter-spacing: .3px; text-transform: uppercase; color: var(--muted); }
+  .section-h a { font-size: 13px; color: var(--accent); font-weight: 600; cursor: pointer; }
+
+  /* ===== Greeting / hero ===== */
+  .hero { margin: 6px 0 4px; }
+  .hero .hi { color: var(--muted); font-size: 14px; }
+  .hero .big { font-size: 27px; font-weight: 800; letter-spacing: -0.6px; line-height: 1.15; margin-top: 2px; }
+  .hero .big .grad { background: linear-gradient(110deg, #fff, var(--accent) 70%, var(--accent-2)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+
+  /* ===== Stat tiles ===== */
+  .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 11px; margin-top: 16px; }
+  .stat {
+    background: linear-gradient(160deg, var(--card), var(--bg-2));
+    border: 1px solid var(--line); border-radius: 16px; padding: 15px 15px 13px;
+    position: relative; overflow: hidden;
+  }
+  .stat::after { content:""; position:absolute; right:-20px; top:-20px; width:70px; height:70px; border-radius:50%; background: var(--accent-glow); filter: blur(14px); }
+  .stat.p2::after { background: var(--purple-glow); }
+  .stat.p3::after { background: #38bdf82a; }
+  .stat.p4::after { background: #ffcb571f; }
+  .stat .num { font-size: 30px; font-weight: 800; letter-spacing: -1px; position: relative; }
+  .stat .lbl { color: var(--muted); font-size: 12.5px; font-weight: 600; margin-top: 1px; }
+  .stat .ic { position:absolute; top:14px; right:14px; font-size:16px; opacity:.8; }
+
+  /* ===== Cards ===== */
+  .card {
+    background: linear-gradient(165deg, var(--card), var(--bg-2));
+    border: 1px solid var(--line); border-radius: 16px; padding: 15px;
+    margin-bottom: 11px; position: relative; cursor: pointer;
+    transition: transform .12s, border-color .15s;
+  }
+  .card:active { transform: scale(.985); border-color: #33385c; }
+
+  /* Project card */
+  .proj { display: flex; gap: 13px; align-items: flex-start; }
+  .proj .emoji {
+    flex: 0 0 auto; width: 46px; height: 46px; border-radius: 13px;
+    display: grid; place-items: center; font-size: 23px;
+    background: var(--bg-2); border: 1px solid var(--line);
+  }
+  .proj .body { flex: 1 1 auto; min-width: 0; }
+  .proj .row1 { display: flex; align-items: center; gap: 8px; }
+  .proj .pname { font-weight: 700; font-size: 15.5px; letter-spacing: -0.2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .proj .ptype { color: var(--muted); font-size: 12px; margin-top: 1px; }
+  .pill {
+    flex: 0 0 auto; font-size: 10.5px; font-weight: 700; padding: 3px 9px; border-radius: 999px;
+    text-transform: uppercase; letter-spacing: .4px; border: 1px solid transparent;
+  }
+  .pill.live { color: var(--accent); background: var(--accent-glow); border-color: #00e5b044; }
+  .pill.doing { color: var(--blue); background: #38bdf81f; border-color: #38bdf844; }
+  .pill.idea { color: var(--gold); background: #ffcb571a; border-color: #ffcb5744; }
+  .pill.paused { color: var(--muted); background: #ffffff0a; border-color: var(--line); }
+  .progress { margin-top: 11px; }
+  .progress .bar { height: 7px; border-radius: 999px; background: #ffffff10; overflow: hidden; }
+  .progress .fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); width: 0; transition: width .8s cubic-bezier(.2,.8,.2,1); }
+  .progress .meta { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-top: 6px; }
+  .avatars { display: flex; margin-top: 10px; }
+  .av {
+    width: 24px; height: 24px; border-radius: 50%; margin-right: -7px; border: 2px solid var(--card);
+    display: grid; place-items: center; font-size: 10px; font-weight: 800; color: #06121a;
+  }
+
+  /* Chips filter */
+  .filters { display: flex; gap: 8px; overflow-x: auto; padding: 2px 0 4px; margin-bottom: 6px; scrollbar-width: none; }
+  .filters::-webkit-scrollbar { display: none; }
+  .fchip {
+    flex: 0 0 auto; font-size: 13px; font-weight: 600; padding: 8px 15px; border-radius: 999px;
+    border: 1px solid var(--line); background: var(--card); color: var(--muted); cursor: pointer; transition: all .14s;
+  }
+  .fchip.on { background: var(--accent-glow); border-color: var(--accent); color: var(--accent); }
+
+  /* Task segmented */
+  .seg { display: flex; background: var(--card); border: 1px solid var(--line); border-radius: 13px; padding: 4px; margin: 4px 0 16px; gap: 4px; }
+  .seg button { flex: 1; border: none; background: transparent; color: var(--muted); font-weight: 700; font-size: 13px; padding: 9px 4px; border-radius: 10px; cursor: pointer; transition: all .15s; position: relative; }
+  .seg button .cnt { display:inline-block; min-width:18px; margin-left:4px; font-size:11px; padding:1px 5px; border-radius:999px; background:#ffffff12; }
+  .seg button.on { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #06121a; box-shadow: 0 6px 16px -6px var(--accent); }
+  .seg button.on .cnt { background:#06121a2e; }
+
+  .task { display: flex; gap: 12px; align-items: flex-start; }
+  .task .prio { flex:0 0 auto; width:8px; height:8px; border-radius:50%; margin-top:7px; }
+  .prio.h { background: var(--danger); box-shadow:0 0 8px var(--danger); }
+  .prio.m { background: var(--gold); }
+  .prio.l { background: var(--muted); }
+  .task .tbody { flex:1 1 auto; min-width:0; }
+  .task .ttitle { font-weight: 650; font-size: 15px; letter-spacing:-.2px; }
+  .task .tmeta { display:flex; align-items:center; gap:7px; margin-top:8px; flex-wrap:wrap; }
+  .tag { font-size:11px; font-weight:650; padding:3px 8px; border-radius:7px; background:#ffffff0c; color:var(--muted); border:1px solid var(--line-soft); }
+  .tag.pj { color:#cbbcff; background:#7c5cff18; border-color:#7c5cff33; }
+  .task .move { display:flex; gap:6px; margin-top:11px; }
+  .mbtn { flex:1; border:1px solid var(--line); background:var(--bg-2); color:var(--muted); font-weight:700; font-size:12.5px; padding:8px; border-radius:9px; cursor:pointer; transition:all .13s; }
+  .mbtn:active { transform:scale(.95); }
+  .mbtn.done { color: var(--accent); border-color:#00e5b040; }
+
+  /* Team */
+  .member { display:flex; gap:13px; align-items:center; }
+  .member .mav { flex:0 0 auto; width:50px; height:50px; border-radius:15px; display:grid; place-items:center; font-size:22px; font-weight:800; color:#06121a; }
+  .member .mname { font-weight:700; font-size:16px; }
+  .member .mrole { color:var(--muted); font-size:12.5px; margin-top:1px; }
+  .skilltags { display:flex; flex-wrap:wrap; gap:6px; margin-top:9px; }
+
+  /* Empty state */
+  .empty { text-align:center; padding:44px 20px; color:var(--muted); }
+  .empty .e-emoji { font-size:44px; margin-bottom:12px; opacity:.9; }
+  .empty p { font-size:14px; }
+
+  /* Idea card */
+  .idea { display:flex; gap:12px; align-items:flex-start; }
+  .idea .bulb { font-size:20px; }
+  .idea .itext { flex:1; font-size:14.5px; }
+
+  /* ===== Bottom nav ===== */
+  .tabbar {
+    flex: 0 0 auto;
+    position: absolute; left: 0; right: 0; bottom: 0; z-index: 40;
+    display: flex; align-items: flex-end; justify-content: space-around;
+    padding: 10px 12px calc(var(--safe-bottom) + 12px);
+    background: linear-gradient(transparent, var(--bg) 34%);
+  }
+  .tabbar .bar-bg {
+    position:absolute; left:12px; right:12px; bottom: calc(var(--safe-bottom) + 10px); top:8px;
+    background: #10121fdd; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--line); border-radius: 20px; z-index:-1;
+  }
+  .tab { background:none; border:none; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:3px; padding:9px 12px; color:var(--muted-2); transition: color .15s; position:relative; }
+  .tab svg { width:22px; height:22px; }
+  .tab span { font-size:10px; font-weight:650; }
+  .tab.on { color: var(--accent); }
+  .tab.on::before { content:""; position:absolute; top:-1px; width:5px; height:5px; border-radius:50%; background:var(--accent); box-shadow:0 0 8px var(--accent); }
+  .fab {
+    width: 56px; height: 56px; border-radius: 18px; border:none; cursor:pointer;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2)); color:#06121a;
+    display:grid; place-items:center; margin-bottom: 6px;
+    box-shadow: 0 10px 26px -8px var(--accent), 0 0 0 5px #0a0b14;
+    transition: transform .15s;
+    animation: fabpulse 3s ease-in-out infinite;
+  }
+  .fab:active { transform: scale(.9) rotate(90deg); }
+  .fab svg { width:26px; height:26px; }
+  @keyframes fabpulse { 0%,100%{ box-shadow:0 10px 26px -8px var(--accent),0 0 0 5px #0a0b14,0 0 0 0 var(--accent-glow);} 50%{ box-shadow:0 10px 26px -8px var(--accent),0 0 0 5px #0a0b14,0 0 0 8px transparent;} }
+
+  /* ===== Bottom sheet ===== */
+  .sheet-wrap { position: fixed; inset: 0; z-index: 100; display: none; }
+  .sheet-wrap.show { display: block; }
+  .sheet-bg { position:absolute; inset:0; background:#000a; opacity:0; transition:opacity .3s; backdrop-filter: blur(2px); }
+  .sheet-wrap.show .sheet-bg { opacity:1; }
+  .sheet {
+    position:absolute; left:0; right:0; bottom:0; max-width:480px; margin:0 auto;
+    background: linear-gradient(var(--card), var(--bg)); border-top:1px solid var(--line);
+    border-radius: 26px 26px 0 0; padding: 10px 20px calc(var(--safe-bottom) + 24px);
+    max-height: 88dvh; overflow-y:auto; transform: translateY(100%); transition: transform .34s cubic-bezier(.2,.8,.2,1);
+    box-shadow: 0 -20px 60px -10px #000c;
+  }
+  .sheet-wrap.show .sheet { transform: none; }
+  .grabber { width:40px; height:5px; border-radius:999px; background:#ffffff22; margin: 6px auto 16px; }
+  .sheet h3.sh-title { font-size:20px; font-weight:800; letter-spacing:-.3px; margin-bottom:4px; }
+  .sheet .sh-sub { color:var(--muted); font-size:13px; margin-bottom:18px; }
+
+  label.f { display:block; margin-bottom:14px; }
+  label.f > span { display:block; font-size:12.5px; color:var(--muted); font-weight:650; margin-bottom:6px; }
+  input, select, textarea {
+    width:100%; background:var(--bg-2); border:1px solid var(--line); color:var(--txt);
+    border-radius:12px; padding:13px 14px; font-size:15px; font-family:inherit; transition:border-color .15s, box-shadow .15s;
+  }
+  input:focus, select:focus, textarea:focus { outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-glow); }
+  textarea { resize:vertical; min-height:70px; }
+  select { appearance:none; }
+  .row2 { display:grid; grid-template-columns:1fr 1fr; gap:11px; }
+
+  .picker { display:flex; flex-wrap:wrap; gap:8px; }
+  .pk { padding:9px 13px; border-radius:11px; border:1px solid var(--line); background:var(--bg-2); font-size:14px; cursor:pointer; transition:all .13s; }
+  .pk.on { border-color:var(--accent); background:var(--accent-glow); color:var(--accent); }
+  .emoji-pick { display:flex; flex-wrap:wrap; gap:7px; }
+  .emoji-pick .ep { width:42px; height:42px; border-radius:11px; border:1px solid var(--line); background:var(--bg-2); font-size:20px; display:grid; place-items:center; cursor:pointer; }
+  .emoji-pick .ep.on { border-color:var(--accent); background:var(--accent-glow); box-shadow:0 0 0 2px var(--accent-glow); }
+
+  .sh-actions { display:flex; gap:11px; margin-top:8px; }
+  .btn { flex:1; border:none; border-radius:13px; padding:15px; font-size:15px; font-weight:750; font-family:inherit; cursor:pointer; transition:transform .1s; }
+  .btn:active { transform:translateY(1px); }
+  .btn-p { background:linear-gradient(135deg, var(--accent), var(--accent-2)); color:#06121a; box-shadow:0 8px 22px -8px var(--accent); }
+  .btn-g { background:var(--card-2); color:var(--txt); border:1px solid var(--line); flex:0 0 auto; padding:15px 20px; }
+  .btn-d { background:#ff547016; color:var(--danger); border:1px solid #ff547040; flex:0 0 auto; padding:15px 18px; }
+
+  .qa-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:4px 0 6px; }
+  .qa { border:1px solid var(--line); background:var(--bg-2); border-radius:16px; padding:18px 14px; cursor:pointer; transition:all .14s; text-align:left; }
+  .qa:active { transform:scale(.96); }
+  .qa .qi { font-size:26px; }
+  .qa .qt { font-weight:700; font-size:15px; margin-top:8px; }
+  .qa .qd { color:var(--muted); font-size:12px; margin-top:2px; }
+
+  .detail-head { display:flex; gap:14px; align-items:center; margin-bottom:18px; }
+  .detail-head .dh-emoji { width:58px; height:58px; border-radius:16px; display:grid; place-items:center; font-size:28px; background:var(--bg-2); border:1px solid var(--line); }
+  .detail-head .dh-name { font-size:20px; font-weight:800; letter-spacing:-.3px; }
+  .kv { display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid var(--line-soft); font-size:14px; }
+  .kv .k { color:var(--muted); }
+  .kv .v { font-weight:650; }
+  .mini-task { display:flex; align-items:center; gap:9px; padding:10px 0; border-bottom:1px solid var(--line-soft); font-size:14px; }
+  .mini-task .dotp { width:7px;height:7px;border-radius:50%; flex:0 0 auto; }
+
+  .slider-wrap { display:flex; align-items:center; gap:12px; }
+  input[type=range] { -webkit-appearance:none; height:8px; border-radius:999px; background:#ffffff14; padding:0; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:22px; height:22px; border-radius:50%; background:linear-gradient(135deg,var(--accent),var(--accent-2)); box-shadow:0 2px 8px -1px var(--accent); cursor:pointer; }
+  .slider-val { flex:0 0 auto; width:44px; text-align:right; font-weight:800; color:var(--accent); }
+
+  /* Toast */
+  #toast { position:fixed; left:50%; bottom: calc(var(--safe-bottom) + 100px); transform:translateX(-50%) translateY(20px); z-index:200;
+    background:#10121f; border:1px solid var(--line); color:var(--txt); padding:12px 20px; border-radius:13px; font-size:14px; font-weight:600;
+    opacity:0; transition:all .3s; pointer-events:none; box-shadow:0 12px 30px -8px #000; max-width:84%; }
+  #toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
+  /* Splash */
+  #splash { position:fixed; inset:0; z-index:500; background:var(--bg); display:grid; place-items:center; transition:opacity .5s; }
+  #splash.hide { opacity:0; pointer-events:none; }
+  #splash .s-logo { width:84px; height:84px; border-radius:24px; background:linear-gradient(135deg,var(--accent),var(--accent-2)); display:grid; place-items:center; font-size:44px; box-shadow:0 20px 50px -10px var(--accent); animation:pop .6s cubic-bezier(.2,1.4,.4,1); }
+  #splash .s-name { text-align:center; margin-top:18px; font-weight:800; font-size:20px; letter-spacing:-.3px; animation:viewIn .6s .15s both; }
+  #splash .s-name small { display:block; color:var(--muted); font-weight:500; font-size:12px; letter-spacing:2px; text-transform:uppercase; margin-top:3px; }
+  @keyframes pop { from { transform:scale(.3); opacity:0; } to { transform:scale(1); opacity:1; } }
+
+  /* Confetti */
+  .conf { position:fixed; z-index:300; width:9px; height:9px; border-radius:2px; pointer-events:none; }
+
+  .install-banner { display:none; align-items:center; gap:12px; background:linear-gradient(135deg,#7c5cff1f,#00e5b014); border:1px solid #7c5cff40; border-radius:15px; padding:13px 15px; margin:14px 0 2px; }
+  .install-banner.show { display:flex; }
+  .install-banner .ib-t { flex:1; font-size:13.5px; font-weight:600; }
+  .install-banner button { border:none; background:var(--accent); color:#06121a; font-weight:750; padding:9px 15px; border-radius:10px; font-size:13px; cursor:pointer; }
+</style>
+</head>
+<body>
+
+<div id="splash">
+  <div>
+    <div class="s-logo">⚡</div>
+    <div class="s-name">Sidequest OS<small>Mission Control</small></div>
+  </div>
+</div>
+
+<div id="app">
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo">⚡</div>
+      <div class="name" id="brandName">Sidequest OS<small>Mission Control</small></div>
+    </div>
+    <button class="icon-btn" onclick="openSettings()" aria-label="Einstellungen">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    </button>
+  </div>
+
+  <main id="view"></main>
+
+  <nav class="tabbar">
+    <div class="bar-bg"></div>
+    <button class="tab" data-tab="home" onclick="nav('home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg><span>Start</span>
+    </button>
+    <button class="tab" data-tab="projects" onclick="nav('projects')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>Projekte</span>
+    </button>
+    <button class="fab" onclick="openQuickAdd()" aria-label="Neu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="tab" data-tab="tasks" onclick="nav('tasks')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg><span>Aufgaben</span>
+    </button>
+    <button class="tab" data-tab="team" onclick="nav('team')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0"/><path d="M16 5.2a3.2 3.2 0 0 1 0 5.6"/><path d="M17 20a5.5 5.5 0 0 0-3-4.9"/></svg><span>Team</span>
+    </button>
+  </nav>
+</div>
+
+<div class="sheet-wrap" id="sheetWrap">
+  <div class="sheet-bg" onclick="closeSheet()"></div>
+  <div class="sheet" id="sheet"></div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+/* ============================================================
+   SIDEQUEST OS — single-file mission control (localStorage)
+   ============================================================ */
+const KEY = "sidequest_os_v1";
+const PALETTE = ["#00e5b0","#7c5cff","#38bdf8","#ffcb57","#ff7ac6","#8b5cf6","#34d399","#fb923c"];
+const PROJ_EMOJIS = ["🚀","🎮","📱","🏋️","🌐","🎥","🕹️","🦎","💥","⚔️","🤖","📈","🚗","📄","🛒","🎨","✍️","🎬","💡","🔥","🧩","🎯","🎵","💎"];
+const MEM_EMOJIS = ["🦊","🐼","🦁","🐯","🐨","🦄","🐺","🦉","🐝","🦅","🐬","🐲","👑","🎯","⚡","🌟"];
+
+/* ---------- Seed (their real venture line-up) ---------- */
+function seed() {
+  return {
+    org: "Sidequest HQ",
+    user: "Boss",
+    projects: [
+      { id:"p1", emoji:"🏋️", name:"Dwayne Coaching App", type:"App · Kunde", status:"live", progress:90, members:["m1"] },
+      { id:"p2", emoji:"🌐", name:"dwaynept.de Migration", type:"Web", status:"doing", progress:60, members:["m1"] },
+      { id:"p3", emoji:"💪", name:"Formsystem", type:"Plattform", status:"doing", progress:70, members:["m1","m2"] },
+      { id:"p4", emoji:"🎥", name:"VIYO", type:"App", status:"doing", progress:45, members:["m2"] },
+      { id:"p5", emoji:"🎮", name:"VOLT", type:"Game", status:"live", progress:100, members:["m3"] },
+      { id:"p6", emoji:"🕹️", name:"PixelPort", type:"Game · Plattform", status:"doing", progress:65, members:["m3"] },
+      { id:"p7", emoji:"🦎", name:"CHROMA (Roblox)", type:"Game", status:"doing", progress:50, members:["m3"] },
+      { id:"p8", emoji:"💥", name:"DemolitionArena", type:"Game", status:"doing", progress:40, members:[] },
+      { id:"p9", emoji:"⚔️", name:"Operation Blitzschlag", type:"Game", status:"idea", progress:25, members:[] },
+      { id:"p10", emoji:"🎬", name:"MysteryForge Studio", type:"Content-Tool", status:"live", progress:85, members:["m2"] },
+      { id:"p11", emoji:"🤖", name:"Hermes Social OS", type:"Tool", status:"doing", progress:55, members:[] },
+      { id:"p12", emoji:"📈", name:"Medientrupp Akquise", type:"Business", status:"doing", progress:60, members:["m1"] },
+    ],
+    tasks: [
+      { id:"t1", title:"Sidequest-Fragebögen auswerten", projectId:"p12", assignee:"m1", status:"doing", prio:"h" },
+      { id:"t2", title:"DNS-Cutover dwaynept.de", projectId:"p2", assignee:"m1", status:"doing", prio:"h" },
+      { id:"t3", title:"VIYO Store-Build (Capacitor + IAP)", projectId:"p4", assignee:"m2", status:"todo", prio:"m" },
+      { id:"t4", title:"CHROMA Shop & Publish", projectId:"p7", assignee:"m3", status:"todo", prio:"m" },
+      { id:"t5", title:"Blitzschlag Phase C starten", projectId:"p9", assignee:"", status:"todo", prio:"l" },
+      { id:"t6", title:"DemolitionArena Multiplayer (Phase 2)", projectId:"p8", assignee:"", status:"todo", prio:"m" },
+      { id:"t7", title:"VOLT Monetarisierung planen", projectId:"p5", assignee:"m3", status:"todo", prio:"m" },
+      { id:"t8", title:"VOLT v1.0 gelauncht", projectId:"p5", assignee:"m3", status:"done", prio:"m" },
+      { id:"t9", title:"PEAK Flyer-Paket abgeliefert", projectId:"p12", assignee:"m2", status:"done", prio:"l" },
+    ],
+    team: [
+      { id:"m1", name:"Du (Boss)", role:"Gründer & Vision", color:"#00e5b0", emoji:"👑", skills:["Strategie","Produkt","Vertrieb"] },
+      { id:"m2", name:"Creative Lead", role:"Design & Content", color:"#7c5cff", emoji:"🎨", skills:["Design","Video","Social"] },
+      { id:"m3", name:"Dev Lead", role:"Umsetzung & Games", color:"#38bdf8", emoji:"🦊", skills:["Code","Games","KI"] },
+    ],
+    ideas: [
+      { id:"i1", text:"KI-Tool das aus 1 Idee automatisch Landingpage + Ad baut" },
+      { id:"i2", text:"Abo-Community für unsere Games (Early Access + Skins)" },
+    ],
+  };
+}
+
+let state = load();
+let tab = "home";
+let projFilter = "all";
+let taskCol = "todo";
+function load(){ try{ const d = JSON.parse(localStorage.getItem(KEY)); return d && d.projects ? d : seed(); }catch(e){ return seed(); } }
+function persist(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
+function uid(p){ return p + Math.random().toString(36).slice(2,8); }
+const $ = s => document.querySelector(s);
+const esc = s => (s||"").replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* ---------- helpers ---------- */
+const STATUS = { live:{l:"Live",c:"live"}, doing:{l:"In Arbeit",c:"doing"}, idea:{l:"Idee",c:"idea"}, paused:{l:"Pausiert",c:"paused"} };
+const member = id => state.team.find(m=>m.id===id);
+const project = id => state.projects.find(p=>p.id===id);
+function avatar(m, size){ if(!m) return ""; return `<div class="av" style="width:${size||24}px;height:${size||24}px;background:${m.color}" title="${esc(m.name)}">${m.emoji||m.name[0]}</div>`; }
+function greeting(){ const h=new Date().getHours(); return h<11?"Guten Morgen":h<17?"Guten Tag":h<22?"Guten Abend":"Noch wach"; }
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+function nav(t){ tab=t; document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("on", b.dataset.tab===t)); render(); $("#view").scrollTop=0; }
+function render(){
+  const v=$("#view");
+  v.innerHTML = tab==="home"?renderHome():tab==="projects"?renderProjects():tab==="tasks"?renderTasks():renderTeam();
+  v.classList.remove("view-anim"); void v.offsetWidth; v.classList.add("view-anim");
+  requestAnimationFrame(()=>document.querySelectorAll(".fill").forEach(f=>f.style.width=f.dataset.w+"%"));
+}
+
+function renderHome(){
+  const live = state.projects.filter(p=>p.status==="live").length;
+  const active = state.projects.filter(p=>p.status==="doing").length;
+  const open = state.tasks.filter(t=>t.status!=="done").length;
+  const doneW = state.tasks.filter(t=>t.status==="done").length;
+  const inWork = state.projects.filter(p=>p.status==="doing").sort((a,b)=>b.progress-a.progress).slice(0,3);
+  const next = state.tasks.filter(t=>t.status!=="done").sort((a,b)=>({h:0,m:1,l:2}[a.prio]-{h:0,m:1,l:2}[b.prio])).slice(0,4);
+  const avg = Math.round(state.projects.reduce((s,p)=>s+p.progress,0)/(state.projects.length||1));
+  return `
+    <div class="hero">
+      <div class="hi">${greeting()}, ${esc(state.user)} 👋</div>
+      <div class="big">Willkommen im <span class="grad">Hauptquartier</span></div>
+    </div>
+    <div class="install-banner" id="installBanner">
+      <span style="font-size:20px">📲</span>
+      <div class="ib-t">Als App installieren — direkt vom Homescreen starten</div>
+      <button onclick="doInstall()">Installieren</button>
+    </div>
+    <div class="stats">
+      <div class="stat"><span class="ic">🚀</span><div class="num">${state.projects.length}</div><div class="lbl">Projekte gesamt</div></div>
+      <div class="stat p2"><span class="ic">🔨</span><div class="num">${active}</div><div class="lbl">Gerade in Arbeit</div></div>
+      <div class="stat p3"><span class="ic">✅</span><div class="num">${open}</div><div class="lbl">Offene Aufgaben</div></div>
+      <div class="stat p4"><span class="ic">🟢</span><div class="num">${live}</div><div class="lbl">Live geschaltet</div></div>
+    </div>
+
+    <div class="section-h"><h3>Momentum</h3><span style="font-size:12px;color:var(--muted)">Ø ${avg}% fertig</span></div>
+    <div class="card" style="cursor:default">
+      <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:9px"><span style="font-weight:700">Gesamt-Fortschritt</span><span style="color:var(--accent);font-weight:800">${doneW} Wins 🏆</span></div>
+      <div class="progress"><div class="bar"><div class="fill" data-w="${avg}"></div></div></div>
+    </div>
+
+    <div class="section-h"><h3>Top in Arbeit</h3><a onclick="nav('projects')">Alle →</a></div>
+    ${inWork.length?inWork.map(projCard).join(""):emptyMini("Noch nichts in Arbeit")}
+
+    <div class="section-h"><h3>Nächste Aufgaben</h3><a onclick="nav('tasks')">Board →</a></div>
+    ${next.length?next.map(taskMini).join(""):emptyMini("Alles erledigt — stark! 🎉")}
+  `;
+}
+
+function projCard(p){
+  const st=STATUS[p.status]||STATUS.idea;
+  const avs=(p.members||[]).map(member).filter(Boolean).slice(0,4).map(m=>avatar(m)).join("");
+  return `<div class="card proj" onclick="openProject('${p.id}')">
+    <div class="emoji">${p.emoji}</div>
+    <div class="body">
+      <div class="row1"><div class="pname">${esc(p.name)}</div><div class="pill ${st.c}">${st.l}</div></div>
+      <div class="ptype">${esc(p.type)}</div>
+      <div class="progress"><div class="bar"><div class="fill" data-w="${p.progress}"></div></div>
+        <div class="meta"><span>${p.progress}% fertig</span>${avs?`<div class="avatars">${avs}</div>`:'<span>—</span>'}</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderProjects(){
+  const f=projFilter;
+  const list = state.projects.filter(p=> f==="all"?true:p.status===f);
+  const chips=[["all","Alle"],["doing","In Arbeit"],["live","Live"],["idea","Ideen"],["paused","Pausiert"]];
+  return `
+    <h2 class="page-title">Projekte</h2>
+    <div class="page-sub">Euer Imperium auf einen Blick · ${state.projects.length} Ventures</div>
+    <div class="filters">
+      ${chips.map(c=>`<button class="fchip ${f===c[0]?'on':''}" onclick="setFilter('${c[0]}')">${c[1]}</button>`).join("")}
+    </div>
+    ${list.length?list.map(projCard).join(""):empty("🗂️","Keine Projekte in dieser Ansicht","Tippe unten auf + um eins anzulegen")}
+  `;
+}
+function setFilter(f){ projFilter=f; render(); }
+
+function renderTasks(){
+  const cols=[["todo","To Do"],["doing","Läuft"],["done","Erledigt ✓"]];
+  const list = state.tasks.filter(t=>t.status===taskCol);
+  const cnt = s => state.tasks.filter(t=>t.status===s).length;
+  return `
+    <h2 class="page-title">Aufgaben</h2>
+    <div class="page-sub">Wer macht was — zieh Aufgaben durch bis „Erledigt"</div>
+    <div class="seg">
+      ${cols.map(c=>`<button class="${taskCol===c[0]?'on':''}" onclick="setCol('${c[0]}')">${c[1]}<span class="cnt">${cnt(c[0])}</span></button>`).join("")}
+    </div>
+    ${list.length?list.map(taskCard).join(""):empty("🎯", taskCol==="done"?"Noch keine Wins hier":"Nichts hier","Leg unten mit + eine Aufgabe an")}
+  `;
+}
+function setCol(c){ taskCol=c; render(); }
+
+function taskCard(t){
+  const p=project(t.projectId), m=member(t.assignee);
+  return `<div class="card task" onclick="openTask('${t.id}')">
+    <div class="prio ${t.prio}"></div>
+    <div class="tbody">
+      <div class="ttitle">${esc(t.title)}</div>
+      <div class="tmeta">
+        ${p?`<span class="tag pj">${p.emoji} ${esc(p.name)}</span>`:""}
+        ${m?`<span class="tag">${m.emoji} ${esc(m.name.split(" ")[0])}</span>`:`<span class="tag">nicht zugewiesen</span>`}
+      </div>
+      <div class="move" onclick="event.stopPropagation()">
+        ${t.status!=="todo"?`<button class="mbtn" onclick="moveTask('${t.id}',-1)">← zurück</button>`:""}
+        ${t.status!=="done"?`<button class="mbtn done" onclick="moveTask('${t.id}',1)">${t.status==="doing"?"✓ fertig":"start →"}</button>`:`<button class="mbtn" onclick="moveTask('${t.id}',-1)">↩ nochmal</button>`}
+      </div>
+    </div>
+  </div>`;
+}
+function taskMini(t){
+  const p=project(t.projectId);
+  return `<div class="card task" style="padding:13px 15px" onclick="nav('tasks')">
+    <div class="prio ${t.prio}"></div>
+    <div class="tbody"><div class="ttitle" style="font-size:14.5px">${esc(t.title)}</div>
+      ${p?`<div class="tmeta"><span class="tag pj">${p.emoji} ${esc(p.name)}</span></div>`:""}</div>
+  </div>`;
+}
+function moveTask(id,dir){
+  const t=state.tasks.find(x=>x.id===id); if(!t) return;
+  const order=["todo","doing","done"]; let i=order.indexOf(t.status)+dir;
+  i=Math.max(0,Math.min(2,i)); const was=t.status; t.status=order[i]; persist();
+  if(t.status==="done"&&was!=="done"){ confetti(); toast("🎉 Erledigt! Stark."); }
+  render();
+}
+
+function renderTeam(){
+  return `
+    <h2 class="page-title">Team</h2>
+    <div class="page-sub">Die Crew hinter dem Imperium · ${state.team.length} Leute</div>
+    ${state.team.map(memberCard).join("")}
+    <div class="card" style="text-align:center;cursor:pointer;border-style:dashed" onclick="openQuestionnaire()">
+      <div style="font-size:14px;font-weight:700">📋 Neues Mitglied? Steckbrief ausfüllen lassen</div>
+      <div style="color:var(--muted);font-size:12.5px;margin-top:3px">Öffnet den Sidequest-Fragebogen</div>
+    </div>
+  `;
+}
+function memberCard(m){
+  const tasks=state.tasks.filter(t=>t.assignee===m.id&&t.status!=="done").length;
+  return `<div class="card member" onclick="openMember('${m.id}')">
+    <div class="mav" style="background:${m.color}">${m.emoji||m.name[0]}</div>
+    <div style="flex:1;min-width:0">
+      <div class="mname">${esc(m.name)}</div>
+      <div class="mrole">${esc(m.role)}</div>
+      <div class="skilltags">${(m.skills||[]).slice(0,4).map(s=>`<span class="tag">${esc(s)}</span>`).join("")}</div>
+    </div>
+    <div style="text-align:center;flex:0 0 auto"><div style="font-size:19px;font-weight:800;color:var(--accent)">${tasks}</div><div style="font-size:10px;color:var(--muted)">offen</div></div>
+  </div>`;
+}
+
+function empty(e,t,s){ return `<div class="empty"><div class="e-emoji">${e}</div><div style="font-weight:700;color:var(--txt);font-size:15px">${t}</div><p>${s}</p></div>`; }
+function emptyMini(t){ return `<div class="card" style="cursor:default;text-align:center;color:var(--muted);font-size:13.5px;padding:20px">${t}</div>`; }
+
+/* ============================================================
+   SHEETS
+   ============================================================ */
+function openSheet(html){ $("#sheet").innerHTML='<div class="grabber"></div>'+html; $("#sheetWrap").classList.add("show"); }
+function closeSheet(){ $("#sheetWrap").classList.remove("show"); }
+
+/* ---- Quick add ---- */
+function openQuickAdd(){
+  openSheet(`<h3 class="sh-title">Was möchtest du anlegen?</h3><div class="sh-sub">Schnell erfasst, sofort im Board.</div>
+    <div class="qa-grid">
+      <div class="qa" onclick="editProject()"><div class="qi">🚀</div><div class="qt">Projekt</div><div class="qd">App, Game, Business…</div></div>
+      <div class="qa" onclick="editTask()"><div class="qi">✅</div><div class="qt">Aufgabe</div><div class="qd">To-Do zuweisen</div></div>
+      <div class="qa" onclick="editMember()"><div class="qi">🧑‍🚀</div><div class="qt">Teammitglied</div><div class="qd">Crew erweitern</div></div>
+      <div class="qa" onclick="addIdea()"><div class="qi">💡</div><div class="qt">Idee</div><div class="qd">Geistesblitz sichern</div></div>
+    </div>`);
+}
+
+/* ---- Project form ---- */
+function editProject(id){
+  const p = id?project(id):{ id:"", emoji:"🚀", name:"", type:"App", status:"idea", progress:10, members:[] };
+  const emo = PROJ_EMOJIS.map(e=>`<div class="ep ${e===p.emoji?'on':''}" onclick="pickEmoji(this,'pemoji')">${e}</div>`).join("");
+  const statOpts = Object.entries(STATUS).map(([k,v])=>`<option value="${k}" ${p.status===k?'selected':''}>${v.l}</option>`).join("");
+  const memPk = state.team.map(m=>`<div class="pk ${p.members.includes(m.id)?'on':''}" data-id="${m.id}" onclick="this.classList.toggle('on')">${m.emoji} ${esc(m.name.split(" ")[0])}</div>`).join("");
+  openSheet(`<h3 class="sh-title">${id?"Projekt bearbeiten":"Neues Projekt"}</h3><div class="sh-sub">${id?"Passe die Details an.":"Leg ein neues Venture an."}</div>
+    <input type="hidden" id="pemoji" value="${p.emoji}">
+    <label class="f"><span>Icon</span><div class="emoji-pick" style="max-height:112px;overflow-y:auto">${emo}</div></label>
+    <label class="f"><span>Name</span><input id="pname" value="${esc(p.name)}" placeholder="z.B. VIYO"></label>
+    <div class="row2">
+      <label class="f"><span>Typ</span><input id="ptype" value="${esc(p.type)}" placeholder="App · Game · Business"></label>
+      <label class="f"><span>Status</span><select id="pstatus">${statOpts}</select></label>
+    </div>
+    <label class="f"><span>Fortschritt</span><div class="slider-wrap"><input type="range" id="pprog" min="0" max="100" step="5" value="${p.progress}" style="flex:1" oninput="$('#pprogv').textContent=this.value+'%'"><span class="slider-val" id="pprogv">${p.progress}%</span></div></label>
+    <label class="f"><span>Team zuweisen</span><div class="picker" id="pmembers">${memPk||'<span style="color:var(--muted);font-size:13px">Noch keine Mitglieder</span>'}</div></label>
+    <div class="sh-actions">
+      ${id?`<button class="btn btn-d" onclick="delProject('${id}')">Löschen</button>`:""}
+      <button class="btn btn-p" onclick="saveProject('${id}')">${id?"Speichern":"Anlegen"}</button>
+    </div>`);
+}
+function pickEmoji(el,hid){ el.parentElement.querySelectorAll(".ep").forEach(x=>x.classList.remove("on")); el.classList.add("on"); $("#"+hid).value=el.textContent; }
+function saveProject(id){
+  const name=$("#pname").value.trim(); if(!name){ toast("Gib einen Namen ein"); return; }
+  const members=[...document.querySelectorAll("#pmembers .pk.on")].map(x=>x.dataset.id);
+  const data={ emoji:$("#pemoji").value, name, type:$("#ptype").value.trim()||"Projekt", status:$("#pstatus").value, progress:+$("#pprog").value, members };
+  if(id){ Object.assign(project(id),data); toast("✓ Gespeichert"); }
+  else { state.projects.unshift({ id:uid("p"), ...data }); toast("🚀 Projekt angelegt"); }
+  persist(); closeSheet(); if(tab!=="projects")nav("projects"); else render();
+}
+function delProject(id){ if(!confirm("Projekt wirklich löschen?"))return; state.projects=state.projects.filter(p=>p.id!==id); state.tasks=state.tasks.filter(t=>t.projectId!==id); persist(); closeSheet(); render(); toast("Gelöscht"); }
+
+function openProject(id){
+  const p=project(id); if(!p)return; const st=STATUS[p.status];
+  const tks=state.tasks.filter(t=>t.projectId===id);
+  const mem=(p.members||[]).map(member).filter(Boolean);
+  openSheet(`
+    <div class="detail-head"><div class="dh-emoji">${p.emoji}</div><div><div class="dh-name">${esc(p.name)}</div><div class="pill ${st.c}" style="margin-top:6px">${st.l}</div></div></div>
+    <div class="progress" style="margin-bottom:6px"><div class="bar"><div class="fill" data-w="${p.progress}" style="width:${p.progress}%"></div></div><div class="meta"><span>${p.progress}% fertig</span><span>${esc(p.type)}</span></div></div>
+    <div class="kv"><span class="k">Team</span><span class="v">${mem.length?mem.map(m=>m.emoji+" "+esc(m.name.split(" ")[0])).join(", "):"—"}</span></div>
+    <div class="kv"><span class="k">Aufgaben</span><span class="v">${tks.filter(t=>t.status!=="done").length} offen · ${tks.filter(t=>t.status==="done").length} erledigt</span></div>
+    ${tks.length?`<div class="section-h" style="margin:16px 2px 4px"><h3>Aufgaben</h3></div>${tks.map(t=>`<div class="mini-task"><span class="dotp prio ${t.prio}" style="margin:0"></span><span style="flex:1">${esc(t.title)}</span><span class="tag">${STATUS_T(t.status)}</span></div>`).join("")}`:""}
+    <div class="sh-actions" style="margin-top:20px"><button class="btn btn-g" onclick="editTask(null,'${id}')">+ Aufgabe</button><button class="btn btn-p" onclick="editProject('${id}')">Bearbeiten</button></div>
+  `);
+}
+function STATUS_T(s){ return s==="done"?"✓":s==="doing"?"läuft":"todo"; }
+
+/* ---- Task form ---- */
+function editTask(id, presetProj){
+  const t = id?state.tasks.find(x=>x.id===id):{ id:"", title:"", projectId:presetProj||"", assignee:"", status:"todo", prio:"m" };
+  const projOpts=`<option value="">— kein Projekt —</option>`+state.projects.map(p=>`<option value="${p.id}" ${t.projectId===p.id?'selected':''}>${p.emoji} ${esc(p.name)}</option>`).join("");
+  const memOpts=`<option value="">— niemand —</option>`+state.team.map(m=>`<option value="${m.id}" ${t.assignee===m.id?'selected':''}>${m.emoji} ${esc(m.name)}</option>`).join("");
+  const prios=[["h","🔴 Hoch"],["m","🟡 Mittel"],["l","⚪ Niedrig"]];
+  openSheet(`<h3 class="sh-title">${id?"Aufgabe bearbeiten":"Neue Aufgabe"}</h3><div class="sh-sub">Klar formuliert = schneller erledigt.</div>
+    <label class="f"><span>Was ist zu tun?</span><input id="ttitle" value="${esc(t.title)}" placeholder="z.B. Landingpage texten"></label>
+    <label class="f"><span>Projekt</span><select id="tproj">${projOpts}</select></label>
+    <div class="row2">
+      <label class="f"><span>Zuweisen an</span><select id="tassignee">${memOpts}</select></label>
+      <label class="f"><span>Priorität</span><select id="tprio">${prios.map(p=>`<option value="${p[0]}" ${t.prio===p[0]?'selected':''}>${p[1]}</option>`).join("")}</select></label>
+    </div>
+    <div class="sh-actions">
+      ${id?`<button class="btn btn-d" onclick="delTask('${id}')">Löschen</button>`:""}
+      <button class="btn btn-p" onclick="saveTask('${id}')">${id?"Speichern":"Anlegen"}</button>
+    </div>`);
+}
+function saveTask(id){
+  const title=$("#ttitle").value.trim(); if(!title){ toast("Gib eine Aufgabe ein"); return; }
+  const data={ title, projectId:$("#tproj").value, assignee:$("#tassignee").value, prio:$("#tprio").value };
+  if(id){ Object.assign(state.tasks.find(x=>x.id===id),data); toast("✓ Gespeichert"); }
+  else { state.tasks.unshift({ id:uid("t"), status:"todo", ...data }); toast("✅ Aufgabe angelegt"); }
+  persist(); closeSheet(); if(tab==="tasks"){ taskCol=id?state.tasks.find(x=>x.id===id).status:"todo"; render(); } else nav("tasks");
+}
+function delTask(id){ if(!confirm("Aufgabe löschen?"))return; state.tasks=state.tasks.filter(t=>t.id!==id); persist(); closeSheet(); render(); toast("Gelöscht"); }
+function openTask(id){ editTask(id); }
+
+/* ---- Member form ---- */
+function editMember(id){
+  const m = id?member(id):{ id:"", name:"", role:"", emoji:"🦊", color:PALETTE[state.team.length%PALETTE.length], skills:[] };
+  const emo=MEM_EMOJIS.map(e=>`<div class="ep ${e===m.emoji?'on':''}" onclick="pickEmoji(this,'memoji')">${e}</div>`).join("");
+  const cols=PALETTE.map(c=>`<div class="ep ${c===m.color?'on':''}" style="background:${c}" data-c="${c}" onclick="pickColor(this)"></div>`).join("");
+  openSheet(`<h3 class="sh-title">${id?"Mitglied bearbeiten":"Neues Teammitglied"}</h3><div class="sh-sub">Wer gehört zur Crew?</div>
+    <input type="hidden" id="memoji" value="${m.emoji}"><input type="hidden" id="mcolor" value="${m.color}">
+    <label class="f"><span>Avatar</span><div class="emoji-pick">${emo}</div></label>
+    <label class="f"><span>Farbe</span><div class="emoji-pick">${cols}</div></label>
+    <label class="f"><span>Name</span><input id="mname" value="${esc(m.name)}" placeholder="z.B. Max"></label>
+    <label class="f"><span>Rolle</span><input id="mrole" value="${esc(m.role)}" placeholder="z.B. Design & Content"></label>
+    <label class="f"><span>Skills (mit Komma trennen)</span><input id="mskills" value="${esc((m.skills||[]).join(', '))}" placeholder="Design, Video, Social"></label>
+    <div class="sh-actions">
+      ${id&&id!=="m1"?`<button class="btn btn-d" onclick="delMember('${id}')">Löschen</button>`:""}
+      <button class="btn btn-p" onclick="saveMember('${id}')">${id?"Speichern":"Hinzufügen"}</button>
+    </div>`);
+}
+function pickColor(el){ el.parentElement.querySelectorAll(".ep").forEach(x=>x.classList.remove("on")); el.classList.add("on"); $("#mcolor").value=el.dataset.c; }
+function saveMember(id){
+  const name=$("#mname").value.trim(); if(!name){ toast("Gib einen Namen ein"); return; }
+  const data={ name, role:$("#mrole").value.trim()||"Teammitglied", emoji:$("#memoji").value, color:$("#mcolor").value, skills:$("#mskills").value.split(",").map(s=>s.trim()).filter(Boolean) };
+  if(id){ Object.assign(member(id),data); toast("✓ Gespeichert"); }
+  else { state.team.push({ id:uid("m"), ...data }); toast("🧑‍🚀 Willkommen im Team!"); }
+  persist(); closeSheet(); if(tab==="team")render(); else nav("team");
+}
+function delMember(id){ if(!confirm("Mitglied entfernen?"))return; state.team=state.team.filter(m=>m.id!==id); state.tasks.forEach(t=>{ if(t.assignee===id)t.assignee=""; }); state.projects.forEach(p=>p.members=(p.members||[]).filter(x=>x!==id)); persist(); closeSheet(); render(); toast("Entfernt"); }
+function openMember(id){ editMember(id); }
+
+/* ---- Ideas ---- */
+function addIdea(){
+  openSheet(`<h3 class="sh-title">💡 Neue Idee</h3><div class="sh-sub">Bevor sie verfliegt — sichern.</div>
+    <label class="f"><span>Deine Idee</span><textarea id="itext" placeholder="Woran denkst du gerade?"></textarea></label>
+    ${state.ideas.length?`<div class="section-h" style="margin:6px 2px 8px"><h3>Gesammelte Ideen (${state.ideas.length})</h3></div>${state.ideas.map(i=>`<div class="card idea" style="cursor:default"><span class="bulb">💡</span><span class="itext">${esc(i.text)}</span><span onclick="delIdea('${i.id}')" style="color:var(--danger);cursor:pointer;padding:0 4px">✕</span></div>`).join("")}`:""}
+    <div class="sh-actions"><button class="btn btn-p" onclick="saveIdea()">Idee sichern</button></div>`);
+}
+function saveIdea(){ const t=$("#itext").value.trim(); if(!t){ toast("Schreib was rein 🙂"); return; } state.ideas.unshift({ id:uid("i"), text:t }); persist(); toast("💡 Idee gesichert"); addIdea(); }
+function delIdea(id){ state.ideas=state.ideas.filter(i=>i.id!==id); persist(); addIdea(); }
+
+/* ---- Settings ---- */
+function openSettings(){
+  openSheet(`<h3 class="sh-title">Einstellungen</h3><div class="sh-sub">Dein Hauptquartier, deine Regeln.</div>
+    <label class="f"><span>Name des HQ</span><input id="sorg" value="${esc(state.org)}"></label>
+    <label class="f"><span>Dein Name</span><input id="suser" value="${esc(state.user)}"></label>
+    <div class="sh-actions" style="margin-bottom:14px"><button class="btn btn-p" onclick="saveSettings()">Speichern</button></div>
+    <div class="section-h" style="margin:8px 2px"><h3>Daten</h3></div>
+    <div class="sh-actions" style="flex-wrap:wrap">
+      <button class="btn btn-g" style="flex:1" onclick="exportData()">⬇︎ Backup exportieren</button>
+      <button class="btn btn-g" style="flex:1" onclick="importData()">⬆︎ Backup laden</button>
+    </div>
+    <button class="btn btn-d" style="width:100%;margin-top:11px" onclick="resetAll()">Alles zurücksetzen</button>
+    <div style="text-align:center;color:var(--muted-2);font-size:11.5px;margin-top:18px">Sidequest OS · v1 · Daten liegen lokal auf diesem Gerät</div>`);
+}
+function saveSettings(){ state.org=$("#sorg").value.trim()||"Sidequest HQ"; state.user=$("#suser").value.trim()||"Boss"; persist(); $("#brandName").innerHTML=esc(state.org)+"<small>Mission Control</small>"; closeSheet(); render(); toast("✓ Gespeichert"); }
+function exportData(){ const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"}); const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="sidequest-os-backup.json"; a.click(); toast("Backup heruntergeladen"); }
+function importData(){ const inp=document.createElement("input"); inp.type="file"; inp.accept=".json"; inp.onchange=e=>{ const f=e.target.files[0]; if(!f)return; const r=new FileReader(); r.onload=()=>{ try{ const d=JSON.parse(r.result); if(d.projects){ state=d; persist(); closeSheet(); render(); toast("✓ Backup geladen"); } else toast("Ungültige Datei"); }catch(x){ toast("Fehler beim Laden"); } }; r.readAsText(f); }; inp.click(); }
+function resetAll(){ if(!confirm("Wirklich ALLES zurücksetzen? (Startdaten werden geladen)"))return; state=seed(); persist(); closeSheet(); nav("home"); toast("Zurückgesetzt"); }
+
+function openQuestionnaire(){ window.open("https://christiansowi-ux.github.io/sidequest-team/","_blank"); }
+
+/* ============================================================
+   FX
+   ============================================================ */
+let toastT;
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove("show"),1900); }
+function confetti(){
+  const cols=["#00e5b0","#7c5cff","#ffcb57","#38bdf8","#ff7ac6"];
+  for(let i=0;i<26;i++){ const c=document.createElement("div"); c.className="conf";
+    c.style.background=cols[i%cols.length]; c.style.left=(50+(Math.random()*40-20))+"%"; c.style.top="70%";
+    document.body.appendChild(c); const x=(Math.random()*2-1)*160, y=-(120+Math.random()*220), r=Math.random()*720;
+    c.animate([{transform:"translate(0,0) rotate(0)",opacity:1},{transform:`translate(${x}px,${y}px) rotate(${r}deg)`,opacity:0}],{duration:900+Math.random()*500,easing:"cubic-bezier(.2,.7,.3,1)"}).onfinish=()=>c.remove();
+  }
+}
+
+/* ---- PWA install ---- */
+let deferredPrompt=null;
+window.addEventListener("beforeinstallprompt",e=>{ e.preventDefault(); deferredPrompt=e; const b=$("#installBanner"); if(b)b.classList.add("show"); });
+function doInstall(){ if(!deferredPrompt){ toast("Menü des Browsers → „Zum Startbildschirm"); return; } deferredPrompt.prompt(); deferredPrompt.userChoice.finally(()=>{ deferredPrompt=null; const b=$("#installBanner"); if(b)b.classList.remove("show"); }); }
+
+/* ---- boot ---- */
+$("#brandName").innerHTML=esc(state.org)+"<small>Mission Control</small>";
+nav("home");
+setTimeout(()=>$("#splash").classList.add("hide"),950);
+if("serviceWorker" in navigator && location.protocol.startsWith("http")){ navigator.serviceWorker.register("sw.js").catch(()=>{}); }
+</script>
+</body>
+</html>
