@@ -1666,6 +1666,7 @@ function openQuickAdd(){
 }
 
 function editProject(id){
+  id = id || ""; // undefined/null wuerde im onclick-Template zum String "undefined" und den Edit-Zweig ausloesen
   const p = id?project(id):{ id:"", emoji:"🚀", name:"", type:"App", status:"idea", progress:10, members:[] };
   const emo = PROJ_EMOJIS.map(e=>`<div class="ep ${e===p.emoji?'on':''}" onclick="pickEmoji(this,'pemoji')">${e}</div>`).join("");
   const statOpts = Object.entries(STATUS).map(([k,v])=>`<option value="${k}" ${p.status===k?'selected':''}>${v.l}</option>`).join("");
@@ -1692,7 +1693,8 @@ function saveProject(id){
   const members=[...document.querySelectorAll("#pmembers .pk.on")].map(x=>x.dataset.id);
   const data={ emoji:$("#pemoji").value, name, type:$("#ptype").value.trim()||"Projekt", status:$("#pstatus").value, progress:+$("#pprog").value, members };
   let saved;
-  if(id){ saved=Object.assign(project(id),data); toast("Gespeichert"); }
+  const existing = id ? project(id) : null;
+  if(existing){ saved=Object.assign(existing,data); toast("Gespeichert"); }
   else { saved={ id:uid("p"), guided:false, ...data }; state.projects.unshift(saved); toast("Projekt angelegt"); logActivity(`hat Projekt „${name}“ angelegt`); }
   persist(); cloudUpsertProject(saved); closeSheet();
   if(!id && !saved.guided) projFilter = "all"; // neues eigenes Projekt darf nicht vom Ventures-Filter versteckt werden
@@ -1832,6 +1834,7 @@ function copyPrompt(btn){
 }
 
 function editTask(id, presetProj){
+  id = id || ""; // undefined/null wuerde im onclick-Template zum String "undefined" und den Edit-Zweig ausloesen
   const t = id?state.tasks.find(x=>x.id===id):{ id:"", title:"", projectId:presetProj||"", assignee:"", status:"todo", prio:"m" };
   const projOpts=`<option value="">Ohne Projekt</option>`+state.projects.map(p=>`<option value="${p.id}" ${t.projectId===p.id?'selected':''}>${esc(p.name)}</option>`).join("");
   const memOpts=`<option value="">Niemand</option>`+PROFILES.map(m=>`<option value="${m.id}" ${t.assignee===m.id?'selected':''}>${esc(m.name)}</option>`).join("");
@@ -1852,7 +1855,8 @@ function saveTask(id){
   const title=$("#ttitle").value.trim(); if(!title){ toast("Aufgabe fehlt noch"); return; }
   const data={ title, projectId:$("#tproj").value, assignee:$("#tassignee").value, prio:$("#tprio").value };
   let saved;
-  if(id){ saved=Object.assign(state.tasks.find(x=>x.id===id),data); toast("Gespeichert"); }
+  const existing = id ? state.tasks.find(x=>x.id===id) : null;
+  if(existing){ saved=Object.assign(existing,data); toast("Gespeichert"); }
   else { saved={ id:uid("t"), status:"todo", ...data }; state.tasks.unshift(saved); toast("Aufgabe angelegt"); logActivity(`hat Aufgabe „${title}“ angelegt`); }
   persist(); cloudUpsertTask(saved); closeSheet(); if(tab==="tasks"){ taskCol=saved.status; render(); } else nav("tasks");
 }
