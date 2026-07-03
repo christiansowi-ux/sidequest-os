@@ -1,7 +1,7 @@
 /* Sidequest OS — service worker
    Strategie: Netzwerk-zuerst für die App-Seite (immer die neueste Version, wenn online),
    Cache-zuerst nur als Offline-Fallback. Assets: stale-while-revalidate. */
-const CACHE = "sidequest-os-v5";
+const CACHE = "sidequest-os-v6";
 const ASSETS = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg", "./icon-maskable.svg"];
 
 self.addEventListener("install", e => {
