@@ -624,6 +624,46 @@
   .prio-chip.h { color: #0a0a0a; background: #ffffff; border-color: #ffffff; }
   .prio-chip.m { color: #cfcfd4; background: transparent; border-color: #4a4a50; }
   .prio-chip.l { color: #8a8a92; background: transparent; border-color: #2c2c30; }
+
+  /* ===== v5.2: Topbar chat button ===== */
+  .icon-round { position:relative; width:34px; height:34px; border-radius:11px; border:1px solid var(--line); background:var(--panel); color:var(--sub); display:grid; place-items:center; cursor:pointer; transition:all .14s; flex:0 0 auto; }
+  .icon-round:active { transform:scale(.92); } .icon-round svg { width:18px; height:18px; }
+  .chat-dot { position:absolute; top:-3px; right:-3px; width:11px; height:11px; border-radius:50%; background:#fff; border:2px solid var(--bg); display:none; }
+  .chat-dot.show { display:block; }
+
+  /* ===== v5.2: Chat sheet ===== */
+  #sheet:has(.chat-body){ display:flex; flex-direction:column; height:88dvh; padding-bottom:0; }
+  .chat-head { display:flex; align-items:center; justify-content:space-between; padding:2px 0 14px; border-bottom:1px solid var(--line); flex:0 0 auto; }
+  .chat-body { flex:1 1 auto; overflow-y:auto; padding:16px 2px 12px; display:flex; flex-direction:column; gap:3px; }
+  .chat-body::-webkit-scrollbar { width:0; }
+  .chat-day { text-align:center; font-size:10.5px; font-weight:700; letter-spacing:.4px; color:var(--dim); text-transform:uppercase; margin:14px 0 10px; }
+  .chat-row { display:flex; gap:8px; align-items:flex-end; margin-top:2px; }
+  .chat-row.mine { flex-direction:row-reverse; }
+  .chat-col { display:flex; flex-direction:column; max-width:78%; min-width:0; }
+  .chat-row.mine .chat-col { align-items:flex-end; }
+  .chat-author { font-size:11px; font-weight:700; color:var(--sub); margin:6px 0 3px 4px; }
+  .chat-bubble { position:relative; background:var(--elev); border:1px solid var(--line); color:var(--txt); padding:9px 13px 9px; border-radius:16px 16px 16px 5px; font-size:14.5px; line-height:1.45; word-break:break-word; }
+  .chat-row.mine .chat-bubble { background:#fff; color:#0a0a0a; border-color:#fff; border-radius:16px 16px 5px 16px; }
+  .chat-time { font-size:9.5px; opacity:.5; margin-left:8px; float:right; margin-top:5px; font-variant-numeric:tabular-nums; }
+  .chat-row.mine .chat-time { opacity:.45; }
+  .chat-empty { text-align:center; color:var(--dim); padding:60px 24px; margin:auto; }
+  .chat-empty b { display:block; color:var(--sub); font-size:15px; margin-bottom:4px; } .chat-empty p { font-size:13px; }
+  .chat-input { flex:0 0 auto; display:flex; gap:9px; align-items:center; padding:12px 0 calc(var(--safe-bottom) + 14px); border-top:1px solid var(--line); background:var(--panel); }
+  .chat-input input { flex:1; border-radius:999px; background:var(--field); border:1px solid var(--line); padding:12px 16px; font-size:15px; }
+  .chat-send { flex:0 0 auto; width:44px; height:44px; border-radius:50%; border:none; background:#fff; color:#0a0a0a; display:grid; place-items:center; cursor:pointer; transition:transform .12s; }
+  .chat-send:active { transform:scale(.9); } .chat-send svg { width:20px; height:20px; transform:rotate(-90deg); }
+
+  /* ===== v5.2: Ideen-Bibliothek ===== */
+  .lib-filters { margin-bottom:12px; }
+  .fchip.sm { padding:6px 12px; font-size:12px; }
+  .idea-card { padding:14px 15px; }
+  .idea-card.niche { border-color:#2e2e34; background:linear-gradient(180deg,#141416,var(--panel)); }
+  .ic-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:9px; }
+  .ic-cat { font-size:9.5px; font-weight:800; letter-spacing:.7px; text-transform:uppercase; color:var(--dim); background:#ffffff0a; border:1px solid var(--line); padding:3px 8px; border-radius:6px; }
+  .ic-cat.mf { color:#f4f4f5; border-color:#3a3a3e; }
+  .ic-top .lr-arrow { color:var(--dim); } .ic-top .lr-arrow svg { width:15px; height:15px; }
+  .ic-name { font-size:16px; font-weight:750; letter-spacing:-.2px; }
+  .ic-pitch { color:var(--sub); font-size:12.5px; line-height:1.5; margin-top:4px; }
 </style>
 </head>
 <body>
@@ -654,6 +694,7 @@
     </div>
     <div class="top-right">
       <div class="sync-pill" id="syncPill" onclick="openSettings()"><span class="sdot"></span><span id="syncLbl">Sync…</span></div>
+      <button class="icon-round" id="chatBtn" onclick="openChat()" aria-label="Team-Chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 8.9 8.9 0 0 1-4-.9L3 20l1.4-5A8.4 8.4 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5z"/></svg><span class="chat-dot" id="chatDot"></span></button>
       <div class="me-chip" id="meBtn" onclick="openSettings()"></div>
     </div>
   </div>
@@ -1234,6 +1275,7 @@ function seed() {
 
 let state = load();
 state.activity = state.activity || [];
+state.messages = state.messages || [];
 let activeProfile = localStorage.getItem("sq_active_profile") || null;
 let gatePin = "";
 let gateSelected = null;
@@ -1398,6 +1440,75 @@ function tutMeta(pid,i){
 const SEED_IDS = new Set(["pA","pB","pC","v1","v2","v3","v4","v5","v6","v7","v8","v9","v10","v11","v12","v13","v14","v15","v16","v17","v18","v19","v20"]);
 function isCustomVenture(p){ return p && p.guided && !SEED_IDS.has(p.id); }
 
+/* ---------- Ideen-Bibliothek: 50 kreative, startklare Ideen ---------- */
+const IDEA_CATS = { tool:"Tool", auto:"Automation", biz:"Business", blog:"Blog", creative:"Kreativ" };
+const IDEA_LIB = [
+  { c:"tool", n:"ThumbForge", p:"KI-Thumbnail-Generator für YouTube & Shorts — hoher CTR auf Knopfdruck.", w:"Thumbnails entscheiden über Klicks; ein Tool dafür verkauft sich an jeden Creator.", s:["Ideogram","Claude","Supabase"] },
+  { c:"tool", n:"HookLab", p:"Generiert die ersten 3 Sekunden (Hook) für virale Shorts.", w:"Der Hook entscheidet über Reichweite — genau das Problem jedes Creators.", s:["Claude","Web-App"] },
+  { c:"tool", n:"CaptionKaraoke", p:"Animierte Wort-für-Wort-Untertitel wie bei Top-Creators.", w:"Untertitel steigern Watch-Time massiv; die guten sind teuer oder umständlich.", s:["Whisper","ffmpeg"] },
+  { c:"tool", n:"ScriptSpark", p:"Kurzvideo-Skripte per Nische & Format in Sekunden.", w:"Ideen-Blockade ist der #1-Grund, warum Creator aufhören.", s:["Claude","Web-App"] },
+  { c:"tool", n:"ColdMailForge", p:"Aus 1 Firmen-URL eine personalisierte Cold-Mail.", w:"Personalisierung skaliert nicht von Hand — genau da setzt das Tool an.", s:["Claude","Make.com"] },
+  { c:"tool", n:"OfferBuilder", p:"Angebots-/Preis-Generator für Freelancer & Agenturen.", w:"Angebote schreiben kostet Zeit; ein Generator spart Stunden pro Deal.", s:["Claude","Web-App","Stripe"] },
+  { c:"tool", n:"MoodBoardAI", p:"Design-Moodboards aus ein paar Stichworten.", w:"Designer & Kunden brauchen schnell visuelle Richtung.", s:["Ideogram","Web-App"] },
+  { c:"tool", n:"LegalSnap", p:"Impressum/AGB/Datenschutz-Generator für Kleinunternehmer.", w:"Jeder deutsche Online-Betrieb braucht das — Pflicht mit hohem Schmerz.", s:["Claude","Web-App"] },
+  { c:"tool", n:"VoiceToTask", p:"Sprachnotiz rein → sortierte To-Do-Liste raus.", w:"Reden ist 5x schneller als tippen; perfekt für Vielbeschäftigte.", s:["Whisper","Claude"] },
+  { c:"tool", n:"PitchDeckAI", p:"Aus 5 Antworten ein fertiges Pitch-Deck.", w:"Gründer hassen Slides — ein Generator verkauft sich sofort.", s:["Claude","Web-App"] },
+  { c:"auto", n:"AutoPoster", p:"Ein Beitrag → automatisch auf allen Plattformen geplant.", w:"Multi-Posting von Hand ist Zeitfresser Nr. 1 für Creator.", s:["Make.com","Airtable"] },
+  { c:"auto", n:"LeadRadar", p:"Scraped täglich lokale Leads nach deinen Kriterien.", w:"Kaltakquise braucht Futter — automatisierte Leads sind Gold wert.", s:["Make.com","Airtable"] },
+  { c:"auto", n:"DM-Funnel", p:"Auto-DM mit Freebie, sobald jemand ein Keyword kommentiert.", w:"Bewährter Wachstums-Hack, den kaum jemand sauber automatisiert.", s:["Make.com","ManyChat-Alt"] },
+  { c:"auto", n:"ReviewGuard", p:"QR-Weiche: Zufriedene → Google, Unzufriedene → intern.", w:"Lokale Betriebe zahlen für mehr Sterne — sofort sichtbarer ROI.", s:["Web-App","Supabase"] },
+  { c:"auto", n:"InvoiceBot", p:"Rechnungen automatisch erstellen, senden & mahnen.", w:"Kleinunternehmer verlieren Geld durch vergessene Rechnungen.", s:["Make.com","Stripe"] },
+  { c:"auto", n:"NewsDigestBot", p:"Täglicher Nischen-Digest per Telegram/E-Mail.", w:"Kuratierte Info spart Zeit — monetarisierbar über Sponsoren.", s:["Make.com","Claude"] },
+  { c:"auto", n:"AppointmentBot", p:"Automatische Terminerinnerungen gegen No-Shows.", w:"No-Shows kosten bares Geld; die Lösung rechnet sich sofort.", s:["Make.com","Telegram"] },
+  { c:"auto", n:"CRM-Lite", p:"Mini-CRM aus Airtable + Automationen für Solopreneure.", w:"Echte CRMs sind überladen; schlanke Lösungen sind gefragt.", s:["Airtable","Make.com"] },
+  { c:"auto", n:"ContentRecycler", p:"Alte Top-Posts automatisch neu aufbereiten & reposten.", w:"90% des Contents wird nie wiederverwendet — pures verschenktes Potenzial.", s:["Make.com","Claude"] },
+  { c:"auto", n:"StockAlert", p:"Alerts bei Preis-/Verfügbarkeits-Änderungen (Sneaker, Teile, Deals).", w:"Sammler & Deal-Jäger zahlen für Zeitvorsprung.", s:["Make.com","Supabase"] },
+  { c:"biz", n:"Faceless-as-a-Service", p:"Faceless-Kanäle komplett für Kunden aufbauen & betreuen.", w:"Firmen wollen Reichweite, aber nicht selbst vor die Kamera.", s:["MysteryForge","CapCut"] },
+  { c:"biz", n:"Shorts-Agentur", p:"Monatsabo: X Shorts/Monat für lokale Firmen.", w:"Lokale Betriebe brauchen Content, haben aber keine Zeit/Skills.", s:["CapCut","Make.com"] },
+  { c:"biz", n:"Template-Shop", p:"CapCut-/Video-/Notion-Templates als Digitalprodukt.", w:"Einmal bauen, unendlich verkaufen — reine Marge.", s:["Gumroad","Canva"] },
+  { c:"biz", n:"KI-Automations-Agentur", p:"Make.com-Automationen als Service für KMU.", w:"Jede Firma will automatisieren, kaum jemand kann es selbst.", s:["Make.com","Airtable"] },
+  { c:"biz", n:"POD-Micro-Nische", p:"Print-on-Demand für eine sehr spitze Community.", w:"0€ Lager, KI-Designs, Nischen-Communities kaufen aus Identität.", s:["Printful","Etsy"] },
+  { c:"biz", n:"Lead-Gen-Service", p:"Warme Leads für Handwerker als Monatsabo.", w:"Handwerker haben Geld, aber keine Zeit für Akquise.", s:["Make.com","Instantly"] },
+  { c:"biz", n:"Cohort-Kurs", p:"Live-Kurs zu einem Skill, den du beherrschst.", w:"Cohorts verkaufen sich teurer als Self-Paced und binden stärker.", s:["Notion","Stripe"] },
+  { c:"biz", n:"Abo-Community", p:"Bezahlte Community rund um eine Leidenschaft.", w:"Wiederkehrender Umsatz + Netzwerkeffekt = starkes Modell.", s:["Discord","Stripe"] },
+  { c:"biz", n:"Kanal-Flipping", p:"Faceless-Kanäle aufbauen und mit Gewinn verkaufen.", w:"Aufgebaute Assets mit Reichweite haben echten Marktwert.", s:["MysteryForge","Marktplätze"] },
+  { c:"biz", n:"Notion-Business", p:"Premium-Notion-Systeme bauen & verkaufen.", w:"Riesige, kaufkräftige Notion-Community sucht ständig Vorlagen.", s:["Notion","Gumroad"] },
+  { c:"blog", n:"Programmatic-SEO", p:"1 Datenbank → 1.000 SEO-Seiten automatisch.", w:"Skaliert Google-Traffic ohne 1.000 Artikel von Hand.", s:["Claude","Supabase","Vercel"] },
+  { c:"blog", n:"Vergleichs-Blog", p:"Test-/Vergleichsseiten mit Affiliate-Links.", w:"Kaufabsicht-Traffic konvertiert stark — passives Einkommen.", s:["Claude","statische Seite"] },
+  { c:"blog", n:"Tool-Directory", p:"Kuratiertes Verzeichnis für eine Nische (Affiliate + Listing-Fees).", w:"Directories ranken gut und verdienen doppelt.", s:["Airtable","Vercel"] },
+  { c:"blog", n:"Listicle-Blog", p:"Teilbare Listen mit massivem Pinterest-Traffic.", w:"Pinterest schickt gratis Traffic auf hübsche Listen.", s:["Claude","Pinterest"] },
+  { c:"blog", n:"Build-in-Public-Blog", p:"Transparenter Aufbau deiner Projekte als Content.", w:"Authentizität zieht Publikum & Kunden gleichzeitig an.", s:["Blog","Newsletter"] },
+  { c:"blog", n:"Trend-Newsletter", p:"Wöchentlicher Was-ging-viral-Recap für eine Nische.", w:"Newsletter = direkter Draht zur Zielgruppe, sponsorbar.", s:["Beehiiv","Make.com"] },
+  { c:"blog", n:"Prompt-Bibliothek", p:"Kuratierte Prompt-Sammlung als Content + Produkt.", w:"KI-Boom → riesige Nachfrage nach fertigen Prompts.", s:["Notion","Gumroad"] },
+  { c:"blog", n:"Lokaler Ratgeber", p:"Beste-X-in-Stadt-Seiten, monetarisiert über Ads/Affiliate/Listings.", w:"Lokale Suchintention + wenig Konkurrenz = leichte Rankings.", s:["Claude","Vercel"] },
+  { c:"blog", n:"Micro-SaaS-Ideen-Blog", p:"Validierte Ideen + Anleitungen als Content-Magnet.", w:"Baut Publikum von Buildern auf — perfekt für eigene Tool-Launches.", s:["Blog","Newsletter"] },
+  { c:"blog", n:"Rechner-Seite", p:"Nützliche Online-Rechner (Steuer, Fitness, Finanzen) mit Ads.", w:"Rechner ranken top und werden immer wieder gebraucht.", s:["Claude Code","Vercel"] },
+  { c:"creative", n:"One-Tap-Game", p:"Ultra-simples virales Browser-Game mit Highscore.", w:"Highscore-Clips verbreiten sich fast von selbst.", s:["HTML/Canvas","Supabase"] },
+  { c:"creative", n:"Quiz-Funnel", p:"Persönlichkeitstest, der am Ende E-Mails/Leads sammelt.", w:"Quizze haben irre Teilnahmequoten und bauen E-Mail-Listen.", s:["Web-App","Supabase"] },
+  { c:"creative", n:"Giveaway-Plattform", p:"Verlosungen mit Teilen-für-Lose-Mechanik.", w:"Eingebauter Viral-Loop durch Empfehlungen.", s:["Web-App","Supabase"] },
+  { c:"creative", n:"Challenge-App", p:"30-Tage-Challenges mit Gruppen-Streaks.", w:"Sozialer Druck + Fortschritt = hohe Bindung.", s:["Supabase","Vercel"] },
+  { c:"creative", n:"Party-Game", p:"Browser-Multiplayer-Spiel, Handy als Controller.", w:"Streamer bringen kostenlose Reichweite für interaktive Formate.", s:["Supabase Realtime","Vercel"] },
+  { c:"creative", n:"AI-Avatar-Grüße", p:"Personalisierte Video-Grüße von KI-Avataren.", w:"Cameo-Prinzip, aber günstig und skalierbar.", s:["KI-Video","Stripe"] },
+  { c:"creative", n:"Meme-Generator", p:"Nischen-Meme-Maker als Traffic- & Reichweiten-Magnet.", w:"Memes werden geteilt → organisches Wachstum.", s:["Canvas","Web-App"] },
+  { c:"creative", n:"Voice-Blog", p:"Sprachnachricht → fertiger Blog-/LinkedIn-Post.", w:"Content-Erstellung ohne Tippen — Zeitersparnis verkauft sich.", s:["Whisper","Claude"] },
+  { c:"creative", n:"Chrome-Extension", p:"Löst ein kleines, nerviges Problem direkt im Browser.", w:"Extensions gehen über den Store viral, wenn sie 1 Schmerz lösen.", s:["JS","Chrome Store"] },
+  { c:"creative", n:"Waitlist-Service", p:"Fertige Warteliste-/Referral-Landingpages als Produkt.", w:"Jeder Launch braucht eine Waitlist — wiederkehrender Bedarf.", s:["Web-App","Supabase"] },
+];
+
+/* ---------- 10 virale Faceless-Nischen für MysteryForge ---------- */
+const NICHE_LIB = [
+  { n:"Ungelöste Mysterien", hook:"Verschwundene Menschen, ungeklärte Fälle, offene Enden.", w:"Cliffhanger halten bis zur letzten Sekunde — Top-Retention.", f:"30-45s Voiceover + düstere Visuals", m:"Reichweite → Sponsoren, eigener True-Crime-Merch" },
+  { n:"Wusstest du? Fakten", hook:"Ein überraschender Fakt pro Video, schneller Payoff.", w:"Sofortiger Aha-Moment = hohe Teilen-Rate.", f:"15-25s, schnelle Schnitte", m:"Masse an Views → Creator-Fund, Faceless-Kurs" },
+  { n:"Reddit-Story-Voiceover", hook:"Dramatische Reddit-Storys als Voiceover mit Gameplay-Hintergrund.", w:"Bewährtes, süchtig machendes Format mit Serien-Effekt.", f:"40-60s Voiceover über Satisfying-Clip", m:"Reichweite → Shoutouts, Kanal-Verkauf" },
+  { n:"Stoizismus & Disziplin", hook:"Kurze, harte Wahrheiten über Fokus, Disziplin, Erfolg.", w:"Selbstoptimierungs-Nische mit extrem loyalem, kaufkräftigem Publikum.", f:"20-30s, ruhige cineastische Visuals", m:"eBooks, Kurse, Coaching, Merch" },
+  { n:"Geschichte-Mysterien", hook:"Rätselhafte historische Ereignisse in 60 Sekunden.", w:"Bildung + Spannung = hohe Watch-Time, wenig Konkurrenz.", f:"45-60s, Archiv-/KI-Visuals", m:"Bildungs-Sponsoren, Merch" },
+  { n:"Weltraum & Universum", hook:"Mind-blowing Fakten über Planeten, Schwarze Löcher, Zeit.", w:"Ehrfurcht-Content wird massiv geteilt und gespeichert.", f:"25-40s, epische Space-Visuals + Voiceover", m:"riesige Reichweite → Creator-Fund, Print-Shop" },
+  { n:"Psychologie-Tricks", hook:"Manipulation erkennen, Menschen lesen, Verhandlungstricks.", w:"Praktischer Mehrwert = Speichern & Wiederkommen.", f:"20-30s, Text-Overlay + B-Roll", m:"Kurs, eBook, Community" },
+  { n:"Gruselgeschichten", hook:"Kurze Horror-/Creepy-Storys mit Twist am Ende.", w:"Angst + Neugier = extrem hohe Completion-Rate.", f:"40-60s Voiceover, düstere Atmosphäre", m:"Reichweite → Hörbuch/Podcast, Merch" },
+  { n:"Was wäre wenn?", hook:"Hypothetische Szenarien wie: Was, wenn die Sonne erlischt?", w:"Neugier-Trigger, endlos neue Ideen, hoher Share-Faktor.", f:"30-45s, KI-Visuals + Voiceover", m:"Reichweite → Creator-Fund, Sponsoren" },
+  { n:"Luxus & Erfolg (Sigma)", hook:"Aspirationaler Lifestyle-Content mit harter Message.", w:"Aspirationsnische mit hoher Kaufkraft & Affiliate-Potenzial.", f:"15-25s, cineastische Luxus-Clips", m:"Affiliate, eigene Produkte, Sponsoren" },
+];
+
 /* ============================================================
    CLOUD-SYNC (Supabase) — localStorage ist Cache, DB ist Quelle der Wahrheit
    ============================================================ */
@@ -1425,6 +1536,7 @@ async function cloudDeleteIdea(id){ if(!sb) return; try{ await sb.from("ideas").
 async function cloudSetSub(pid,title,done){ if(!sb) return; try{ await sb.from("subtasks_done").upsert({ project_id:pid, subtask_title:title, done }); }catch(e){} }
 async function cloudSetSetting(key,value){ if(!sb) return; try{ await sb.from("settings").upsert({ key, value }); }catch(e){} }
 async function cloudInsertActivity(a){ if(!sb) return; try{ await sb.from("activity").insert(a); }catch(e){} }
+async function cloudSendMessage(m){ if(!sb) return; try{ await sb.from("messages").insert({ id:m.id, author:m.author, text:m.text }); }catch(e){} }
 async function cloudResetAll(){
   if(!sb) return;
   try {
@@ -1450,10 +1562,11 @@ function logActivity(text){
 async function initCloud(){
   if(!sb){ updateSyncPill(); return; }
   try {
-    const [{data:projRows}, {data:taskRows}, {data:ideaRows}, {data:subRows}, {data:setRows}, {data:actRows}] = await Promise.all([
+    const [{data:projRows}, {data:taskRows}, {data:ideaRows}, {data:subRows}, {data:setRows}, {data:actRows}, {data:msgRows}] = await Promise.all([
       sb.from("projects").select("*"), sb.from("tasks").select("*"), sb.from("ideas").select("*"),
       sb.from("subtasks_done").select("*"), sb.from("settings").select("*"),
       sb.from("activity").select("*").order("created_at",{ascending:false}).limit(25),
+      sb.from("messages").select("*").order("created_at",{ascending:false}).limit(100),
     ]);
 
     if(!projRows || projRows.length===0){
@@ -1476,6 +1589,7 @@ async function initCloud(){
     }
     if(setRows){ const org = setRows.find(r=>r.key==="org"); if(org) state.org = org.value; }
     if(actRows){ state.activity = actRows.map(r=>({ id:r.id, actor:r.actor, action:r.action, target:r.target, created_at:r.created_at })); }
+    if(msgRows){ state.messages = msgRows.map(r=>({ id:r.id, author:r.author, text:r.text, created_at:r.created_at })).reverse(); updateChatBadge(); }
 
     persist();
     cloudReady = true;
@@ -1495,7 +1609,17 @@ function subscribeRealtime(){
     .on("postgres_changes", { event:"*", schema:"public", table:"ideas" }, handleRealtimeIdea)
     .on("postgres_changes", { event:"*", schema:"public", table:"subtasks_done" }, handleRealtimeSub)
     .on("postgres_changes", { event:"INSERT", schema:"public", table:"activity" }, handleRealtimeActivity)
+    .on("postgres_changes", { event:"INSERT", schema:"public", table:"messages" }, handleRealtimeMessage)
     .subscribe();
+}
+function handleRealtimeMessage(payload){
+  const r = payload.new;
+  if(state.messages.find(m=>m.id===r.id)) return;
+  state.messages.push({ id:r.id, author:r.author, text:r.text, created_at:r.created_at });
+  if(state.messages.length>200) state.messages = state.messages.slice(-200);
+  persist();
+  if(chatOpen){ renderChatMessages(true); markChatRead(); }
+  else { updateChatBadge(); if(r.author!==activeProfile){ const m=fullMember(r.author); toast(`${m?m.name:"Neue"}: ${r.text.slice(0,40)}`); } }
 }
 function handleRealtimeProject(payload){
   if(payload.eventType==="DELETE"){ state.projects = state.projects.filter(p=>p.id!==payload.old.id); }
@@ -1599,6 +1723,7 @@ function bootApp(){
   $("#app").style.display="flex";
   renderMeBtn();
   updateSyncPill();
+  updateChatBadge();
   nav("home");
   maybeOnboard();
 }
@@ -1755,16 +1880,16 @@ function projCard(p){
 
 function renderProjects(){
   const f=projFilter;
-  const list = state.projects.filter(p=> f==="all"?true: f==="guided"?p.guided : p.status===f);
-  const chips=[["all","Alle"],["guided","Ventures"],["doing","In Arbeit"],["live","Live"],["idea","Pipeline"]];
-  return `
+  const chips=[["all","Alle"],["guided","Ventures"],["lib","💡 Bibliothek"],["doing","In Arbeit"],["live","Live"],["idea","Pipeline"]];
+  const header = `
     <h2 class="page-title">Ventures</h2>
-    <div class="page-sub num">${state.projects.filter(p=>!p.guided).length} laufende Projekte · ${state.projects.filter(p=>p.guided).length} startklare Business-Fahrpläne</div>
+    <div class="page-sub num">${state.projects.filter(p=>!p.guided).length} laufende Projekte · ${state.projects.filter(p=>p.guided).length} Fahrpläne · 60 Ideen</div>
     <div class="filters">
       ${chips.map(c=>`<button class="fchip ${f===c[0]?'on':''}" onclick="setFilter('${c[0]}')">${c[1]}</button>`).join("")}
-    </div>
-    ${list.length?list.map(projCard).join(""):empty(IC.layers,"Nichts in dieser Ansicht","Über das Plus legst du ein neues Projekt an.")}
-  `;
+    </div>`;
+  if(f==="lib") return header + renderLibrary(true);
+  const list = state.projects.filter(p=> f==="all"?true: f==="guided"?p.guided : p.status===f);
+  return header + (list.length?list.map(projCard).join(""):empty(IC.layers,"Nichts in dieser Ansicht","Über das Plus legst du ein neues Projekt an."));
 }
 function setFilter(f){ projFilter=f; render(); }
 
@@ -1899,7 +2024,7 @@ function emptyMini(t){ return `<div class="card static" style="text-align:center
    SHEETS
    ============================================================ */
 function openSheet(html){ $("#sheet").innerHTML='<div class="grabber"></div>'+html; $("#sheetWrap").classList.add("show"); const sh=$("#sheet"); sh.scrollTop=0; requestAnimationFrame(()=>sh.querySelectorAll(".fill").forEach(f=>{ if(f.dataset.w!==undefined) f.style.width=f.dataset.w+"%"; })); }
-function closeSheet(){ $("#sheetWrap").classList.remove("show"); }
+function closeSheet(){ $("#sheetWrap").classList.remove("show"); chatOpen=false; }
 
 function openQuickAdd(){
   openSheet(`<h3 class="sh-title">Neu anlegen</h3><div class="sh-sub">Landet sofort synchronisiert im Team-Board.</div>
@@ -2203,7 +2328,7 @@ function openSettings(){
     <div class="sysrow"><span class="k">Cloud-Sync</span><span class="v">${cloudReady?'<span class="sdot"></span> Live verbunden':'<span class="sdot" style="background:var(--amber)"></span> Lokal'}</span></div>
     <div class="sysrow"><span class="k">Datenregion</span><span class="v">EU (Irland)</span></div>
     <div class="sysrow"><span class="k">Realtime</span><span class="v">${cloudReady?'Aktiv — Änderungen in ~1 s beim Team':'Wartet auf Verbindung'}</span></div>
-    <div class="sysrow"><span class="k">Version</span><span class="v num">Sidequest OS 5.1 · Mono</span></div>
+    <div class="sysrow"><span class="k">Version</span><span class="v num">Sidequest OS 5.2 · Mono</span></div>
     <div class="kicker" style="margin:16px 2px 8px"><h3>Daten</h3></div>
     <div class="sh-actions" style="margin-top:4px">
       <button class="btn btn-g" style="flex:1" onclick="exportData()">${IC.download} Backup</button>
@@ -2216,6 +2341,119 @@ function exportData(){ const blob=new Blob([JSON.stringify(state,null,2)],{type:
 function importData(){ const inp=document.createElement("input"); inp.type="file"; inp.accept=".json"; inp.onchange=e=>{ const f=e.target.files[0]; if(!f)return; const r=new FileReader(); r.onload=()=>{ try{ const d=JSON.parse(r.result); if(d.projects){ state=d; state.activity=state.activity||[]; persist(); closeSheet(); render(); toast("Backup geladen"); } else toast("Ungültige Datei"); }catch(x){ toast("Fehler beim Laden"); } }; r.readAsText(f); }; inp.click(); }
 function resetAll(){ if(!confirm("Wirklich ALLES zurücksetzen? Das betrifft ALLE Geräte im Team, nicht nur dieses!"))return; state=seed(); persist(); cloudResetAll(); closeSheet(); nav("home"); toast("Zurückgesetzt"); }
 function openQuestionnaire(){ window.open("https://christiansowi-ux.github.io/sidequest-team/","_blank"); }
+
+/* ============================================================
+   TEAM-CHAT
+   ============================================================ */
+let chatOpen = false;
+function lastSeenChat(){ return +(localStorage.getItem("sq_chat_seen_"+activeProfile)||0); }
+function markChatRead(){ const last=state.messages.length?new Date(state.messages[state.messages.length-1].created_at).getTime():Date.now(); localStorage.setItem("sq_chat_seen_"+activeProfile, last); updateChatBadge(); }
+function unreadCount(){ const seen=lastSeenChat(); return state.messages.filter(m=>m.author!==activeProfile && new Date(m.created_at).getTime()>seen).length; }
+function updateChatBadge(){ const d=$("#chatDot"); if(!d) return; d.classList.toggle("show", unreadCount()>0); }
+function openChat(){
+  chatOpen = true;
+  $("#sheet").innerHTML = `<div class="grabber"></div>
+    <div class="chat-head"><div><div class="sh-title" style="margin:0">Team-Chat</div><div class="sh-sub" style="margin:2px 0 0">Alle ${PROFILES.length} sehen mit — live.</div></div></div>
+    <div class="chat-body" id="chatBody"></div>
+    <div class="chat-input"><input id="chatText" placeholder="Nachricht ans Team…" autocomplete="off" onkeydown="if(event.key==='Enter')sendMessage()"><button class="chat-send" onclick="sendMessage()">${IC.arrow}</button></div>`;
+  $("#sheetWrap").classList.add("show");
+  renderChatMessages(true); markChatRead();
+  setTimeout(()=>$("#chatText")?.focus(),350);
+}
+function renderChatMessages(scroll){
+  const box=$("#chatBody"); if(!box) return;
+  if(!state.messages.length){ box.innerHTML=`<div class="chat-empty"><div style="font-size:34px;margin-bottom:10px">💬</div><b>Noch keine Nachrichten</b><p>Schreib die erste — das ganze Team sieht sie sofort.</p></div>`; return; }
+  let html="", lastDay="", lastAuthor="";
+  state.messages.forEach(msg=>{
+    const d=new Date(msg.created_at); const day=d.toLocaleDateString("de-DE",{weekday:"long",day:"numeric",month:"long"});
+    if(day!==lastDay){ html+=`<div class="chat-day">${day}</div>`; lastDay=day; lastAuthor=""; }
+    const mine=msg.author===activeProfile; const m=fullMember(msg.author);
+    const showMeta=msg.author!==lastAuthor; lastAuthor=msg.author;
+    const time=d.toLocaleTimeString("de-DE",{hour:"2-digit",minute:"2-digit"});
+    html+=`<div class="chat-row ${mine?'mine':''}">
+      ${!mine?(showMeta?mono(msg.author,28,9):'<div style="width:28px;flex:0 0 auto"></div>'):''}
+      <div class="chat-col">
+        ${(!mine&&showMeta)?`<div class="chat-author">${m?esc(m.name):"?"}</div>`:''}
+        <div class="chat-bubble">${esc(msg.text)}<span class="chat-time">${time}</span></div>
+      </div>
+    </div>`;
+  });
+  box.innerHTML=html;
+  if(scroll) box.scrollTop=box.scrollHeight;
+}
+function sendMessage(){
+  const inp=$("#chatText"); if(!inp) return;
+  const text=inp.value.trim(); if(!text) return;
+  const msg={ id:uid("m"), author:activeProfile, text, created_at:new Date().toISOString() };
+  state.messages.push(msg); if(state.messages.length>200) state.messages=state.messages.slice(-200);
+  persist(); cloudSendMessage(msg);
+  inp.value=""; renderChatMessages(true); markChatRead();
+}
+
+/* ============================================================
+   IDEEN-BIBLIOTHEK (50) + FACELESS-NISCHEN (10)
+   ============================================================ */
+let libCat = "all";
+function renderLibrary(embedded){
+  const cats=[["all","Alle"],["mf","MysteryForge"],["tool","Tools"],["auto","Automationen"],["biz","Business"],["blog","Blogs"],["creative","Kreativ"]];
+  let body = embedded ? "" : `<h2 class="page-title">Ideen-Bibliothek</h2><div class="page-sub num">50 startklare Ideen + 10 virale Faceless-Nischen — tippen & als Venture starten</div>`;
+  body += `<div class="filters lib-filters">${cats.map(c=>`<button class="fchip sm ${libCat===c[0]?'on':''}" onclick="setLibCat('${c[0]}')">${c[1]}</button>`).join("")}</div>`;
+  if(libCat==="mf"){
+    body += NICHE_LIB.map((x,i)=>nicheCard(x,i)).join("");
+  } else if(libCat==="all"){
+    body += `<div class="kicker"><h3>Virale Faceless-Nischen</h3><span class="k-meta num">${NICHE_LIB.length}</span></div>`;
+    body += NICHE_LIB.map((x,i)=>nicheCard(x,i)).join("");
+    body += `<div class="kicker"><h3>Ideen-Katalog</h3><span class="k-meta num">${IDEA_LIB.length}</span></div>`;
+    body += IDEA_LIB.map((x,i)=>ideaCard(x,i)).join("");
+  } else {
+    const list = IDEA_LIB.map((x,i)=>({x,i})).filter(o=>o.x.c===libCat);
+    body += list.map(o=>ideaCard(o.x,o.i)).join("");
+  }
+  return body;
+}
+function setLibCat(c){ libCat=c; render(); }
+function ideaCard(x,i){
+  return `<div class="card idea-card" onclick="openIdea(${i})">
+    <div class="ic-top"><span class="ic-cat">${IDEA_CATS[x.c]}</span><span class="lr-arrow">${IC.arrow}</span></div>
+    <div class="ic-name">${esc(x.n)}</div>
+    <div class="ic-pitch">${esc(x.p)}</div>
+  </div>`;
+}
+function nicheCard(x,i){
+  return `<div class="card idea-card niche" onclick="openNiche(${i})">
+    <div class="ic-top"><span class="ic-cat mf">🎬 Faceless-Nische</span><span class="lr-arrow">${IC.arrow}</span></div>
+    <div class="ic-name">${esc(x.n)}</div>
+    <div class="ic-pitch">${esc(x.hook)}</div>
+  </div>`;
+}
+function openIdea(i){
+  const x=IDEA_LIB[i]; if(!x) return;
+  openSheet(`<div class="sh-crumb num">${IDEA_CATS[x.c]} · Ideen-Bibliothek</div><h3 class="sh-title">${esc(x.n)}</h3><div class="detail-tagline">${esc(x.p)}</div>
+    <div class="kicker" style="margin-top:2px"><h3>Warum das zieht</h3></div><div class="case-box">${esc(x.w)}</div>
+    <div class="kicker"><h3>Empfohlener Stack</h3></div><div class="stack-row">${x.s.map(t=>{const u=toolLink(t);return u?`<a class="tag tap" href="${u}" target="_blank" rel="noopener">${esc(t)} ${IC.ext}</a>`:`<span class="tag">${esc(t)}</span>`;}).join("")}</div>
+    <button class="btn btn-p" style="width:100%;margin-top:8px" onclick='promoteIdea(${i})'>${IC.rocket} Als eigenes Venture starten</button>
+    <div style="text-align:center;color:var(--dim);font-size:11.5px;margin-top:10px">Legt ein Venture an — Fahrplan & Anleitungen baust du dann selbst.</div>`);
+}
+function openNiche(i){
+  const x=NICHE_LIB[i]; if(!x) return;
+  openSheet(`<div class="sh-crumb num">🎬 Faceless-Nische für MysteryForge</div><h3 class="sh-title">${esc(x.n)}</h3><div class="detail-tagline">${esc(x.hook)}</div>
+    <div class="kicker" style="margin-top:2px"><h3>Warum es viral geht</h3></div><div class="case-box">${esc(x.w)}</div>
+    <div class="kv"><span class="k">Format</span><span class="v" style="max-width:62%">${esc(x.f)}</span></div>
+    <div class="kv"><span class="k">Monetarisierung</span><span class="v" style="max-width:62%">${esc(x.m)}</span></div>
+    <button class="btn btn-p" style="width:100%;margin-top:14px" onclick='promoteNiche(${i})'>${IC.rocket} Als Kanal-Venture starten</button>`);
+}
+function promoteIdea(i){
+  const x=IDEA_LIB[i]; if(!x) return;
+  const saved={ id:uid("p"), emoji:"💡", name:x.n, type:IDEA_CATS[x.c], tagline:x.p, why:x.w, stack:x.s, guided:true, status:"idea", progress:0, members:[activeProfile], subtasks:[] };
+  state.projects.unshift(saved); persist(); cloudUpsertProject(saved); logActivity(`hat „${x.n}“ aus der Ideen-Bibliothek gestartet`);
+  toast("Venture angelegt — bau deinen Fahrplan!"); openProject(saved.id);
+}
+function promoteNiche(i){
+  const x=NICHE_LIB[i]; if(!x) return;
+  const saved={ id:uid("p"), emoji:"🎬", name:x.n+" (Kanal)", type:"Faceless-Kanal · MysteryForge", tagline:x.hook, why:x.w+" · Format: "+x.f+" · "+x.m, stack:["MysteryForge","CapCut","Make.com"], guided:true, status:"idea", progress:0, members:[activeProfile], subtasks:[] };
+  state.projects.unshift(saved); persist(); cloudUpsertProject(saved); logActivity(`hat den Faceless-Kanal „${x.n}“ gestartet`);
+  toast("Kanal-Venture angelegt!"); openProject(saved.id);
+}
 
 /* ---- Ressourcen-Hub ---- */
 function openResources(){
