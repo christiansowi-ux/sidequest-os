@@ -959,6 +959,226 @@ function ventures() {
           steps:["Einladungs-Mechanik einbauen: wer 1 Freund einlädt, der beitritt, bekommt Bonus-Credit","Automatisierte E-Mail/Push nach abgeschlossenem Tausch: „Bewerte deinen Partner“","Erfolgsgeschichten (mit Erlaubnis) für Marketing sammeln","Nächste Zielgruppe/Stadt für Expansion festlegen"],
           prompt:"Wie baue ich einen einfachen Einladungs-Bonus ein, der bestehende Nutzer motiviert, Freunde zu einer Skill-Tausch-Plattform einzuladen, ohne dass es sich nach Pyramidensystem anfühlt?" },
       ]},
+    { id:"v11", emoji:"📰", name:"NicheNews Digest", type:"Newsletter · Media",
+      tagline:"Kuratierter KI-Newsletter für eine spitze Nische — täglich/wöchentlich automatisch zusammengestellt, monetarisiert über Sponsoren & Abo.",
+      why:"Newsletter sind 2026 wieder riesig, weil sie direkten Zugang zur Zielgruppe geben (kein Algorithmus dazwischen). Eine spitze Nische + KI-Kuratierung = tägliche Ausgabe in 15 Min statt 3 Stunden.",
+      stack:["Beehiiv/Substack (kostenlos)","Make.com","Claude","RSS/Reddit-Quellen"],
+      fit:["oscar","christian"], status:"idea", progress:0, guided:true,
+      subtasks:[
+        { title:"Nische + Zielgruppe festlegen", tool:"Recherche", goal:"Eine spitze Nische, für die es täglich frische News gibt.", time:"~30 Min", tip:"Wähle etwas, das sich schnell ändert (Tech, Krypto, eine Branche) — dann hast du immer Stoff.",
+          steps:["3 Nischen sammeln, in denen du dich auskennst oder die dich interessieren","Prüfen: gibt es genug tägliche Quellen (Blogs, Subreddits, Twitter-Accounts)?","Zielgruppe in 1 Satz beschreiben: wer liest das und warum?","Newsletter-Namen + 1-Satz-Versprechen festlegen"],
+          prompt:"Ich will einen Newsletter für [Nische] starten. Gib mir 10 Namensideen + je ein 1-Satz-Versprechen, das die Zielgruppe sofort abholt." },
+        { title:"Quellen sammeln & in Make.com einspeisen", tool:"Make.com", goal:"Ein automatischer Feed, der dir täglich frische Artikel liefert.", time:"~60 Min", tip:"Starte mit 5 guten Quellen — Qualität schlägt Masse.",
+          steps:["5-10 RSS-Feeds / Subreddits deiner Nische raussuchen","Make.com-Szenario: RSS-Module bündeln neue Artikel","Ergebnisse in einem Google Doc / Airtable sammeln","Täglichen Trigger (z.B. 7 Uhr) einstellen"],
+          prompt:"Wie richte ich in Make.com ein Szenario ein, das jeden Morgen die neuesten Artikel aus mehreren RSS-Feeds sammelt und mir kompakt in einem Dokument ablegt?" },
+        { title:"KI-Zusammenfassung & Ausgabe bauen", tool:"Claude", goal:"Aus rohen Artikeln wird eine fertige, lesbare Ausgabe.", time:"~45 Min", tip:"Gib Claude deinen Tonfall vor (locker/seriös) — dann klingt jede Ausgabe nach dir.",
+          steps:["Prompt bauen: Artikel rein → 5 kurze, knackige Kurzmeldungen raus","Format festlegen: Titel, 2 Sätze, Link","Mit 3 echten Tagen testen und den Prompt verfeinern","Intro/Outro-Vorlage für Wiedererkennung erstellen"],
+          prompt:"Hier sind heutige Artikel aus [Nische]: [ARTIKEL]. Fasse die 5 wichtigsten in je 2 knackigen Sätzen zusammen, locker geschrieben, mit Link — als Newsletter-Ausgabe." },
+        { title:"Erste 50 Abonnenten holen", tool:"Beehiiv + Social", goal:"Die ersten echten Leser.", time:"~1 Woche", tip:"Poste die beste Kurzmeldung öffentlich und häng den Abo-Link dran — liefern statt betteln.",
+          steps:["Anmeldeseite bei Beehiiv/Substack einrichten (kostenlos)","In 2-3 Communities der Nische ehrlich vorstellen","Freunde/Bekannte der Nische direkt einladen","2 Wochen konsequent veröffentlichen"],
+          prompt:"Schreib mir einen ehrlichen Community-Post, in dem ich meinen neuen [Nische]-Newsletter vorstelle und Leute zum kostenlosen Abo einlade, ohne spammy zu wirken." },
+        { title:"Monetarisieren: Sponsor oder Abo", tool:"Beehiiv Ads/Stripe", goal:"Erste Einnahmen aus dem Newsletter.", time:"~2 Std", tip:"Ab ~500 Abonnenten werden Nischen-Sponsoren interessant — vorher lieber Reichweite aufbauen.",
+          steps:["Entscheiden: Sponsoren (frei + Werbung) oder Premium-Abo?","Media-Kit mit Abonnentenzahl + Öffnungsrate erstellen","3 passende Nischen-Firmen für Sponsoring anschreiben","Alternativ: Premium-Ausgabe/Archiv per Stripe anbieten"],
+          prompt:"Erstelle mir ein kurzes Media-Kit-Template, mit dem ich Sponsoren für meinen Nischen-Newsletter (aktuell [X] Abonnenten, [Y]% Öffnungsrate) gewinnen kann." },
+      ]},
+    { id:"v12", emoji:"😂", name:"Meme Machine", type:"Faceless · Creator",
+      tagline:"Faceless Meme-/Zitat-Account (IG/TikTok) mit KI-Bildern + Auto-Posting — Reichweite als Kapital, monetarisiert über Shoutouts & eigene Produkte.",
+      why:"Faceless Content-Accounts wachsen schnell, weil das Format skaliert (kein Gesicht, keine Hemmung). Mit KI-Bildern und Auto-Posting produzierst du täglich, ohne on-camera zu gehen.",
+      stack:["Ideogram/Canva","CapCut","Make.com (Auto-Post)","Claude (Captions)"],
+      fit:["jonas","sebi"], status:"idea", progress:0, guided:true,
+      subtasks:[
+        { title:"Nische + Format festnageln", tool:"Recherche", goal:"Ein klares, wiederholbares Content-Format.", time:"~40 Min", tip:"Ein Format, das du 100x wiederholen kannst — Wiedererkennung schlägt Abwechslung.",
+          steps:["Nische wählen (z.B. Gym-Motivation, Auto-Memes, Gaming-Humor)","3 erfolgreiche Accounts derselben Nische analysieren","Ein wiederholbares Format definieren (gleicher Look, gleiche Struktur)","Account-Namen + Bio + Look festlegen"],
+          prompt:"Ich starte einen Faceless-[Nische]-Account. Gib mir 10 Content-Formate, die sich endlos wiederholen lassen und in dieser Nische gut funktionieren." },
+        { title:"10 Posts mit KI erstellen", tool:"Ideogram + Canva", goal:"Ein Vorrat an 10 fertigen Posts.", time:"~90 Min", tip:"Batch-Produktion: 10 auf einmal ist effizienter als 1 pro Tag.",
+          steps:["10 Sprüche/Ideen sammeln (oder von Claude generieren lassen)","Pro Idee ein Bild/Grafik in Ideogram oder Canva bauen","Einheitliche Schrift/Farben für Wiedererkennung","Alles in einem Ordner als Vorrat sammeln"],
+          prompt:"Gib mir 15 kurze, teilbare Sprüche/Captions für einen [Nische]-Meme-Account, die zum Speichern und Teilen anregen." },
+        { title:"Auto-Posting einrichten", tool:"Make.com", goal:"Content läuft automatisch, auch ohne dich.", time:"~60 Min", tip:"Feste Uhrzeiten schlagen Zufall — der Algorithmus mag Verlässlichkeit.",
+          steps:["Posting-Rhythmus festlegen (z.B. 1-2x täglich)","Make.com-Szenario: geplanter Post aus Airtable/Ordner","Captions + Hashtags automatisch anhängen","1 Woche Testlauf und Reichweite beobachten"],
+          prompt:"Wie richte ich in Make.com automatisiertes Posten auf Instagram/TikTok zu festen Uhrzeiten ein, mit Bild + Caption aus einer Airtable-Tabelle?" },
+        { title:"Auf Reichweite optimieren", tool:"Analytics", goal:"Erkennen, welcher Content zieht — und mehr davon machen.", time:"laufend", tip:"Verdopple, was funktioniert; lösch mental, was floppt. Nicht verlieben in Ideen.",
+          steps:["Nach 2 Wochen die 3 Top-Posts identifizieren","Muster erkennen: was hatten sie gemeinsam?","Mehr Varianten der Gewinner-Formate produzieren","Posting-Zeiten nach bester Performance anpassen"],
+          prompt:"Meine erfolgreichsten Posts waren [BESCHREIBUNG]. Welche Muster erkennst du und welche 5 neuen Post-Ideen im selben Stil würdest du vorschlagen?" },
+        { title:"Reichweite zu Geld machen", tool:"DMs / Linktree", goal:"Erste Einnahmen aus der Community.", time:"~2 Std", tip:"Reichweite ist erst Geld wert, wenn du sie irgendwohin lenkst — Link in Bio ist Pflicht.",
+          steps:["Ab ~5-10k Followern: Shoutout-Anfragen anderer Accounts annehmen","Eigenes kleines Digitalprodukt (Guide/Preset) verlinken","Affiliate-Links passend zur Nische einbauen","Link-in-Bio-Seite mit allen Angeboten aufsetzen"],
+          prompt:"Ich habe einen [Nische]-Account mit [X] Followern. Welche 3 realistischen Monetarisierungswege passen, ohne die Community zu vergraulen?" },
+      ]},
+    { id:"v13", emoji:"⭐", name:"LocalBoost QR", type:"Local Business · SaaS",
+      tagline:"QR-Bewertungs-Booster für lokale Läden: Kunde scannt → zufrieden landet bei Google, unzufrieden gibt internes Feedback. Verkauft an Gastro, Friseure & Co.",
+      why:"Lokale Betriebe leben von Google-Bewertungen, verlieren aber Sterne durch Frust-Reviews. Ein simples Tool, das Zufriedene zu Google lenkt und Kritik intern abfängt, hat sofort sichtbaren ROI — leicht verkaufbar.",
+      stack:["Einfache HTML-Seite","Supabase","QR-Generator (kostenlos)","Stripe"],
+      fit:["helmut","christian"], status:"idea", progress:0, guided:true,
+      subtasks:[
+        { title:"Ablauf & Seite bauen", tool:"Claude Code", goal:"Eine funktionierende Scan-Seite mit Weiche.", time:"~90 Min", tip:"Halte es auf 1 Frage: 'Wie war's?' — jede zusätzliche Hürde kostet Bewertungen.",
+          steps:["Ablauf definieren: Scan → 'Wie war's?' → gut = Google, schlecht = Formular","Einfache mobile Seite von Claude Code bauen lassen","Google-Bewertungslink des Betriebs hinterlegen","Internes Feedback in Supabase speichern"],
+          prompt:"Baue mir eine simple mobile Web-Seite: Nutzer wird gefragt 'Wie war dein Besuch?'. Bei 4-5 Sternen leite zu einem Google-Bewertungslink, bei 1-3 Sternen zeige ein kurzes Feedback-Formular, das in Supabase gespeichert wird." },
+        { title:"QR-Code & Aufsteller gestalten", tool:"Canva + QR", goal:"Ein fertiger Tisch-Aufsteller zum Hinstellen.", time:"~45 Min", tip:"'Scan für 10% beim nächsten Mal' erhöht die Scan-Rate enorm.",
+          steps:["QR-Code auf die Scan-Seite generieren (kostenlos)","In Canva einen hübschen Tisch-Aufsteller gestalten","Klaren Call-to-Action drauf ('Bewerte uns in 10 Sek.')","Als Druckvorlage (PDF) exportieren"],
+          prompt:"Schreib mir 5 kurze, einladende Call-to-Action-Texte für einen QR-Aufsteller, der Gäste zum Bewerten motiviert." },
+        { title:"Mit 1 echten Betrieb testen", tool:"Direktkontakt", goal:"Ein realer Pilot mit echten Scans.", time:"~1 Woche", tip:"Der eigene Friseur/Stammlokal ist der einfachste erste Test — frag persönlich.",
+          steps:["Einen Betrieb im Umfeld ansprechen (Stammlokal, Bekannte)","Kostenlos einrichten und Aufsteller hinstellen","1 Woche laufen lassen, Scans & Bewertungen zählen","Ergebnis dokumentieren (mehr Google-Reviews?)"],
+          prompt:"Entwirf mir eine kurze, lockere Nachricht, mit der ich meinen Stamm-Betrieb frage, ob ich mein Bewertungs-Tool eine Woche kostenlos bei ihm testen darf." },
+        { title:"Angebot & Preis festlegen", tool:"Konzept", goal:"Ein verkaufsfertiges Monatsangebot.", time:"~45 Min", tip:"Monatlich (z.B. 19-49€) schlägt Einmalzahlung — planbarer Umsatz.",
+          steps:["Ergebnis vom Piloten als Mini-Case-Study festhalten","Monatspreis festlegen (klein starten)","Was ist inklusive? (Einrichtung, Aufsteller, Dashboard)","1-Seiten-Angebot erstellen"],
+          prompt:"Hilf mir, ein einfaches monatliches Preismodell für ein QR-Bewertungs-Tool für lokale Betriebe zu entwerfen, inkl. was jeweils enthalten ist." },
+        { title:"3 weitere Betriebe gewinnen", tool:"Akquise vor Ort", goal:"Die ersten zahlenden Kunden.", time:"~1 Woche", tip:"Zeig die Case Study, nicht das Tool — Betriebe kaufen Ergebnisse, keine Software.",
+          steps:["10 lokale Betriebe der gleichen Art auflisten","Persönlich vorbeigehen oder anrufen, Case Study zeigen","Ersten Monat vergünstigt/gratis anbieten","Zahlung über Stripe-Link einrichten"],
+          prompt:"Schreib mir einen kurzen Gesprächsleitfaden für den Erstkontakt mit einem lokalen Betrieb, um mein Bewertungs-Tool zu verkaufen — freundlich, auf den Nutzen fokussiert." },
+      ]},
+    { id:"v14", emoji:"📅", name:"CalReminder Bot", type:"Bot · Local Service",
+      tagline:"WhatsApp/Telegram-Erinnerungsbot für kleine Dienstleister (Friseur, Kosmetik, Praxen) — senkt No-Shows automatisch. Abo-Modell.",
+      why:"No-Shows kosten kleine Dienstleister bares Geld. Ein Bot, der automatisch an Termine erinnert, spart mehr als er kostet — das ist ein sofort verständlicher, leicht verkaufbarer Nutzen.",
+      stack:["Make.com","Telegram/WhatsApp API","Airtable (Termine)","Stripe"],
+      fit:["helmut","oscar"], status:"idea", progress:0, guided:true,
+      subtasks:[
+        { title:"Termin-Datenbank in Airtable", tool:"Airtable", goal:"Eine einfache Terminliste als Basis.", time:"~30 Min", tip:"Halte die Felder minimal: Name, Kontakt, Datum/Zeit, Status.",
+          steps:["Airtable-Base mit Feldern Name, Kontakt, Termin, Status anlegen","Ein paar Test-Termine eintragen","Formular zum schnellen Eintragen von Terminen erstellen","Ansicht 'Termine morgen' filtern"],
+          prompt:"Entwirf mir eine minimale Airtable-Struktur für Terminverwaltung eines kleinen Dienstleisters, inkl. einer gefilterten Ansicht 'Termine morgen'." },
+        { title:"Erinnerungs-Automation bauen", tool:"Make.com + Telegram", goal:"Automatische Erinnerung 24h vor dem Termin.", time:"~75 Min", tip:"24h vorher ist optimal — genug Vorlauf zum Absagen, nah genug zum Erinnern.",
+          steps:["Make.com-Szenario: täglich 'Termine morgen' aus Airtable holen","Pro Termin eine freundliche Erinnerung senden","Bestätigen/Absagen per Antwort ermöglichen","Status in Airtable zurückschreiben"],
+          prompt:"Wie baue ich in Make.com eine tägliche Automation, die allen Kunden mit Termin morgen eine Erinnerung per Telegram schickt und ihre Antwort (bestätigt/abgesagt) zurück in Airtable schreibt?" },
+        { title:"Freundliche Nachrichten-Vorlagen", tool:"Claude", goal:"Nachrichten, die nett klingen statt roboterhaft.", time:"~20 Min", tip:"Persönlich + kurz. Emoji sparsam. Klingt wie der Inhaber, nicht wie Software.",
+          steps:["Erinnerungs-, Bestätigungs- und Absage-Text schreiben","An den Ton des Betriebs anpassen (locker/seriös)","Platzhalter für Name/Zeit einbauen","2 Varianten zum Testen erstellen"],
+          prompt:"Schreib mir 3 kurze, freundliche Terminerinnerungs-Nachrichten (mit Platzhaltern für Name und Uhrzeit) für einen [Friseur/Kosmetik/Praxis], die persönlich statt automatisiert klingen." },
+        { title:"Mit 1 Betrieb live testen", tool:"Direktkontakt", goal:"Beweis, dass No-Shows sinken.", time:"~2 Wochen", tip:"Vorher/Nachher-Zahl der No-Shows ist dein Verkaufsargument — miss es.",
+          steps:["Einen Betrieb finden (Bekannte, eigener Friseur)","Termine 2 Wochen über das System laufen lassen","No-Show-Rate vorher vs. nachher vergleichen","Feedback zum Ablauf einholen"],
+          prompt:"Welche einfachen Kennzahlen sollte ich beim Testlauf meines Terminerinnerungs-Bots messen, um dem Betrieb den Nutzen schwarz auf weiß zu zeigen?" },
+        { title:"Als Abo verkaufen", tool:"Stripe", goal:"Erste zahlende Betriebe.", time:"~2 Std", tip:"Rechne den Nutzen vor: '1 verhinderter No-Show = dein Monatsbeitrag'.",
+          steps:["Monatspreis festlegen (deutlich unter dem Nutzen)","Case Study aus dem Piloten bauen","3-5 ähnliche Betriebe ansprechen","Einrichtung + Stripe-Abo anbieten"],
+          prompt:"Hilf mir, den Nutzen meines Terminerinnerungs-Bots in eine einfache Rechnung zu packen, die einem Betrieb zeigt, dass sich das Abo ab dem ersten verhinderten No-Show lohnt." },
+      ]},
+    { id:"v15", emoji:"🐾", name:"PixelPet", type:"Game · Viral PWA",
+      tagline:"Süchtig machendes virtuelles Haustier (Tamagotchi-Revival) als installierbare PWA — viral über 'mein Pet'-Clips, monetarisiert über Skins & Accessoires.",
+      why:"Nostalgie + Sammeltrieb + tägliche Gewohnheit = hohe Bindung. Virtuelle Pets triggern täglichen Re-Open (füttern/pflegen), und kosmetische Items verkaufen sich hervorragend an eine emotional gebundene Community.",
+      stack:["HTML/Canvas (Single-File)","Supabase (Speicherstand)","Vercel/Pages"],
+      fit:["baris","jonas"], status:"idea", progress:0, guided:true,
+      subtasks:[
+        { title:"Kern-Loop bauen: füttern, pflegen, wachsen", tool:"Claude Code", goal:"Ein spielbares Pet, das man täglich pflegen will.", time:"~2 Std", tip:"Der tägliche Grund zum Wiederkommen ist alles — Pet wird 'traurig', wenn man weg bleibt.",
+          steps:["Pet-Zustände definieren (Hunger, Laune, Energie)","Von Claude Code eine erste Canvas-Version bauen lassen","Aktionen: füttern, spielen, schlafen","Zustand sinkt über Zeit → Grund zum Wiederkommen"],
+          prompt:"Baue mir ein Single-File HTML/Canvas 'virtuelles Haustier': es hat Hunger, Laune und Energie, die über Zeit sinken. Buttons zum Füttern, Spielen, Schlafen. Mobile-first, süßer minimalistischer Look." },
+        { title:"Wachstum & Level einbauen", tool:"Claude Code", goal:"Sichtbarer Fortschritt, der bindet.", time:"~60 Min", tip:"Sichtbare Evolution (Baby → erwachsen) ist der stärkste Grund dranzubleiben.",
+          steps:["Pet entwickelt sich mit guter Pflege weiter (Level/Stufen)","Visuelle Veränderung bei jedem Level","Kleine Belohnungen/Achievements","Streak-Zähler für tägliche Pflege"],
+          prompt:"Erweitere mein virtuelles Pet um ein Level-System: mit guter Pflege entwickelt es sich sichtbar weiter (mehrere Wachstumsstufen), plus einen Streak-Zähler für tägliche Pflege." },
+        { title:"Speicherstand & Cloud", tool:"Supabase", goal:"Das Pet lebt geräteübergreifend weiter.", time:"~45 Min", tip:"Cloud-Speicher = man verliert sein Pet nie → emotionale Bindung bleibt.",
+          steps:["Supabase-Tabelle für Speicherstände","Beim Öffnen laden, bei Aktion speichern","Einfache Anmeldung (Name/Code) genügt zum Start","Offline-Fallback über localStorage"],
+          prompt:"Zeig mir, wie ich den Spielstand meines Browser-Pets in Supabase speichere und beim nächsten Öffnen (auch auf anderem Gerät) wieder lade." },
+        { title:"5 Viral-Clips drehen", tool:"CapCut", goal:"Content, der zum Nachmachen anregt.", time:"~90 Min", tip:"'Mein Pet nach 7 Tagen' — Fortschritt zeigen triggert 'will ich auch'.",
+          steps:["Screen-Recordings von süßen Momenten (Level-Up, Reaktionen)","In CapCut auf 15-20 Sek. mit Trend-Sound schneiden","Text-Hook: 'Ich hab wieder ein Tamagotchi und es ist eskaliert'","Link/QR zum Spiel in Bio"],
+          prompt:"Gib mir 5 TikTok-Hook-Texte für Clips über ein süßes virtuelles Browser-Pet, die Nostalgie wecken und zum Ausprobieren anregen." },
+        { title:"Skins & Accessoires verkaufen", tool:"Stripe", goal:"Erste Einnahmen über kosmetische Items.", time:"~90 Min", tip:"Nur Kosmetik verkaufen — niemals Vorteile. Fairness hält die Community.",
+          steps:["3-5 kosmetische Items entwerfen (Farben, Hüte, Hintergründe)","Kauf über Stripe-Link freischalten","Item im Spielstand speichern","Saisonale/limitierte Items für Dringlichkeit"],
+          prompt:"Welche kosmetischen (nicht spielverändernden) Items könnte ich für ein virtuelles Pet verkaufen, und wie schalte ich sie nach einer Stripe-Zahlung im Spiel frei?" },
+      ]},
+    { id:"v16", emoji:"📄", name:"ResumeForge", type:"Micro-SaaS · KI-Tool",
+      tagline:"KI-Bewerbungs-Optimierer: Lebenslauf + Stellenanzeige rein → maßgeschneiderte, ATS-taugliche Bewerbung raus. Bezahlung pro Optimierung oder Abo.",
+      why:"Jeder Bewerber will bessere Chancen und die meisten Lebensläufe scheitern an ATS-Filtern. Ein Tool, das den Lebenslauf gezielt auf die Stelle zuschneidet, löst ein akutes Problem — dafür zahlen Leute sofort.",
+      stack:["Claude","Supabase","Stripe","einfache Web-App"],
+      fit:["oscar","sebi"], status:"idea", progress:0, guided:true,
+      subtasks:[
+        { title:"Kern-Prompt perfektionieren", tool:"Claude", goal:"Ein Prompt, der wirklich bessere Bewerbungen liefert.", time:"~60 Min", tip:"Teste mit deinem eigenen Lebenslauf + echten Anzeigen — du merkst sofort, ob's taugt.",
+          steps:["Lebenslauf + Stellenanzeige als Input definieren","Prompt: passe CV gezielt auf die Anzeige an (Keywords, Formulierungen)","Mit 3 echten Stellen testen und verfeinern","Auf ATS-Tauglichkeit achten (klare Struktur, Keywords)"],
+          prompt:"Hier ist mein Lebenslauf: [CV] und diese Stellenanzeige: [ANZEIGE]. Schneide den Lebenslauf gezielt auf die Stelle zu: passende Keywords, umformulierte Bullet-Points, ATS-freundliche Struktur. Erfinde nichts dazu." },
+        { title:"Web-App drumherum bauen", tool:"Claude Code + Supabase", goal:"Eine Seite, wo man reinpaste und Ergebnis bekommt.", time:"~2,5 Std", tip:"Zwei Textfelder + ein Button — nicht mehr. Einfachheit verkauft.",
+          steps:["Zwei Eingabefelder (CV, Anzeige) + Button","Backend ruft Claude mit dem Prompt auf","Ergebnis anzeigen + als Text/PDF exportieren","Nutzung in Supabase zählen"],
+          prompt:"Baue mir eine einfache Web-App mit zwei Textfeldern (Lebenslauf, Stellenanzeige) und einem Button, der im Hintergrund eine KI-Optimierung ausführt und das Ergebnis anzeigt und als Datei exportierbar macht." },
+        { title:"Gratis-Testlauf begrenzen", tool:"Konzept", goal:"Kostenloses Probieren, dann Bezahlschranke.", time:"~45 Min", tip:"1 gratis Optimierung zeigt den Wert, dann zahlen — 'Freemium' konvertiert am besten.",
+          steps:["Erste Optimierung gratis anbieten","Danach Bezahlschranke (pro Optimierung oder Abo)","Wert klar zeigen: Vorher/Nachher-Vergleich","Preis testen (z.B. 3-5€ pro Optimierung)"],
+          prompt:"Wie strukturiere ich ein Freemium-Modell für mein Bewerbungs-Tool: erste Optimierung gratis, danach Bezahlung — und welcher Preis ist realistisch?" },
+        { title:"Erste Nutzer in Job-Communities", tool:"Reddit / Gruppen", goal:"Echte Bewerber, die es nutzen.", time:"~1 Woche", tip:"Bewerbungs-Subreddits/Gruppen sind voll motivierter Zielgruppe — dort ehrlich anbieten.",
+          steps:["Job-/Karriere-Communities finden","Kostenlose Optimierungen gegen Feedback anbieten","Erfolgsgeschichten sammeln (Einladung zum Gespräch bekommen?)","Tool anhand des Feedbacks nachschärfen"],
+          prompt:"Schreib mir einen hilfreichen, nicht-werblichen Post für ein Karriere-Forum, in dem ich anbiete, kostenlos ein paar Lebensläufe für eine konkrete Stelle zu optimieren, im Tausch für Feedback." },
+        { title:"Stripe & Abo scharf schalten", tool:"Stripe", goal:"Erste zahlende Nutzer.", time:"~90 Min", tip:"Biete beides: Einzelkauf für Einmal-Bewerber, Abo für aktive Jobsucher.",
+          steps:["Stripe-Zahlung pro Optimierung einrichten","Optional Monats-Abo für Vielbewerber","Nutzung mit Zahlung in Supabase verknüpfen","Ersten zahlenden Nutzer gewinnen"],
+          prompt:"Zeig mir, wie ich mit Stripe sowohl Einzelzahlungen (pro Optimierung) als auch ein Monats-Abo anbiete und den Zugang in meiner App entsprechend freischalte." },
+      ]},
+    { id:"v17", emoji:"📈", name:"DropBrief", type:"SaaS · E-Commerce-Tool",
+      tagline:"Täglicher Trend-Radar für Dropshipper & Creator: scannt aufkommende Produkte/Trends und liefert einen kompakten Report. Abo-Modell.",
+      why:"Im E-Commerce entscheidet Timing — wer einen Trend 3 Tage früher sieht, gewinnt. Ein Tool, das Trends automatisch bündelt, spart Stunden Recherche und verkauft sich als planbares Abo an eine kaufkräftige Zielgruppe.",
+      stack:["Make.com","Claude","Supabase","Stripe"],
+      fit:["oscar","jonas"], status:"idea", progress:0, guided:true,
+      subtasks:[
+        { title:"Trend-Quellen definieren", tool:"Recherche", goal:"Eine Liste zuverlässiger Trend-Signale.", time:"~45 Min", tip:"Kombiniere mehrere Quellen — ein einzelnes Signal ist oft Rauschen.",
+          steps:["Quellen sammeln (TikTok-Sounds/Tags, Amazon Movers, Trend-Seiten)","Kriterien für 'aufkommender Trend' festlegen","Eine Nische fokussieren (z.B. Home-Gadgets)","In Airtable/Doc strukturieren"],
+          prompt:"Welche kostenlosen oder günstigen Quellen eignen sich, um aufkommende E-Commerce-Produkttrends früh zu erkennen, und woran erkenne ich ein echtes Signal statt Rauschen?" },
+        { title:"Automatische Sammlung bauen", tool:"Make.com", goal:"Trends landen automatisch an einem Ort.", time:"~75 Min", tip:"Täglich um dieselbe Zeit sammeln — Konsistenz macht Trends vergleichbar.",
+          steps:["Make.com-Szenario: Quellen täglich abrufen","Ergebnisse in Supabase/Airtable ablegen","Duplikate & Rauschen herausfiltern","Über mehrere Tage Muster sichtbar machen"],
+          prompt:"Wie baue ich in Make.com eine tägliche Sammlung von Produkttrends aus mehreren Quellen, die Ergebnisse strukturiert speichert und Duplikate herausfiltert?" },
+        { title:"KI-Report generieren", tool:"Claude", goal:"Aus Rohdaten wird ein lesbarer Tages-Report.", time:"~45 Min", tip:"Weniger ist mehr — die Top 5 mit klarer Begründung schlagen eine lange Liste.",
+          steps:["Prompt: Rohdaten → Top 5 Trends mit Einschätzung","Format: Produkt, warum es trended, Einschätzung","Mit echten Tagen testen","Report-Vorlage für Wiedererkennung"],
+          prompt:"Hier sind heute gesammelte Produkt-Signale: [DATEN]. Wähle die 5 vielversprechendsten Trends aus und schreib zu jedem 2 Sätze: was es ist und warum es gerade an Fahrt gewinnt." },
+        { title:"Beta mit 5 Testern", tool:"Direktkontakt", goal:"Echtes Feedback von der Zielgruppe.", time:"~1 Woche", tip:"Dropshipper-Communities sind aktiv und teilen gern Feedback — dort suchen.",
+          steps:["5 Dropshipper/Creator finden","1 Woche gratis Reports schicken","Feedback: nützlich? würdest du zahlen?","Report anhand des Feedbacks verbessern"],
+          prompt:"Schreib mir eine kurze Nachricht an Dropshipper in einer Community, in der ich anbiete, ihnen eine Woche lang kostenlos einen täglichen Trend-Report zu schicken, im Tausch für ehrliches Feedback." },
+        { title:"Als Abo launchen", tool:"Stripe", goal:"Erste zahlende Abonnenten.", time:"~2 Std", tip:"Trend-Tools rechtfertigen 20-50€/Monat, wenn sie echten Zeitvorteil liefern.",
+          steps:["Monatspreis festlegen","Zugang nach Zahlung automatisieren","Frühbucher-Rabatt für die ersten Tester","Report-Zustellung an Zahler einrichten"],
+          prompt:"Hilf mir, ein einfaches Abo-Modell für einen täglichen Trend-Report-Service zu strukturieren, inkl. Frühbucher-Angebot für die ersten Kunden." },
+      ]},
+    { id:"v18", emoji:"⚔️", name:"StudyDuel", type:"App · EdTech",
+      tagline:"1-gegen-1 Quiz-Lern-App für Schüler & Studenten — viral über Klassen-Challenges und Bestenlisten. Lernen als Wettkampf.",
+      why:"Lernen allein ist langweilig, Wettkampf motiviert. Eine App, in der man Freunde/Klassenkameraden herausfordert, verbreitet sich organisch über Einladungen — und Bildung ist eine riesige, dauerhafte Zielgruppe.",
+      stack:["Supabase Realtime","HTML/JS","Vercel","Claude (Fragen)"],
+      fit:["baris","sebi"], status:"idea", progress:0, guided:true,
+      subtasks:[
+        { title:"Quiz-Kern bauen", tool:"Claude Code", goal:"Ein spielbares Quiz für 1 Person.", time:"~90 Min", tip:"Kurze Runden (5-10 Fragen) — schnell nochmal spielbar schlägt lang.",
+          steps:["Fachbereich wählen (z.B. Abi-Fächer, Führerschein)","Quiz-Runde mit Fragen + Timer bauen lassen","Punktesystem (schneller = mehr Punkte)","Ergebnisscreen mit 'nochmal'"],
+          prompt:"Baue mir ein Web-Quiz für [Fach]: 10 Multiple-Choice-Fragen mit Timer, Punkte je nach Geschwindigkeit, Ergebnisscreen. Mobile-first, klarer Look." },
+        { title:"Fragen mit KI erzeugen", tool:"Claude", goal:"Ein großer Vorrat an guten Fragen.", time:"~60 Min", tip:"Lass Claude Schwierigkeitsgrade markieren — dann kannst du Runden fair mischen.",
+          steps:["Themen/Lehrplan als Basis nehmen","Von Claude Fragen + 4 Antworten + richtige Lösung generieren","Auf Korrektheit stichprobenartig prüfen","In Supabase als Fragenpool speichern"],
+          prompt:"Erstelle mir 20 Multiple-Choice-Fragen zum Thema [Thema] mit je 4 Antworten, der richtigen Lösung und einer Schwierigkeitsstufe (leicht/mittel/schwer)." },
+        { title:"1-gegen-1 Duell mit Realtime", tool:"Supabase Realtime", goal:"Zwei Leute spielen live dieselbe Runde.", time:"~2 Std", tip:"Erst mit 2 Tabs testen, dann mit echten Freunden auf 2 Handys.",
+          steps:["Duell-Raum mit Code erstellen","Beide bekommen dieselben Fragen gleichzeitig","Punkte live vergleichen (Supabase Realtime)","Gewinner-Screen am Ende"],
+          prompt:"Erklär mir, wie ich mit Supabase Realtime ein 1-gegen-1-Quizduell baue: beide Spieler bekommen dieselben Fragen gleichzeitig und sehen live den Punktestand des Gegners." },
+        { title:"Bestenliste & Klassen-Challenge", tool:"Claude Code + Supabase", goal:"Sozialer Druck, der zum Wiederkommen bringt.", time:"~75 Min", tip:"Wöchentliche Bestenliste, die sich zurücksetzt — gibt immer wieder einen frischen Grund.",
+          steps:["Globale + Freundes-Bestenliste bauen","Klassen-/Gruppen-Code zum gemeinsamen Ranking","Wöchentlicher Reset für Spannung","Einladelink für neue Spieler"],
+          prompt:"Baue eine wöchentliche Bestenliste mit Gruppen-Code, sodass eine Klasse gemeinsam in einem Ranking antritt, das sich jede Woche zurücksetzt." },
+        { title:"Viral testen mit einer echten Klasse", tool:"Schulen/Unis", goal:"Beweis, dass es sich organisch verbreitet.", time:"~1 Woche", tip:"Eine begeisterte Klasse zieht die nächste nach — beobachte, ob Einladungen entstehen.",
+          steps:["Eine echte Klasse/Lerngruppe gewinnen","Vor einer Prüfung als Lernhilfe einsetzen","Beobachten: laden sie von selbst weitere ein?","Reibungspunkte im Onboarding glätten"],
+          prompt:"Welche 5 Kennzahlen zeigen mir, ob sich meine Lern-Duell-App organisch verbreitet (nicht nur genutzt wird), und wie mache ich das Einladen von Freunden möglichst einfach?" },
+      ]},
+    { id:"v19", emoji:"🎙️", name:"VoiceNote → Post", type:"SaaS · Creator-Tool",
+      tagline:"Sprachnachricht rein, fertiger Blog-/LinkedIn-Post raus — für Creator & Solopreneure, die keine Zeit zum Schreiben haben. Abo-Modell.",
+      why:"Reden ist 5x schneller als tippen, aber Verschriftlichen kostet Zeit. Ein Tool, das aus einer Sprachnotiz einen polierten Post macht, spricht jeden Creator/Selbstständigen an — planbarer Abo-Umsatz.",
+      stack:["Whisper (Transkription)","Claude","Supabase","Stripe"],
+      fit:["jonas","oscar"], status:"idea", progress:0, guided:true,
+      subtasks:[
+        { title:"Ablauf manuell durchspielen", tool:"Whisper + Claude", goal:"Ein Beispiel-Post aus einer echten Sprachnotiz.", time:"~45 Min", tip:"Erst manuell verstehen, was gut klingt — dann automatisieren.",
+          steps:["Eine 2-Min-Sprachnotiz aufnehmen","Mit Whisper transkribieren","Von Claude in einen Post umwandeln lassen","Zielformat wählen (Blog, LinkedIn, Instagram)"],
+          prompt:"Hier ist das Transkript einer Sprachnotiz: [TRANSKRIPT]. Mach daraus einen strukturierten, gut lesbaren [LinkedIn-Post/Blogartikel] in meinem Tonfall, ohne den Inhalt zu verfälschen." },
+        { title:"Upload → Post automatisieren", tool:"Claude Code", goal:"Audio hochladen, Post kommt raus.", time:"~2,5 Std", tip:"Zeig einen Ladebalken ('transkribiere… schreibe…') — Warten ohne Feedback nervt.",
+          steps:["Upload-Seite für Audio bauen","Transkription + Umwandlung im Hintergrund","Fertigen Post zum Kopieren anzeigen","Format-Auswahl (Blog/LinkedIn/IG)"],
+          prompt:"Baue mir eine Web-App: Nutzer lädt eine Audiodatei hoch, im Hintergrund läuft Transkription + Umwandlung in einen Post im gewählten Format, am Ende erscheint der fertige Text zum Kopieren." },
+        { title:"Stil-Anpassung pro Nutzer", tool:"Claude", goal:"Posts klingen nach dem Nutzer, nicht nach KI.", time:"~45 Min", tip:"Ein paar Beispiel-Posts des Nutzers als Stilvorlage machen den Unterschied.",
+          steps:["Option: Nutzer gibt 1-2 eigene Beispiel-Posts an","Claude übernimmt Ton & Struktur daraus","Format-Presets (locker/professionell)","Ergebnis mit/ohne Stilvorlage vergleichen"],
+          prompt:"Hier sind 2 Beispiel-Posts von mir: [BEISPIELE]. Analysiere meinen Schreibstil und wende ihn auf dieses Transkript an: [TRANSKRIPT]." },
+        { title:"5 Creator kostenlos testen lassen", tool:"Direktkontakt", goal:"Ehrliches Feedback von der Zielgruppe.", time:"~1 Woche", tip:"Vielbeschäftigte Creator lieben Zeitersparnis — genau dein Verkaufsargument.",
+          steps:["5 kleine Creator/Selbstständige ansprechen","Gratis-Nutzung gegen Feedback anbieten","Fragen: Zeit gespart? Qualität okay?","Tool nachschärfen"],
+          prompt:"Schreib mir eine kurze, persönliche Nachricht an einen Creator, in der ich anbiete, dass er seine Posts künftig einfach einsprechen kann und mein Tool sie fertig schreibt — kostenloser Test gegen Feedback." },
+        { title:"Abo scharf schalten", tool:"Stripe", goal:"Erste zahlende Abonnenten.", time:"~90 Min", tip:"X Posts/Monat gratis, dann Abo — die Vielnutzer konvertieren zuerst.",
+          steps:["Freimenge festlegen (z.B. 3 Posts/Monat)","Danach Monats-Abo","Stripe + Nutzungszählung in Supabase","Zufriedene Tester zuerst umwandeln"],
+          prompt:"Zeig mir, wie ich ein Freemium-Abo (X gratis Posts/Monat, dann Bezahlung) mit Stripe umsetze und die Nutzung pro Konto in Supabase zähle." },
+      ]},
+    { id:"v20", emoji:"🎁", name:"GiftGenie", type:"Content · Affiliate",
+      tagline:"KI-Geschenkefinder: ein paar Fragen zur Person → passende Geschenkideen mit Affiliate-Links. Saisonaler Traffic-Magnet ohne eigenes Lager.",
+      why:"Geschenke suchen ist Stress — ein Tool, das in 30 Sekunden Ideen liefert, wird gern geteilt. Über Affiliate-Links (Amazon/Etsy) verdienst du an jedem Kauf, ohne Produkte oder Support zu haben. Saisonspitzen (Weihnachten, Muttertag) bringen kostenlosen Traffic.",
+      stack:["Claude","statische Web-Seite","Affiliate-Programme","Vercel/Pages"],
+      fit:["sebi","christian"], status:"idea", progress:0, guided:true,
+      subtasks:[
+        { title:"Empfehlungs-Logik bauen", tool:"Claude", goal:"Gute Geschenkideen aus wenigen Angaben.", time:"~60 Min", tip:"3-4 Fragen reichen (für wen, Anlass, Budget, Interessen) — mehr schreckt ab.",
+          steps:["Eingaben definieren: für wen, Anlass, Budget, Hobbys","Prompt: daraus 5 konkrete Geschenkideen + kurze Begründung","Mit verschiedenen Personen testen","Ideen sollen suchbar/verlinkbar sein"],
+          prompt:"Ich suche ein Geschenk für [Person: z.B. Vater, 55, mag Grillen & Technik], Anlass [X], Budget [Y]. Gib mir 5 konkrete Geschenkideen mit je einem Satz, warum es passt." },
+        { title:"Einfache Web-Seite bauen", tool:"Claude Code", goal:"Eine Seite: Fragen beantworten → Ideen sehen.", time:"~2 Std", tip:"Ergebnis als schöne Karten mit 'Ansehen'-Button — das lädt zum Klick ein.",
+          steps:["Formular mit den paar Fragen bauen","Bei Absenden KI-Ideen anzeigen","Jede Idee als Karte mit Bild + Link","Mobil sauber & schnell"],
+          prompt:"Baue mir eine einfache Web-Seite: ein kurzes Formular (für wen, Anlass, Budget, Interessen), nach dem Absenden werden 5 Geschenkideen als hübsche Karten mit Beschreibung und einem 'Ansehen'-Button angezeigt." },
+        { title:"Affiliate-Links einbauen", tool:"Amazon/Etsy Partner", goal:"An jedem Kauf mitverdienen.", time:"~60 Min", tip:"Ehrlich kennzeichnen ('enthält Affiliate-Links') — schafft Vertrauen und ist Pflicht.",
+          steps:["Bei einem Affiliate-Programm anmelden (Amazon PartnerNet o.ä.)","Ideen mit passenden Produktlinks verknüpfen","Affiliate-Kennzeichnung ergänzen (rechtlich nötig)","Testen, dass Links korrekt tracken"],
+          prompt:"Erklär mir Schritt für Schritt, wie ich mich beim Amazon-Partnerprogramm anmelde und meine Geschenkempfehlungen korrekt mit Affiliate-Links versehe (inkl. Pflicht-Kennzeichnung)." },
+        { title:"Auf eine Saison zuspitzen", tool:"SEO/Content", goal:"Kostenloser Traffic zur richtigen Zeit.", time:"~90 Min", tip:"6-8 Wochen VOR dem Anlass starten — Google und Leute suchen früh.",
+          steps:["Nächsten Anlass wählen (Weihnachten, Muttertag, Geburtstag)","Seite darauf zuspitzen ('Geschenke für [Zielgruppe] 2026')","Ein paar SEO-Texte / Listen ergänzen","Rechtzeitig vor der Saison live gehen"],
+          prompt:"Gib mir 10 SEO-freundliche Seitentitel und Themen für einen Geschenkefinder, der auf den Anlass [X] und die Zielgruppe [Y] zugespitzt ist." },
+        { title:"Verbreiten & optimieren", tool:"Social / Pinterest", goal:"Erste Klicks und erste Provisionen.", time:"laufend", tip:"Pinterest liebt Geschenklisten — dort mit hübschen Pins viel kostenloser Traffic.",
+          steps:["Seite in passenden Gruppen/Pinterest teilen","Beliebteste Ideen-Kategorien erkennen","Mehr Content zu den Gewinnern erstellen","Conversion (Klick → Kauf) beobachten"],
+          prompt:"Welche kostenlosen Kanäle eignen sich am besten, um einen saisonalen Geschenkefinder zu verbreiten, und wie baue ich einen teilbaren Pinterest-Pin dafür?" },
+      ]},
   ];
 }
 
@@ -1170,7 +1390,13 @@ const TUT_META = {
       ["Eine App, die das Matching automatisch macht.","~4 Std","Erst wenn Hand-Matching läuft, lohnt sich die App."],
       ["Ein Wachstumsmotor über Einladungen.","~2 Std","Bonus fürs Einladen — aber nie wie ein Schneeballsystem."]],
 };
-function tutMeta(pid,i){ const m=TUT_META[pid]; return m&&m[i] ? {goal:m[i][0], time:m[i][1], tip:m[i][2]} : null; }
+function tutMeta(pid,i){
+  const s = project(pid)?.subtasks?.[i];
+  if(s && (s.goal || s.time || s.tip)) return { goal:s.goal||"", time:s.time||"", tip:s.tip||"" };
+  const m=TUT_META[pid]; return m&&m[i] ? {goal:m[i][0], time:m[i][1], tip:m[i][2]} : null;
+}
+const SEED_IDS = new Set(["pA","pB","pC","v1","v2","v3","v4","v5","v6","v7","v8","v9","v10","v11","v12","v13","v14","v15","v16","v17","v18","v19","v20"]);
+function isCustomVenture(p){ return p && p.guided && !SEED_IDS.has(p.id); }
 
 /* ============================================================
    CLOUD-SYNC (Supabase) — localStorage ist Cache, DB ist Quelle der Wahrheit
@@ -1187,7 +1413,7 @@ function updateSyncPill(){
   else { pill.classList.remove("live"); lbl.textContent = sb ? "Sync…" : "Lokal"; }
 }
 
-function projectRow(p){ return { id:p.id, emoji:p.emoji, name:p.name, type:p.type, tagline:p.tagline||null, why:p.why||null, stack:p.stack||[], status:p.status, progress:p.progress, guided:!!p.guided, members:p.members||[] }; }
+function projectRow(p){ const r = { id:p.id, emoji:p.emoji, name:p.name, type:p.type, tagline:p.tagline||null, why:p.why||null, stack:p.stack||[], status:p.status, progress:p.progress, guided:!!p.guided, members:p.members||[] }; if(isCustomVenture(p)) r.subtasks = p.subtasks || []; return r; }
 function taskRow(t){ return { id:t.id, title:t.title, project_id:t.projectId||null, assignee:t.assignee||null, status:t.status, prio:t.prio }; }
 
 async function cloudUpsertProject(p){ if(!sb||!p) return; try{ await sb.from("projects").upsert(projectRow(p)); }catch(e){} }
@@ -1238,7 +1464,7 @@ async function initCloud(){
       state.projects.forEach(p=>{ const r=byId[p.id]; if(r){ p.status=r.status; p.progress=r.progress; p.members=r.members||[]; if(r.name) p.name=r.name; if(r.type) p.type=r.type; } });
       const knownIds = new Set(state.projects.map(p=>p.id));
       projRows.filter(r=>!knownIds.has(r.id)).forEach(r=>{
-        state.projects.push({ id:r.id, emoji:r.emoji, name:r.name, type:r.type, tagline:r.tagline, why:r.why, stack:r.stack||[], status:r.status, progress:r.progress, guided:r.guided, members:r.members||[] });
+        state.projects.push({ id:r.id, emoji:r.emoji, name:r.name, type:r.type, tagline:r.tagline, why:r.why, stack:r.stack||[], status:r.status, progress:r.progress, guided:r.guided, members:r.members||[], subtasks:r.subtasks||[] });
       });
     }
     if(taskRows && taskRows.length){ state.tasks = taskRows.map(r=>({ id:r.id, title:r.title, projectId:r.project_id||"", assignee:r.assignee||"", status:r.status, prio:r.prio })); }
@@ -1275,8 +1501,8 @@ function handleRealtimeProject(payload){
   if(payload.eventType==="DELETE"){ state.projects = state.projects.filter(p=>p.id!==payload.old.id); }
   else {
     const r=payload.new; let p=project(r.id);
-    if(p){ p.status=r.status; p.progress=r.progress; p.members=r.members||[]; if(r.name) p.name=r.name; if(r.type) p.type=r.type; }
-    else { state.projects.push({ id:r.id, emoji:r.emoji, name:r.name, type:r.type, tagline:r.tagline, why:r.why, stack:r.stack||[], status:r.status, progress:r.progress, guided:r.guided, members:r.members||[] }); }
+    if(p){ p.status=r.status; p.progress=r.progress; p.members=r.members||[]; if(r.name) p.name=r.name; if(r.type) p.type=r.type; if(!SEED_IDS.has(r.id)){ p.emoji=r.emoji; p.tagline=r.tagline; p.why=r.why; p.stack=r.stack||[]; if(r.subtasks) p.subtasks=r.subtasks; } }
+    else { state.projects.push({ id:r.id, emoji:r.emoji, name:r.name, type:r.type, tagline:r.tagline, why:r.why, stack:r.stack||[], status:r.status, progress:r.progress, guided:r.guided, members:r.members||[], subtasks:r.subtasks||[] }); }
   }
   persist();
   if(tab==="projects"||tab==="home") render();
@@ -1678,10 +1904,81 @@ function closeSheet(){ $("#sheetWrap").classList.remove("show"); }
 function openQuickAdd(){
   openSheet(`<h3 class="sh-title">Neu anlegen</h3><div class="sh-sub">Landet sofort synchronisiert im Team-Board.</div>
     <div class="qa-grid">
+      <div class="qa" onclick="editVenture()"><div class="q-ico">${IC.route}</div><div class="qt">Venture</div><div class="qd">Eigener Fahrplan</div></div>
       <div class="qa" onclick="editProject()"><div class="q-ico">${IC.box}</div><div class="qt">Projekt</div><div class="qd">App · Game · Business</div></div>
       <div class="qa" onclick="editTask()"><div class="q-ico">${IC.checkSq}</div><div class="qt">Aufgabe</div><div class="qd">Zuweisen & tracken</div></div>
       <div class="qa" onclick="addIdea()"><div class="q-ico">${IC.bulb}</div><div class="qt">Idee</div><div class="qd">Festhalten</div></div>
     </div>`);
+}
+
+/* ---- Eigene Ventures + Schritte (selbst-erstellte Fahrpläne/Tutorials) ---- */
+function editVenture(id){
+  id = id || "";
+  const p = id?project(id):{ id:"", emoji:"🚀", name:"", type:"Business", tagline:"", why:"", stack:[], status:"idea", progress:0, guided:true, members:[], subtasks:[] };
+  const emo = PROJ_EMOJIS.map(e=>`<div class="ep ${e===p.emoji?'on':''}" onclick="pickEmoji(this,'vemoji')">${e}</div>`).join("");
+  openSheet(`<div class="sh-crumb num">${id?"Venture bearbeiten":"Neues Venture"}</div><h3 class="sh-title">${id?esc(p.name):"Eigenes Venture bauen"}</h3><div class="sh-sub">Definiere die Idee — die Schritte fügst du danach im Fahrplan hinzu.</div>
+    <input type="hidden" id="vemoji" value="${p.emoji}">
+    <label class="f"><span>Symbol</span><div class="emoji-pick" style="max-height:96px;overflow-y:auto">${emo}</div></label>
+    <label class="f"><span>Name</span><input id="vname" value="${esc(p.name)}" placeholder="z.B. Mein Newsletter"></label>
+    <label class="f"><span>Typ / Kategorie</span><input id="vtype" value="${esc(p.type)}" placeholder="Business · App · Content …"></label>
+    <label class="f"><span>Kurzbeschreibung</span><textarea id="vtag" placeholder="In 1-2 Sätzen: was ist das Venture?">${esc(p.tagline||"")}</textarea></label>
+    <label class="f"><span>Warum das zieht (optional)</span><textarea id="vwhy" placeholder="Warum funktioniert die Idee gerade jetzt?">${esc(p.why||"")}</textarea></label>
+    <label class="f"><span>Stack / Tools (mit Komma trennen)</span><input id="vstack" value="${esc((p.stack||[]).join(', '))}" placeholder="Claude Code, Supabase, Make.com"></label>
+    <div class="sh-actions">
+      ${id?`<button class="btn btn-d" onclick="delProject('${id}')">Löschen</button>`:""}
+      <button class="btn btn-p" onclick="saveVenture('${id}')">${id?"Speichern":"Weiter zum Fahrplan"}</button>
+    </div>`);
+}
+function saveVenture(id){
+  const name=$("#vname").value.trim(); if(!name){ toast("Name fehlt noch"); return; }
+  const data={ emoji:$("#vemoji").value, name, type:$("#vtype").value.trim()||"Venture", tagline:$("#vtag").value.trim(), why:$("#vwhy").value.trim(), stack:$("#vstack").value.split(",").map(s=>s.trim()).filter(Boolean), guided:true, status:"idea" };
+  let saved;
+  const existing = id ? project(id) : null;
+  if(existing){ saved=Object.assign(existing,data); toast("Venture gespeichert"); }
+  else { saved={ id:uid("p"), progress:0, members:[activeProfile], subtasks:[], ...data }; state.projects.unshift(saved); toast("Venture angelegt"); logActivity(`hat das Venture „${name}“ erstellt`); }
+  persist(); cloudUpsertProject(saved); openProject(saved.id);
+}
+const TIME_OPTS = ["~15 Min","~30 Min","~45 Min","~60 Min","~90 Min","~2 Std","~3 Std","~1 Woche","laufend"];
+function editStep(pid, i){
+  const p=project(pid); if(!p) return;
+  const isNew = (i===undefined || i===null || i==="");
+  const s = isNew ? { title:"", tool:"", goal:"", time:"~30 Min", tip:"", steps:[], prompt:"" } : p.subtasks[i];
+  const timeOpts = TIME_OPTS.map(t=>`<option ${s.time===t?'selected':''}>${t}</option>`).join("");
+  openSheet(`<div class="sh-crumb num">${esc(p.name)} · Schritt-Editor</div><h3 class="sh-title">${isNew?"Neuer Schritt":"Schritt bearbeiten"}</h3><div class="sh-sub">Das wird zur Anleitung, die dein Team Schritt für Schritt abarbeitet.</div>
+    <label class="f"><span>Titel des Schritts</span><input id="stitle" value="${esc(s.title)}" placeholder="z.B. Nische wählen & Konkurrenz checken"></label>
+    <div class="row2">
+      <label class="f"><span>Werkzeug / Tool</span><input id="stool" value="${esc(s.tool)}" placeholder="z.B. Claude Code"></label>
+      <label class="f"><span>Zeitaufwand</span><select id="stime">${timeOpts}</select></label>
+    </div>
+    <label class="f"><span>Ziel — „Am Ende hast du …"</span><input id="sgoal" value="${esc(s.goal||"")}" placeholder="Was ist danach fertig?"></label>
+    <label class="f"><span>Vorgehen (ein Schritt pro Zeile)</span><textarea id="ssteps" style="min-height:110px" placeholder="Erst dies…&#10;Dann das…&#10;Zum Schluss…">${esc((s.steps||[]).join("\n"))}</textarea></label>
+    <label class="f"><span>Pro-Tipp (optional)</span><input id="stip" value="${esc(s.tip||"")}" placeholder="Ein Trick, der Zeit/Fehler spart"></label>
+    <label class="f"><span>Fertiger Claude-Prompt (optional)</span><textarea id="sprompt" style="min-height:90px" placeholder="Der Prompt, den man bei Claude einfügt…">${esc(s.prompt||"")}</textarea></label>
+    <div class="sh-actions">
+      ${!isNew?`<button class="btn btn-d" onclick="delStep('${pid}',${i})">Löschen</button>`:""}
+      <button class="btn btn-g" onclick="openProject('${pid}')">Abbrechen</button>
+      <button class="btn btn-p" onclick="saveStep('${pid}',${isNew?"null":i})">Schritt speichern</button>
+    </div>`);
+}
+function saveStep(pid, i){
+  const p=project(pid); if(!p) return;
+  const title=$("#stitle").value.trim(); if(!title){ toast("Titel fehlt noch"); return; }
+  const step={ title, tool:$("#stool").value.trim()||"—", time:$("#stime").value, goal:$("#sgoal").value.trim(), steps:$("#ssteps").value.split("\n").map(x=>x.trim()).filter(Boolean), tip:$("#stip").value.trim(), prompt:$("#sprompt").value.trim() };
+  p.subtasks = p.subtasks || [];
+  if(i===null || i===undefined){ p.subtasks.push(step); } else { p.subtasks[i]=step; }
+  const done = p.subtasks.filter(s=>isSubDone(pid,s.title)).length;
+  p.progress = p.subtasks.length ? Math.round(done/p.subtasks.length*100) : 0;
+  persist(); cloudUpsertProject(p); toast("Schritt gespeichert"); openProject(pid);
+}
+function delStep(pid, i){
+  if(!confirm("Diesen Schritt löschen?")) return;
+  const p=project(pid); if(!p||!p.subtasks) return;
+  const removed = p.subtasks[i];
+  p.subtasks.splice(i,1);
+  if(removed){ state.subtasksDone=state.subtasksDone||{}; delete state.subtasksDone[subKey(pid,removed.title)]; cloudSetSub(pid,removed.title,false); }
+  const done = p.subtasks.filter(s=>isSubDone(pid,s.title)).length;
+  p.progress = p.subtasks.length ? Math.round(done/p.subtasks.length*100) : 0;
+  persist(); cloudUpsertProject(p); toast("Schritt gelöscht"); openProject(pid);
 }
 
 function editProject(id){
@@ -1768,10 +2065,13 @@ function openProject(id){
       <div class="lr-body"><div class="lr-t">${esc(m.name)}</div><div class="lr-s">${esc(m.role)}</div></div>
       <span class="lr-arrow">${IC.arrow}</span></div>`; }).join("");
   }
-  if(p.guided && p.subtasks){
-    body += `<div class="kicker"><h3>Fahrplan</h3><span class="k-meta num">${doneN}/${p.subtasks.length} erledigt</span></div><div class="tl">`;
-    body += p.subtasks.map((s,i)=>subtaskRow(p.id,s,i)).join("");
-    body += `</div>`;
+  const custom = isCustomVenture(p);
+  if(p.guided){
+    const subs = p.subtasks || [];
+    body += `<div class="kicker"><h3>Fahrplan</h3><span class="k-meta num">${doneN}/${subs.length} erledigt</span></div>`;
+    if(subs.length){ body += `<div class="tl">` + subs.map((s,i)=>subtaskRow(p.id,s,i,custom)).join("") + `</div>`; }
+    else if(custom){ body += `<div class="empty" style="padding:24px 16px"><div class="e-ico">${IC.route}</div><b>Noch keine Schritte</b><p>Bau deinen Fahrplan Schritt für Schritt auf — jeder Schritt wird zur Anleitung fürs Team.</p></div>`; }
+    if(custom){ body += `<button class="btn btn-g" style="width:100%;margin-top:6px" onclick="editStep('${p.id}')">+ Schritt hinzufügen</button>`; }
   } else {
     const tks=state.tasks.filter(t=>t.projectId===id);
     body += `<div class="kicker"><h3>Aufgaben</h3><span class="k-meta num">${tks.filter(t=>t.status!=="done").length} offen · ${tks.filter(t=>t.status==="done").length} erledigt</span></div>`;
@@ -1781,7 +2081,7 @@ function openProject(id){
       <span class="lr-arrow">${IC.arrow}</span></div>`).join("");
     else body += `<div style="color:var(--dim);font-size:12.5px;padding:6px 2px 2px">Noch keine Aufgaben in diesem Projekt.</div>`;
   }
-  body += `<div class="sh-actions" style="margin-top:18px"><button class="btn btn-g" onclick="editTask(null,'${id}')">+ Aufgabe</button><button class="btn btn-p" onclick="editProject('${id}')">Bearbeiten</button></div>`;
+  body += `<div class="sh-actions" style="margin-top:18px"><button class="btn btn-g" onclick="editTask(null,'${id}')">+ Aufgabe</button><button class="btn btn-p" onclick="${custom?`editVenture('${id}')`:`editProject('${id}')`}">Bearbeiten</button></div>`;
   openSheet(body);
 }
 
@@ -1800,7 +2100,7 @@ function toggleSub(pid,title){
   if(now){ confetti(); toast("Schritt erledigt"); logActivity(`hat „${title}“ in ${p.name} erledigt`); }
   openProject(pid);
 }
-function subtaskRow(pid,s,i){
+function subtaskRow(pid,s,i,editable){
   const done = isSubDone(pid,s.title);
   const safe = s.title.replace(/'/g,"\\'");
   const meta = tutMeta(pid,i);
@@ -1809,8 +2109,9 @@ function subtaskRow(pid,s,i){
     <div class="tl-title" onclick="openTutorial('${pid}',${i})">${esc(s.title)}</div>
     <div class="tl-meta">
       <span class="tag">${esc(s.tool)}</span>
-      ${meta?`<span class="tag ghost">${IC.clock} ${esc(meta.time)}</span>`:''}
-      <span class="tl-guide" onclick="openTutorial('${pid}',${i})">${IC.book} Anleitung öffnen</span>
+      ${meta&&meta.time?`<span class="tag ghost">${IC.clock} ${esc(meta.time)}</span>`:''}
+      <span class="tl-guide" onclick="openTutorial('${pid}',${i})">${IC.book} Anleitung</span>
+      ${editable?`<span class="tl-guide" style="color:var(--sub)" onclick="editStep('${pid}',${i})">${IC.box} Bearbeiten</span>`:''}
     </div>
   </div>`;
 }
@@ -1902,7 +2203,7 @@ function openSettings(){
     <div class="sysrow"><span class="k">Cloud-Sync</span><span class="v">${cloudReady?'<span class="sdot"></span> Live verbunden':'<span class="sdot" style="background:var(--amber)"></span> Lokal'}</span></div>
     <div class="sysrow"><span class="k">Datenregion</span><span class="v">EU (Irland)</span></div>
     <div class="sysrow"><span class="k">Realtime</span><span class="v">${cloudReady?'Aktiv — Änderungen in ~1 s beim Team':'Wartet auf Verbindung'}</span></div>
-    <div class="sysrow"><span class="k">Version</span><span class="v num">Sidequest OS 5.0 · Mono</span></div>
+    <div class="sysrow"><span class="k">Version</span><span class="v num">Sidequest OS 5.1 · Mono</span></div>
     <div class="kicker" style="margin:16px 2px 8px"><h3>Daten</h3></div>
     <div class="sh-actions" style="margin-top:4px">
       <button class="btn btn-g" style="flex:1" onclick="exportData()">${IC.download} Backup</button>
