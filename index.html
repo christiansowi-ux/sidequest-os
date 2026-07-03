@@ -1694,7 +1694,9 @@ function saveProject(id){
   let saved;
   if(id){ saved=Object.assign(project(id),data); toast("Gespeichert"); }
   else { saved={ id:uid("p"), guided:false, ...data }; state.projects.unshift(saved); toast("Projekt angelegt"); logActivity(`hat Projekt „${name}“ angelegt`); }
-  persist(); cloudUpsertProject(saved); closeSheet(); if(tab!=="projects")nav("projects"); else render();
+  persist(); cloudUpsertProject(saved); closeSheet();
+  if(!id && !saved.guided) projFilter = "all"; // neues eigenes Projekt darf nicht vom Ventures-Filter versteckt werden
+  if(tab!=="projects")nav("projects"); else render();
 }
 function delProject(id){ if(!confirm("Projekt wirklich löschen? Das gilt für das ganze Team."))return;
   const relatedTaskIds = state.tasks.filter(t=>t.projectId===id).map(t=>t.id);
