@@ -1,5 +1,5 @@
 /* Sidequest OS — service worker (offline app shell) */
-const CACHE = "sidequest-os-v3";
+const CACHE = "sidequest-os-v4";
 const ASSETS = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg", "./icon-maskable.svg"];
 
 self.addEventListener("install", e => {

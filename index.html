@@ -514,6 +514,97 @@
   .sysrow .k { color: var(--dim); font-weight: 600; }
   .sysrow .v { font-weight: 650; color: var(--sub); display: flex; align-items: center; gap: 6px; }
   .sysrow .v .sdot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+
+  /* ===== v4: Focus card ===== */
+  .focus {
+    position: relative; margin-top: 16px; padding: 17px 17px 16px;
+    border-radius: var(--r-lg); cursor: pointer; overflow: hidden;
+    background: linear-gradient(150deg, #12271f, #10141d 62%);
+    border: 1px solid #2ce0a733;
+    transition: transform .12s, border-color .15s;
+  }
+  .focus:active { transform: scale(.99); }
+  .focus::before { content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background: linear-gradient(var(--acc), var(--acc-2)); }
+  .focus.claim { background: linear-gradient(150deg, #1a1830, #10141d 62%); border-color: #6d5df03d; }
+  .focus.claim::before { background: linear-gradient(var(--acc-2), var(--blue)); }
+  .focus-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 9px; }
+  .focus-kick { display: inline-flex; align-items: center; gap: 6px; font-size: 10.5px; font-weight: 800; letter-spacing: .8px; text-transform: uppercase; color: var(--acc); }
+  .focus-kick svg { width: 13px; height: 13px; }
+  .focus.claim .focus-kick { color: #a89bff; }
+  .focus-go { color: var(--dim); } .focus-go svg { width: 17px; height: 17px; }
+  .focus-title { font-size: 17px; font-weight: 750; letter-spacing: -0.3px; line-height: 1.3; }
+  .focus-sub { color: var(--sub); font-size: 12.5px; line-height: 1.5; margin-top: 6px; }
+  .focus-meta { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+  .focus-cta { display: inline-flex; align-items: center; gap: 7px; margin-top: 13px; font-size: 13px; font-weight: 750; color: var(--acc); background: var(--acc-dim); border: 1px solid #2ce0a733; padding: 9px 13px; border-radius: 10px; }
+  .focus-cta svg { width: 15px; height: 15px; }
+  .focus.claim .focus-cta { color: #b9aeff; background: #6d5df016; border-color: #6d5df033; }
+
+  /* ===== v4: Quick row ===== */
+  .quick-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 9px; margin-top: 12px; }
+  .quick {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    padding: 13px 8px; border-radius: var(--r-md); cursor: pointer;
+    background: var(--panel); border: 1px solid var(--line); color: var(--sub);
+    font-family: inherit; font-size: 11.5px; font-weight: 700; transition: all .13s;
+  }
+  .quick:active { transform: scale(.95); border-color: var(--line-2); }
+  .quick svg { width: 19px; height: 19px; color: var(--acc); }
+
+  .chip.mine { color: var(--acc); background: var(--acc-dim); border-color: #2ce0a74d; }
+  .tag.ghost { color: var(--dim); background: transparent; }
+  .tag.ghost svg { width: 11px; height: 11px; vertical-align: -1px; }
+  .tag.tap { text-decoration: none; color: #a89bff; background: #6d5df012; border-color: #6d5df02e; }
+  .tag.tap svg { width: 10px; height: 10px; vertical-align: -1px; margin-left: 1px; }
+
+  .tool-ico { width: 38px; height: 38px; flex: 0 0 auto; border-radius: 10px; background: var(--elev); border: 1px solid var(--line); display: grid; place-items: center; font-size: 16px; font-weight: 800; color: var(--sub); }
+  .tool-ico svg { width: 17px; height: 17px; }
+  a.link-row { text-decoration: none; color: inherit; }
+
+  /* ===== v4: Tutorial richer ===== */
+  .tut-badges { display: flex; gap: 7px; margin-bottom: 14px; flex-wrap: wrap; }
+  .tut-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 700; color: var(--sub); background: var(--elev); border: 1px solid var(--line); padding: 6px 10px; border-radius: 8px; }
+  .tut-badge svg { width: 13px; height: 13px; color: var(--dim); }
+  .goal-box { display: flex; flex-direction: column; gap: 5px; background: linear-gradient(150deg, #12271f, var(--panel) 70%); border: 1px solid #2ce0a72e; border-radius: var(--r-md); padding: 12px 14px; margin-bottom: 4px; }
+  .goal-box .gb-lbl { display: inline-flex; align-items: center; gap: 6px; font-size: 10.5px; font-weight: 800; letter-spacing: .7px; text-transform: uppercase; color: var(--acc); }
+  .goal-box .gb-lbl svg { width: 13px; height: 13px; }
+  .goal-box .gb-txt { font-size: 14px; font-weight: 650; line-height: 1.45; }
+  .tip-box { display: flex; gap: 10px; align-items: flex-start; background: #f0a8320d; border: 1px solid #f0a83226; border-radius: var(--r-md); padding: 12px 14px; margin: 14px 0 4px; font-size: 13px; color: var(--sub); line-height: 1.5; }
+  .tip-box svg { width: 17px; height: 17px; color: var(--amber); flex: 0 0 auto; margin-top: 1px; }
+  .tip-box b { color: var(--amber); }
+  .term-lbl-row { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800; letter-spacing: .6px; text-transform: uppercase; color: var(--dim); margin: 18px 0 8px; }
+  .term-lbl-row svg { width: 13px; height: 13px; color: var(--acc); }
+  .btn-tool { background: var(--elev); color: var(--txt); border: 1px solid var(--line-2); text-decoration: none; }
+  .btn-tool svg { width: 15px; height: 15px; color: var(--acc); }
+  .btn-ghost2 { background: transparent; color: var(--sub); border: 1px dashed var(--line-2); font-size: 13px; }
+  .btn-ghost2 svg { width: 14px; height: 14px; }
+
+  /* ===== v4: Onboarding ===== */
+  #onboard { position: fixed; inset: 0; z-index: 450; display: none; align-items: flex-end; background: #000c; backdrop-filter: blur(4px); }
+  #onboard.show { display: flex; animation: obfade .3s; }
+  @keyframes obfade { from { opacity: 0; } to { opacity: 1; } }
+  .ob-card { width: 100%; max-width: 480px; margin: 0 auto; background: linear-gradient(180deg, var(--panel-2), var(--panel)); border: 1px solid var(--line); border-bottom: none; border-radius: 24px 24px 0 0; padding: 30px 24px calc(var(--safe-bottom) + 26px); text-align: center; animation: obup .38s cubic-bezier(.2,.8,.2,1); }
+  @keyframes obup { from { transform: translateY(100%); } to { transform: none; } }
+  .ob-ico { width: 64px; height: 64px; border-radius: 18px; margin: 0 auto 20px; background: linear-gradient(135deg, var(--acc), var(--acc-2)); display: grid; place-items: center; box-shadow: 0 14px 34px -10px #2ce0a766; }
+  .ob-ico svg { width: 30px; height: 30px; color: #04110c; }
+  .ob-t { font-size: 21px; font-weight: 800; letter-spacing: -0.4px; }
+  .ob-s { color: var(--sub); font-size: 14px; line-height: 1.55; margin: 10px auto 22px; max-width: 340px; }
+  .ob-dots { display: flex; justify-content: center; gap: 7px; margin-bottom: 22px; }
+  .ob-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--line-2); transition: all .2s; }
+  .ob-dot.on { width: 22px; border-radius: 99px; background: var(--acc); }
+  .ob-skip { margin-top: 14px; color: var(--dim); font-size: 12.5px; font-weight: 650; cursor: pointer; }
+
+  /* ===== v4: mobile touch tuning ===== */
+  .btn { min-height: 48px; }
+  .mbtn { min-height: 40px; }
+  .tl-title { cursor: pointer; }
+  .tl-guide { min-height: 26px; }
+  @media (max-width: 374px) {
+    .kpis { gap: 8px; } .kpi { padding: 12px 12px 10px; } .kpi .k-num { font-size: 24px; }
+    .quick { padding: 11px 5px; font-size: 11px; }
+    .page-title { font-size: 21px; }
+    .hero .big { font-size: 21px; }
+    .qa-grid { gap: 8px; } .qa { padding: 14px 8px; }
+  }
 </style>
 </head>
 <body>
@@ -575,6 +666,8 @@
   <div class="sheet" id="sheet"></div>
 </div>
 
+<div id="onboard"></div>
+
 <div id="toast"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -603,6 +696,15 @@ const IC = {
   upload: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V9"/><path d="m7 14 5-5 5 5"/><path d="M4 3h16"/></svg>',
   user: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>',
   phone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg>',
+  rocket: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.3-2 5-2 5s3.7-.5 5-2c.7-.9.7-2.2-.1-3a2.1 2.1 0 0 0-2.9 0z"/><path d="M12 15 9 12a11 11 0 0 1 5-8c3.5-2 6-1.5 6-1.5s.5 2.5-1.5 6a11 11 0 0 1-8 5z"/><path d="M9 12H4s.5-2.8 2-4c1.7-1.3 4 0 4 0"/><path d="M12 15v5s2.8-.5 4-2c1.3-1.7 0-4 0-4"/></svg>',
+  ext: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>',
+  help: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.2 9.3a2.8 2.8 0 0 1 5.4 1c0 1.9-2.8 2.5-2.8 2.5"/><path d="M12 17h.01"/></svg>',
+  grid: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.6"/><rect x="14" y="3" width="7" height="7" rx="1.6"/><rect x="3" y="14" width="7" height="7" rx="1.6"/><rect x="14" y="14" width="7" height="7" rx="1.6"/></svg>',
+  clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>',
+  flag: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22V4"/><path d="M4 4h12l-2 4 2 4H4"/></svg>',
+  play: '<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M7 4.5v15l13-7.5z"/></svg>',
+  hand: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13V5a1.6 1.6 0 0 1 3.2 0v6"/><path d="M11.2 11V4a1.6 1.6 0 0 1 3.2 0v7"/><path d="M14.4 11V6a1.6 1.6 0 0 1 3.2 0v8a6 6 0 0 1-6 6h-1.5a5 5 0 0 1-3.6-1.6L3 15s1.3-1.3 2.6-.4L8 16"/></svg>',
+  route: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M8.5 19H14a3.5 3.5 0 0 0 0-7h-4a3.5 3.5 0 0 1 0-7h5.5"/></svg>',
 };
 
 /* ---------- Hardcoded profiles + PINs ---------- */
@@ -928,6 +1030,129 @@ function timeAgo(iso){
 const ROLE_LABEL = { macher:"Macher", visionaer:"Visionär", finisher:"Finisher", growth:"Growth", koordinator:"Koordinator", kreativ:"Kreativ", allrounder:"Allrounder" };
 const SKILL_LABEL = { reden:"Reden & Überzeugen", design:"Design", schreiben:"Schreiben", organisieren:"Organisieren", technik:"Technik", verkaufen:"Verkaufen", video:"Video & Social", zahlen:"Zahlen & Logik" };
 
+/* ---------- Tool-Links (automatisch aus dem Werkzeug-Namen) ---------- */
+const TOOL_LINKS = [
+  ["botfather","https://t.me/botfather"],["telegram","https://core.telegram.org/bots"],["gumroad","https://gumroad.com/discover"],
+  ["notion","https://notion.so"],["canva","https://canva.com"],["claude","https://claude.ai"],["reddit","https://reddit.com"],
+  ["facebook","https://facebook.com/groups"],["make","https://make.com"],["supabase","https://supabase.com"],["stripe","https://stripe.com"],
+  ["paypal","https://paypal.com"],["capcut","https://capcut.com"],["ffmpeg","https://ffmpeg.org/download.html"],["whisper","https://github.com/openai/whisper"],
+  ["vercel","https://vercel.com"],["airtable","https://airtable.com"],["instantly","https://instantly.ai"],["mailmeteor","https://mailmeteor.com"],
+  ["printful","https://printful.com"],["printify","https://printify.com"],["etsy","https://etsy.com"],["shopify","https://shopify.com"],
+  ["ideogram","https://ideogram.ai"],["midjourney","https://midjourney.com"],["discord","https://discord.com"],["twitch","https://twitch.tv"],["twitter","https://twitter.com"],
+];
+function toolLink(tool){ const t=(tool||"").toLowerCase(); for(const [k,u] of TOOL_LINKS){ if(t.includes(k)) return u; } return null; }
+
+/* ---------- Ressourcen-Hub ---------- */
+const RESOURCES = [
+  { cat:"KI & Bauen", items:[
+    {n:"Claude Code",u:"https://claude.ai/code",d:"Dein KI-Baumeister für Apps, Games & Automationen"},
+    {n:"Claude",u:"https://claude.ai",d:"KI-Chat für Texte, Prompts & Ideen"},
+    {n:"Ideogram",u:"https://ideogram.ai",d:"KI-Bilder & Designs erzeugen"},
+  ]},
+  { cat:"Datenbank & Hosting", items:[
+    {n:"Supabase",u:"https://supabase.com",d:"Datenbank, Login & Realtime — kostenlos"},
+    {n:"Vercel",u:"https://vercel.com",d:"Web-Apps gratis online stellen"},
+    {n:"Airtable",u:"https://airtable.com",d:"Tabellen-Datenbank ohne Code"},
+  ]},
+  { cat:"Automatisierung", items:[
+    {n:"Make.com",u:"https://make.com",d:"Abläufe automatisieren ohne Programmieren"},
+    {n:"Telegram Bots",u:"https://core.telegram.org/bots",d:"Bots & Benachrichtigungen bauen"},
+  ]},
+  { cat:"Verkaufen & Geld", items:[
+    {n:"Gumroad",u:"https://gumroad.com",d:"Digitale Produkte verkaufen — 0€ Start"},
+    {n:"Stripe",u:"https://stripe.com",d:"Zahlungen & Abos abwickeln"},
+    {n:"Printful",u:"https://printful.com",d:"Print-on-Demand, kein Lager nötig"},
+    {n:"Etsy",u:"https://etsy.com",d:"Marktplatz für kreative Produkte"},
+  ]},
+  { cat:"Content & Design", items:[
+    {n:"Canva",u:"https://canva.com",d:"Grafiken, Cover & Thumbnails"},
+    {n:"CapCut",u:"https://capcut.com",d:"Videos schneiden fürs Handy"},
+  ]},
+];
+
+/* ---------- Einsteiger-Guides ---------- */
+const GUIDES = [
+  { id:"venture", icon:"route", title:"So funktioniert ein Venture", sub:"Von der Idee zum Umsatz — in 5 Schritten", steps:[
+    "Geh auf „Ventures“, wähle ein Projekt, das zu dir passt, und tippe auf „Dieses Venture übernehmen“.",
+    "Öffne den Fahrplan — er zerlegt das ganze Business in klare, machbare Schritte.",
+    "Tippe bei jedem Schritt auf „Anleitung“: Du bekommst Ziel, Erklärung, Klick-für-Klick-Schritte und einen fertigen Claude-Prompt.",
+    "Erledige den Schritt und hak ihn ab — dein Team sieht den Fortschritt sofort live.",
+    "Nach dem letzten Schritt steht dein Business. Dann: nächstes Venture oder ausbauen." ]},
+  { id:"claude", icon:"zap", title:"Claude Code — dein KI-Baumeister", sub:"Programmieren lassen, ohne selbst zu coden", steps:[
+    "Claude Code ist eine KI, die für dich Apps baut, Texte schreibt und Aufgaben löst — du beschreibst nur, was du willst.",
+    "Öffne claude.ai und sag in normaler Sprache, was du brauchst, z.B. „Baue mir ein einfaches Browserspiel“.",
+    "Kopier die fertigen Prompts aus den Venture-Anleitungen direkt hinein — sie sind genau dafür gemacht.",
+    "Ist etwas unklar? Frag einfach nach. Claude erklärt jeden Schritt — es gibt keine dummen Fragen.",
+    "Pro-Tipp: Ein Ziel pro Nachricht. Klein anfangen, dann Stück für Stück erweitern." ]},
+  { id:"supabase", icon:"layers", title:"Supabase in 5 Minuten", sub:"Kostenlose Datenbank für deine Apps", steps:[
+    "Supabase speichert die Daten deiner App in der Cloud — Nutzer, Scores, Einträge, alles.",
+    "Geh auf supabase.com, registriere dich gratis und klicke „New Project“.",
+    "Wähle als Region Europa (Frankfurt oder Irland) — dann lädt es in Deutschland schnell.",
+    "Unter „Table Editor“ legst du Tabellen an — oder lässt dir das SQL von Claude Code schreiben.",
+    "Die „API Keys“ aus den Einstellungen verbinden deine App mit der Datenbank." ]},
+  { id:"make", icon:"pulse", title:"Make.com — Automatisierung ohne Code", sub:"Abläufe per Baukasten verbinden", steps:[
+    "Make.com verbindet Apps und erledigt Aufgaben automatisch — ganz ohne Programmieren.",
+    "Registriere dich gratis (1.000 Aktionen/Monat frei) und klicke „Create a new scenario“.",
+    "Ein Szenario besteht aus Modulen: Auslöser (z.B. „alle 30 Min“) → Aktion (z.B. „Telegram-Nachricht senden“).",
+    "Verbinde die Module per Drag & Drop und teste mit „Run once“.",
+    "Pro-Tipp: Starte mit 2 Modulen. Läuft das, baust du Schritt für Schritt aus." ]},
+];
+
+/* ---------- Tutorial-Metadaten: Ziel / Zeit / Pro-Tipp je Schritt ---------- */
+const TUT_META = {
+  v1:[["Eine klar umrissene Nische mit zahlungsbereiter Zielgruppe.","~30 Min","Je enger die Nische, desto leichter der erste Verkauf."],
+      ["10 getestete, wirklich brauchbare Prompts als Rohmaterial.","~90 Min","Teste jeden Prompt mit echten Daten, nicht nur theoretisch."],
+      ["Eine verkaufsfertige Produktseite mit Cover.","~45 Min","Zeig 1-2 Prompts gratis als Teaser — das baut Vertrauen auf."],
+      ["Erstes echtes Feedback (und evtl. der erste Verkauf).","~30 Min","Frag nach Feedback statt zu verkaufen — Communities hassen Werbung."],
+      ["Ein zweites Produkt und ein wachsender Katalog.","~2 Std","Bundles heben den Warenkorbwert ohne neue Kunden."]],
+  v2:[["Ein funktionierender Telegram-Bot, der dir schreiben kann.","~15 Min","Speichere den Token sicher — er ist wie ein Passwort."],
+      ["Eine Automatisierung, die neue Treffer automatisch meldet.","~60 Min","Starte mit 30-Min-Intervall — das schont dein Make-Kontingent."],
+      ["Eine Datenbank, die jeden Fund dauerhaft speichert.","~30 Min","Mit Historie erkennst du faire Preise auf einen Blick."],
+      ["Saubere Alerts für 3 Wunschteile, ohne Spam.","1 Woche beobachten","Lieber strenger filtern — 1 verpasster Treffer schlägt 50 Fehlalarme."],
+      ["Dein erster zahlender Kunde für den Alert-Service.","~45 Min","Erst gratis, dann Geld — Vertrauen kommt zuerst."]],
+  v3:[["Ein spielbarer Prototyp, der Spaß macht.","~60 Min","Willst du nach 5 Min nicht „nochmal“, ändere die Mechanik."],
+      ["Belohnungen, die zum Weiterspielen motivieren.","~45 Min","Kleine Effekte (Shake, Partikel) fühlen sich riesig an."],
+      ["Ein Online-Highscore, der Konkurrenz erzeugt.","~40 Min","Rangliste = Grund, den Link an Freunde zu schicken."],
+      ["5 fertige Clips, die zum Spielen verleiten.","~90 Min","Der knappe Fail ist der beste Hook — zeig „fast geschafft“."],
+      ["Ein koordinierter Launch mit erstem Traffic.","~2 Std","Alle Kanäle am selben Tag — geballt schlägt verteilt."]],
+  v4:[["Ein manuell erstellter Beispiel-Clip als Zielbild.","~60 Min","Kenn das Handwerk zuerst, bevor du es automatisierst."],
+      ["Ein Prompt, der die besten Momente zuverlässig findet.","~60 Min","Vergleich immer mit deiner eigenen Auswahl zum Kalibrieren."],
+      ["Eine Web-App, die aus 1 Upload 3 Clips macht.","~3 Std","Zeig Fortschritt — Warten ohne Rückmeldung nervt Nutzer."],
+      ["5 echte Test-Nutzer mit ehrlichem Feedback.","~45 Min + Wartezeit","Gratis-Tests bringen ehrlicheres Feedback als Umfragen."],
+      ["Der erste zahlende Abo-Kunde.","~60 Min","Wandle deine zufriedensten Tester zuerst in Zahler um."]],
+  v5:[["Ein klar definierter Kern-Loop als Prototyp.","~60 Min","Ein Habit, eine Gruppe — erst wenn das süchtig macht, erweitern."],
+      ["Login und Einladelinks, die funktionieren.","~90 Min","Magic-Link spart dir Passwort-Frust komplett."],
+      ["Sichtbarer Fortschritt, der motiviert.","~60 Min","Die Streak-Zahl ist der wichtigste Motivator — mach sie groß."],
+      ["Echte Erkenntnisse aus 2 Wochen Eigennutzung.","2 Wochen","Nutzt es selbst täglich — nur so seht ihr die echten Hürden."],
+      ["Erste externe Gruppe, die freiwillig bleibt.","~2 Std","Kommen Fremde ohne Erklärung rein, ist der Kern stimmig."]],
+  v6:[["Eine spitze Micro-Nische, die ihr wirklich kennt.","~40 Min","„Zu spitz“ fühlt sich richtig an — breit verkauft sich nicht."],
+      ["10 druckfertige Designs.","~90 Min","Auf Stoff zählt Kontrast, nicht Detail — halt es simpel."],
+      ["Ein Shop mit Print-Anbindung, 0€ Lager.","~45 Min","Kalkuliere die Marge vor dem Preis, nicht danach."],
+      ["10 Produkte live mit guten Titeln.","~90 Min","Mockup-Fotos verkaufen 10x besser als flache Designs."],
+      ["Erste Verkäufe aus der Community.","~45 Min","Rabattcode für die ersten 20 erzeugt sofort Bewegung."]],
+  v7:[["Eine Zielbranche + Region, die ihr versteht.","~45 Min","Start lokal — Vertrauen entsteht in der Nähe schneller."],
+      ["20 qualifizierte Leads in einer sauberen Datenbank.","~90 Min","Priorisiere nach Schmerz: wer braucht dich am dringendsten?"],
+      ["Automatisierte, personalisierte Erstansprache.","~2 Std","Ein konkretes Problem nennen schlägt jede Werbefloskel."],
+      ["Ein Pilotkunde im kostenlosen Testlauf.","~45 Min","Definiere vorher, was als „Lead“ zählt — sonst gibt's Streit."],
+      ["Ein Preis, eine Case Study, eine zweite Branche.","~3 Std","Die erste Case Study ist dein bestes Verkaufsargument."]],
+  v8:[["Eine rechtssichere, ehrliche Positionierung.","~45 Min","Bildung statt Versprechen schützt dich und baut Vertrauen."],
+      ["Ein Kanal mit festem, verlässlichem Rhythmus.","~60 Min + täglich","Dokumentiere auch Verluste — Ehrlichkeit bindet am stärksten."],
+      ["Automatische Alerts, die echten Mehrwert liefern.","~60 Min","Weniger, aber relevante Signale — Spam killt Vertrauen."],
+      ["Klare Grenze zwischen Gratis und Premium.","~30 Min","Gratis muss echten Wert haben, sonst wächst der Kanal nicht."],
+      ["Erste zahlende Premium-Mitglieder.","~60 Min","Frühbucher-Preis belohnt, wer dir zuerst vertraut hat."]],
+  v9:[["Ein Minispiel-Konzept, das ohne Erklärung klappt.","~45 Min","Brauchst du 3 Sätze zum Erklären, ist es zu kompliziert."],
+      ["Host-Screen + Handy-Controller als Prototyp.","~2 Std","Raum-Code auf den großen Screen, alles andere aufs Handy."],
+      ["Live-Sync zwischen allen Geräten.","~90 Min","Teste mit echten 4-6 Geräten, nicht nur zwei Tabs."],
+      ["Ein durchgespielter Test mit echten Leuten.","~1 Std","Beobachte, wo Leute zögern — dort ist dein UX-Problem."],
+      ["Ein Streamer, der es live testet.","~45 Min","Kleine Streamer sagen eher ja und geben echtes Feedback."]],
+  v10:[["Ein faires, klares Zeit-Bank-Regelwerk.","~40 Min","Einfach schlägt perfekt — 1 Stunde = 1 Credit, fertig."],
+      ["20 Anmeldungen + erste Hand-Matches.","~90 Min","Von Hand matchen zeigt, was der Algorithmus später braucht."],
+      ["Bestätigung, dass echte Tausche zustande kommen.","~1 Woche","Der erste echte Tausch beweist, dass die Idee trägt."],
+      ["Eine App, die das Matching automatisch macht.","~4 Std","Erst wenn Hand-Matching läuft, lohnt sich die App."],
+      ["Ein Wachstumsmotor über Einladungen.","~2 Std","Bonus fürs Einladen — aber nie wie ein Schneeballsystem."]],
+};
+function tutMeta(pid,i){ const m=TUT_META[pid]; return m&&m[i] ? {goal:m[i][0], time:m[i][1], tip:m[i][2]} : null; }
+
 /* ============================================================
    CLOUD-SYNC (Supabase) — localStorage ist Cache, DB ist Quelle der Wahrheit
    ============================================================ */
@@ -1130,6 +1355,7 @@ function bootApp(){
   renderMeBtn();
   updateSyncPill();
   nav("home");
+  maybeOnboard();
 }
 function renderMeBtn(){
   const m=fullMember(activeProfile);
@@ -1164,54 +1390,88 @@ function ringSVG(pct){
   </div>`;
 }
 
+/* ---- Personalisierung ---- */
+function myVentures(id){ return state.projects.filter(p=>p.guided && (p.members||[]).includes(id)); }
+function nextStepOf(p){ if(!p.subtasks) return null; const i=p.subtasks.findIndex(s=>!isSubDone(p.id,s.title)); return i<0?null:{i, s:p.subtasks[i]}; }
+function focusFor(id){
+  const mine = myVentures(id).slice().sort((a,b)=>b.progress-a.progress);
+  for(const p of mine){ const ns=nextStepOf(p); if(ns) return {type:"step", p, i:ns.i, s:ns.s}; }
+  const doingT = state.tasks.find(t=>t.assignee===id && t.status==="doing");
+  if(doingT) return {type:"task", t:doingT};
+  const todoT = state.tasks.find(t=>t.assignee===id && t.status==="todo");
+  if(todoT) return {type:"task", t:todoT};
+  if(mine.length) return {type:"done"};
+  return {type:"claim"};
+}
+function focusCard(id){
+  const f = focusFor(id);
+  if(f.type==="step"){
+    return `<div class="focus" onclick="openTutorial('${f.p.id}',${f.i})">
+      <div class="focus-top"><span class="focus-kick">${IC.flag} Dein nächster Schritt</span><span class="focus-go">${IC.arrow}</span></div>
+      <div class="focus-title">${esc(f.s.title)}</div>
+      <div class="focus-meta"><span class="tag pj">${f.p.emoji} ${esc(f.p.name)}</span><span class="tag">Schritt ${f.i+1}/${f.p.subtasks.length}</span></div>
+      <div class="focus-cta">${IC.book} Anleitung öffnen</div></div>`;
+  }
+  if(f.type==="task"){
+    const p=project(f.t.projectId);
+    return `<div class="focus" onclick="nav('tasks')">
+      <div class="focus-top"><span class="focus-kick">${IC.checkSq} ${f.t.status==="doing"?"Weiter dran":"Als Nächstes"}</span><span class="focus-go">${IC.arrow}</span></div>
+      <div class="focus-title">${esc(f.t.title)}</div>
+      ${p?`<div class="focus-meta"><span class="tag pj">${esc(p.name)}</span></div>`:''}
+      <div class="focus-cta">${IC.checkSq} Zum Aufgaben-Board</div></div>`;
+  }
+  if(f.type==="done"){
+    return `<div class="focus done" onclick="projFilter='guided';nav('projects')">
+      <div class="focus-top"><span class="focus-kick">${IC.target} Alles erledigt</span><span class="focus-go">${IC.arrow}</span></div>
+      <div class="focus-title">Deine Ventures laufen — stark!</div>
+      <div class="focus-cta">${IC.rocket} Nächstes Venture übernehmen</div></div>`;
+  }
+  return `<div class="focus claim" onclick="projFilter='guided';nav('projects')">
+    <div class="focus-top"><span class="focus-kick">${IC.rocket} Leg los</span><span class="focus-go">${IC.arrow}</span></div>
+    <div class="focus-title">Übernimm dein erstes Venture</div>
+    <div class="focus-sub">10 startklare Business-Ideen mit komplettem Schritt-für-Schritt-Fahrplan. Wähle eins, das zu dir passt.</div>
+    <div class="focus-cta">${IC.hand} Ventures ansehen</div></div>`;
+}
+
 function renderHome(){
   const me = fullMember(activeProfile);
   const nProj = state.projects.length;
   const nGuided = state.projects.filter(p=>p.guided).length;
   const doing = state.projects.filter(p=>p.status==="doing");
-  const live = state.projects.filter(p=>p.status==="live").length;
-  const ideas = state.projects.filter(p=>p.status==="idea").length;
   const open = state.tasks.filter(t=>t.status!=="done");
   const highPrio = open.filter(t=>t.prio==="h").length;
   const doneCnt = state.tasks.filter(t=>t.status==="done").length;
-  const myTasks = state.tasks.filter(t=>t.assignee===activeProfile&&t.status!=="done");
-  const next = (myTasks.length?myTasks:open).slice().sort((a,b)=>({h:0,m:1,l:2}[a.prio]-{h:0,m:1,l:2}[b.prio])).slice(0,4);
-  const inWork = doing.slice().sort((a,b)=>b.progress-a.progress).slice(0,3);
-  const avg = Math.round(state.projects.reduce((s,p)=>s+p.progress,0)/(nProj||1));
+  const mine = myVentures(activeProfile);
   const avgDoing = Math.round(doing.reduce((s,p)=>s+p.progress,0)/(doing.length||1));
   const acts = state.activity.slice(0,6);
   return `
     <div class="hero">
       <div class="hi">${greeting()} · ${new Date().toLocaleDateString("de-DE",{weekday:"long",day:"numeric",month:"long"})}</div>
-      <div class="big">${esc(me.name)}, hier steht dein Imperium.</div>
+      <div class="big">Willkommen zurück, ${esc(me.name)}.</div>
     </div>
     <div class="install-banner" id="installBanner">
       <div class="ib-ico">${IC.phone}</div>
       <div class="ib-t">Als App installieren<small>Direkt vom Homescreen starten</small></div>
       <button onclick="doInstall()">Installieren</button>
     </div>
+
+    ${focusCard(activeProfile)}
+
+    <div class="quick-row">
+      <button class="quick" onclick="openResources()">${IC.grid}<span>Ressourcen</span></button>
+      <button class="quick" onclick="openHelp()">${IC.help}<span>Hilfe</span></button>
+      <button class="quick" onclick="openQuestionnaire()">${IC.user}<span>Steckbrief</span></button>
+    </div>
+
+    ${mine.length?`<div class="kicker"><h3>Deine Ventures</h3><span class="k-meta num">${mine.length} übernommen</span></div>
+      ${mine.map(projCard).join("")}`:''}
+
     <div class="kpis">
-      <div class="kpi" onclick="projFilter='all';nav('projects')"><span class="k-ico">${IC.layers}</span><div class="k-num num">${nProj}</div><div class="k-lbl">Projekte & Ventures</div><div class="k-sub num">${nGuided} startklare Ventures</div></div>
-      <div class="kpi" onclick="projFilter='doing';nav('projects')"><span class="k-ico">${IC.zap}</span><div class="k-num num">${doing.length}</div><div class="k-lbl">In Arbeit</div><div class="k-sub num">Ø ${avgDoing}% Fortschritt</div></div>
-      <div class="kpi" onclick="taskCol='todo';nav('tasks')"><span class="k-ico">${IC.checkSq}</span><div class="k-num num">${open.length}</div><div class="k-lbl">Offene Aufgaben</div><div class="k-sub num">${highPrio} mit hoher Priorität</div></div>
-      <div class="kpi" onclick="taskCol='done';nav('tasks')"><span class="k-ico">${IC.target}</span><div class="k-num num">${doneCnt}</div><div class="k-lbl">Abgeschlossen</div><div class="k-sub">Team-Wins gesamt</div></div>
+      <div class="kpi" onclick="projFilter='all';nav('projects')"><span class="k-ico">${IC.layers}</span><div class="k-num num">${nProj}</div><div class="k-lbl">Projekte & Ventures</div><div class="k-sub num">${nGuided} startklar</div></div>
+      <div class="kpi" onclick="projFilter='doing';nav('projects')"><span class="k-ico">${IC.zap}</span><div class="k-num num">${doing.length}</div><div class="k-lbl">In Arbeit</div><div class="k-sub num">Ø ${avgDoing}% fertig</div></div>
+      <div class="kpi" onclick="taskCol='todo';nav('tasks')"><span class="k-ico">${IC.checkSq}</span><div class="k-num num">${open.length}</div><div class="k-lbl">Offene Aufgaben</div><div class="k-sub num">${highPrio} × hohe Prio</div></div>
+      <div class="kpi" onclick="taskCol='done';nav('tasks')"><span class="k-ico">${IC.target}</span><div class="k-num num">${doneCnt}</div><div class="k-lbl">Abgeschlossen</div><div class="k-sub">Team-Wins</div></div>
     </div>
-
-    <div class="kicker"><h3>Momentum</h3><span class="k-meta num">${nProj} Initiativen</span></div>
-    <div class="momentum">
-      ${ringSVG(avg)}
-      <div class="mom-rows num">
-        <div class="mom-row"><span class="m-lbl">In Arbeit</span><div class="m-bar"><div class="m-fill" style="width:${Math.round(doing.length/nProj*100)}%;background:var(--blue)"></div></div><span class="m-val">${doing.length}</span></div>
-        <div class="mom-row"><span class="m-lbl">Live</span><div class="m-bar"><div class="m-fill" style="width:${Math.round(live/nProj*100)}%;background:var(--green)"></div></div><span class="m-val">${live}</span></div>
-        <div class="mom-row"><span class="m-lbl">Pipeline</span><div class="m-bar"><div class="m-fill" style="width:${Math.round(ideas/nProj*100)}%;background:var(--amber)"></div></div><span class="m-val">${ideas}</span></div>
-      </div>
-    </div>
-
-    <div class="kicker"><h3>In Arbeit</h3><span class="k-link" onclick="projFilter='all';nav('projects')">Alle ${IC.arrow}</span></div>
-    ${inWork.length?inWork.map(projCard).join(""):emptyMini("Noch nichts in Arbeit — starte ein Venture.")}
-
-    <div class="kicker"><h3>${myTasks.length?"Deine Aufgaben":"Nächste Aufgaben"}</h3><span class="k-link" onclick="nav('tasks')">Board ${IC.arrow}</span></div>
-    ${next.length?next.map(taskMini).join(""):emptyMini("Alles erledigt — starke Leistung.")}
 
     <div class="kicker"><h3>Team-Aktivität</h3><span class="k-meta">live</span></div>
     <div class="card static" style="padding:4px 14px">
@@ -1229,19 +1489,21 @@ function actRow(a){
 
 function projCard(p){
   const st=STATUS[p.status]||STATUS.idea;
-  const fitIds = p.guided ? (p.fit||[]) : (p.members||[]);
+  const hasTeam = (p.members||[]).length>0;
+  const fitIds = hasTeam ? p.members : (p.guided ? (p.fit||[]) : []);
   const avs = fitIds.slice(0,4).map(id=>mono(id,20,7)).join("");
+  const mineHere = (p.members||[]).includes(activeProfile);
   return `<div class="card proj" onclick="openProject('${p.id}')">
     <div class="tile">${p.emoji}</div>
     <div class="body">
       <div class="row1">
         <div class="pname">${esc(p.name)}</div>
-        ${p.guided?'<span class="chip venture">Venture</span>':''}
+        ${mineHere?'<span class="chip mine">Du</span>':(p.guided?'<span class="chip venture">Venture</span>':'')}
         <span class="chip ${st.c}">${st.l}</span>
       </div>
       <div class="ptype">${esc(p.type)}</div>
       <div class="pbar"><div class="bar"><div class="fill" data-w="${p.progress}"></div></div><span class="pct num">${p.progress}%</span></div>
-      ${avs?`<div class="pmeta"><div class="av-stack">${avs}</div><span style="font-size:10px;color:var(--dim);font-weight:700;text-transform:uppercase;letter-spacing:.5px">${p.guided?'Empfohlen':'Team'}</span></div>`:''}
+      ${avs?`<div class="pmeta"><div class="av-stack">${avs}</div><span style="font-size:10px;color:var(--dim);font-weight:700;text-transform:uppercase;letter-spacing:.5px">${hasTeam?'Im Team':'Empfohlen'}</span></div>`:''}
     </div>
   </div>`;
 }
@@ -1440,9 +1702,23 @@ function delProject(id){ if(!confirm("Projekt wirklich löschen? Das gilt für d
   persist(); cloudDeleteProject(id); relatedTaskIds.forEach(cloudDeleteTask);
   closeSheet(); render(); toast("Gelöscht"); }
 
+function toggleClaim(id){
+  const p=project(id); if(!p) return;
+  p.members = p.members || [];
+  const has = p.members.includes(activeProfile);
+  if(has){ p.members = p.members.filter(x=>x!==activeProfile); }
+  else { p.members.push(activeProfile); if(p.status==="idea"){ p.status="doing"; } }
+  persist(); cloudUpsertProject(p);
+  if(!has){ toast("Venture übernommen — leg los!"); logActivity(`hat das Venture „${p.name}“ übernommen`); }
+  else { toast("Venture verlassen"); }
+  openProject(id);
+}
 function openProject(id){
   const p=project(id); if(!p)return; const st=STATUS[p.status];
-  const teamIds = p.guided ? (p.fit||[]) : (p.members||[]);
+  const members = p.members||[];
+  const mineHere = members.includes(activeProfile);
+  const recommended = p.guided ? (p.fit||[]).filter(x=>!members.includes(x)) : [];
+  const doneN = p.guided&&p.subtasks ? p.subtasks.filter(s=>isSubDone(p.id,s.title)).length : 0;
   let body = `
     <div class="detail-head"><div class="dh-tile">${p.emoji}</div>
       <div><div class="dh-name">${esc(p.name)}</div>
@@ -1450,17 +1726,26 @@ function openProject(id){
     ${p.tagline?`<div class="detail-tagline">${esc(p.tagline)}</div>`:""}
     <div class="pbar" style="display:flex;align-items:center;gap:10px;margin-bottom:16px"><div class="bar" style="flex:1"><div class="fill" data-w="${p.progress}" style="width:${p.progress}%"></div></div><span class="pct num">${p.progress}%</span></div>
   `;
+  if(p.guided){
+    body += `<button class="btn ${mineHere?'btn-g':'btn-p'}" style="width:100%;margin-bottom:16px" onclick="toggleClaim('${id}')">${mineHere?IC.check+' Du bist im Team — antippen zum Verlassen':IC.hand+' Dieses Venture übernehmen'}</button>`;
+  }
   if(p.why){ body += `<div class="kicker" style="margin-top:4px"><h3>Business Case</h3></div><div class="case-box">${esc(p.why)}</div>`; }
-  if(p.stack?.length){ body += `<div class="kicker"><h3>Stack · 100% Free Tier</h3></div><div class="stack-row">${p.stack.map(s=>`<span class="tag">${esc(s)}</span>`).join("")}</div>`; }
-  if(teamIds.length){
-    body += `<div class="kicker"><h3>${p.guided?'Empfohlenes Team':'Team'}</h3></div>`;
-    body += teamIds.map(mid=>{ const m=fullMember(mid); if(!m) return ""; return `<div class="link-row" onclick="openMemberDetail('${mid}')">
+  if(p.stack?.length){ body += `<div class="kicker"><h3>Stack · 100% Free Tier</h3></div><div class="stack-row">${p.stack.map(s=>{const u=toolLink(s);return u?`<a class="tag tap" href="${u}" target="_blank" rel="noopener">${esc(s)} ${IC.ext}</a>`:`<span class="tag">${esc(s)}</span>`;}).join("")}</div>`; }
+  if(members.length){
+    body += `<div class="kicker"><h3>Im Team</h3><span class="k-meta num">${members.length}</span></div>`;
+    body += members.map(mid=>{ const m=fullMember(mid); if(!m) return ""; return `<div class="link-row" onclick="openMemberDetail('${mid}')">
+      ${mono(mid,32,10)}
+      <div class="lr-body"><div class="lr-t">${esc(m.name)}${mid===activeProfile?' · Du':''}</div><div class="lr-s">${esc(m.role)}</div></div>
+      <span class="lr-arrow">${IC.arrow}</span></div>`; }).join("");
+  }
+  if(recommended.length){
+    body += `<div class="kicker"><h3>Empfohlen für dieses Venture</h3></div>`;
+    body += recommended.map(mid=>{ const m=fullMember(mid); if(!m) return ""; return `<div class="link-row" onclick="openMemberDetail('${mid}')">
       ${mono(mid,32,10)}
       <div class="lr-body"><div class="lr-t">${esc(m.name)}</div><div class="lr-s">${esc(m.role)}</div></div>
       <span class="lr-arrow">${IC.arrow}</span></div>`; }).join("");
   }
   if(p.guided && p.subtasks){
-    const doneN = p.subtasks.filter(s=>isSubDone(p.id,s.title)).length;
     body += `<div class="kicker"><h3>Fahrplan</h3><span class="k-meta num">${doneN}/${p.subtasks.length} erledigt</span></div><div class="tl">`;
     body += p.subtasks.map((s,i)=>subtaskRow(p.id,s,i)).join("");
     body += `</div>`;
@@ -1495,33 +1780,49 @@ function toggleSub(pid,title){
 function subtaskRow(pid,s,i){
   const done = isSubDone(pid,s.title);
   const safe = s.title.replace(/'/g,"\\'");
+  const meta = tutMeta(pid,i);
   return `<div class="tl-item ${done?'done':''}">
     <div class="tl-node num" onclick="toggleSub('${pid}','${safe}')">${done?IC.check:(i+1)}</div>
-    <div class="tl-title">${esc(s.title)}</div>
+    <div class="tl-title" onclick="openTutorial('${pid}',${i})">${esc(s.title)}</div>
     <div class="tl-meta">
       <span class="tag">${esc(s.tool)}</span>
-      <span class="tl-guide" onclick="openTutorial('${pid}',${i})">${IC.book} Anleitung</span>
+      ${meta?`<span class="tag ghost">${IC.clock} ${esc(meta.time)}</span>`:''}
+      <span class="tl-guide" onclick="openTutorial('${pid}',${i})">${IC.book} Anleitung öffnen</span>
     </div>
   </div>`;
 }
 function openTutorial(pid,i){
   const p=project(pid); const s=p.subtasks[i];
+  const meta = tutMeta(pid,i);
+  const link = toolLink(s.tool);
+  const done = isSubDone(pid,s.title);
   const steps = s.steps.map((st,idx)=>`<div class="tut-step"><div class="tut-num num">${idx+1}</div><div class="tut-text">${esc(st)}</div></div>`).join("");
   const safe = s.title.replace(/'/g,"\\'");
+  const hasNext = i < p.subtasks.length-1;
   openSheet(`
     <div class="sh-crumb num">${esc(p.name)} · Schritt ${i+1} von ${p.subtasks.length}</div>
     <h3 class="sh-title">${esc(s.title)}</h3>
-    <div class="sh-sub">Werkzeug: ${esc(s.tool)}</div>
+    <div class="tut-badges">
+      <span class="tut-badge">${IC.box} ${esc(s.tool)}</span>
+      ${meta?`<span class="tut-badge">${IC.clock} ${esc(meta.time)}</span>`:''}
+    </div>
+    ${meta?`<div class="goal-box"><div class="gb-lbl">${IC.flag} Am Ende hast du</div><div class="gb-txt">${esc(meta.goal)}</div></div>`:''}
+    <div class="kicker" style="margin-top:6px"><h3>So gehst du vor</h3></div>
     ${steps}
+    ${meta?`<div class="tip-box">${IC.bulb}<div><b>Pro-Tipp:</b> ${esc(meta.tip)}</div></div>`:''}
+    <div class="term-lbl-row">${IC.zap} Fertiger Claude-Prompt — kopieren & einfügen</div>
     <div class="terminal">
       <div class="term-head"><div class="term-dots"><i></i><i></i><i></i></div><span class="term-lbl">Claude Prompt</span>
         <button class="term-copy" onclick="copyPrompt(this)">${IC.copy} Kopieren</button></div>
       <div class="term-body" id="promptBody">${esc(s.prompt)}</div>
     </div>
-    <div class="sh-actions" style="margin-top:16px">
-      <button class="btn btn-g" onclick="openProject('${pid}')">Zurück</button>
-      <button class="btn btn-p" onclick="toggleSub('${pid}','${safe}')">${isSubDone(pid,s.title)?'Als offen markieren':'Erledigt markieren'}</button>
-    </div>`);
+    ${link?`<a class="btn btn-tool" href="${link}" target="_blank" rel="noopener" style="width:100%;margin-top:12px">${IC.ext} ${esc(s.tool.split(/[·\/+]/)[0].trim())} öffnen</a>`:''}
+    <div class="sh-actions" style="margin-top:12px">
+      <button class="btn btn-g" onclick="openProject('${pid}')">${IC.arrow2||''}Fahrplan</button>
+      <button class="btn ${done?'btn-g':'btn-p'}" onclick="toggleSub('${pid}','${safe}')">${done?'Wieder offen':IC.check+' Erledigt'}</button>
+    </div>
+    ${hasNext?`<button class="btn btn-ghost2" style="width:100%;margin-top:10px" onclick="openTutorial('${pid}',${i+1})">Nächster Schritt: ${esc(p.subtasks[i+1].title)} ${IC.arrow}</button>`:'<div style="text-align:center;color:var(--acc);font-size:12.5px;font-weight:700;margin-top:14px">🎉 Letzter Schritt — danach steht dein Business!</div>'}
+    `);
 }
 function copyPrompt(btn){
   const txt = $("#promptBody")?.textContent || "";
@@ -1570,12 +1871,13 @@ function openSettings(){
   openSheet(`<h3 class="sh-title">Einstellungen</h3><div class="sh-sub">Angemeldet als ${esc(m.name)} · ${esc(m.role)}</div>
     <label class="f"><span>Name des Hauptquartiers</span><input id="sorg" value="${esc(state.org)}"></label>
     <div class="sh-actions" style="margin-bottom:12px"><button class="btn btn-p" onclick="saveSettings()">Speichern</button></div>
+    <div class="sh-actions" style="margin-bottom:10px"><button class="btn btn-g" style="flex:1" onclick="openResources()">${IC.grid} Ressourcen</button><button class="btn btn-g" style="flex:1" onclick="openHelp()">${IC.help} Hilfe</button></div>
     <button class="btn btn-g" style="width:100%;margin-bottom:16px" onclick="switchProfile()">Profil wechseln</button>
     <div class="kicker" style="margin:6px 2px 8px"><h3>System</h3></div>
     <div class="sysrow"><span class="k">Cloud-Sync</span><span class="v">${cloudReady?'<span class="sdot"></span> Live verbunden':'<span class="sdot" style="background:var(--amber)"></span> Lokal'}</span></div>
     <div class="sysrow"><span class="k">Datenregion</span><span class="v">EU (Irland)</span></div>
     <div class="sysrow"><span class="k">Realtime</span><span class="v">${cloudReady?'Aktiv — Änderungen in ~1 s beim Team':'Wartet auf Verbindung'}</span></div>
-    <div class="sysrow"><span class="k">Version</span><span class="v num">Sidequest OS 3.0</span></div>
+    <div class="sysrow"><span class="k">Version</span><span class="v num">Sidequest OS 4.0</span></div>
     <div class="kicker" style="margin:16px 2px 8px"><h3>Daten</h3></div>
     <div class="sh-actions" style="margin-top:4px">
       <button class="btn btn-g" style="flex:1" onclick="exportData()">${IC.download} Backup</button>
@@ -1588,6 +1890,65 @@ function exportData(){ const blob=new Blob([JSON.stringify(state,null,2)],{type:
 function importData(){ const inp=document.createElement("input"); inp.type="file"; inp.accept=".json"; inp.onchange=e=>{ const f=e.target.files[0]; if(!f)return; const r=new FileReader(); r.onload=()=>{ try{ const d=JSON.parse(r.result); if(d.projects){ state=d; state.activity=state.activity||[]; persist(); closeSheet(); render(); toast("Backup geladen"); } else toast("Ungültige Datei"); }catch(x){ toast("Fehler beim Laden"); } }; r.readAsText(f); }; inp.click(); }
 function resetAll(){ if(!confirm("Wirklich ALLES zurücksetzen? Das betrifft ALLE Geräte im Team, nicht nur dieses!"))return; state=seed(); persist(); cloudResetAll(); closeSheet(); nav("home"); toast("Zurückgesetzt"); }
 function openQuestionnaire(){ window.open("https://christiansowi-ux.github.io/sidequest-team/","_blank"); }
+
+/* ---- Ressourcen-Hub ---- */
+function openResources(){
+  let body = `<h3 class="sh-title">Ressourcen</h3><div class="sh-sub">Alle Werkzeuge, die ihr für die Ventures braucht — direkt geöffnet.</div>`;
+  RESOURCES.forEach(g=>{
+    body += `<div class="kicker" style="margin:14px 2px 8px"><h3>${esc(g.cat)}</h3></div>`;
+    body += g.items.map(it=>`<a class="link-row" href="${it.u}" target="_blank" rel="noopener">
+      <div class="tool-ico">${esc(it.n[0])}</div>
+      <div class="lr-body"><div class="lr-t">${esc(it.n)}</div><div class="lr-s">${esc(it.d)}</div></div>
+      <span class="lr-arrow">${IC.ext}</span></a>`).join("");
+  });
+  body += `<div class="kicker" style="margin:16px 2px 8px"><h3>Sidequest</h3></div>
+    <div class="link-row" onclick="openHelp()"><div class="tool-ico" style="background:var(--acc-dim);color:var(--acc)">${IC.help}</div><div class="lr-body"><div class="lr-t">Einsteiger-Guides</div><div class="lr-s">So funktionieren Ventures, Claude, Supabase & Make</div></div><span class="lr-arrow">${IC.arrow}</span></div>
+    <a class="link-row" href="https://christiansowi-ux.github.io/sidequest-team/" target="_blank" rel="noopener"><div class="tool-ico" style="background:var(--acc-dim);color:var(--acc)">${IC.user}</div><div class="lr-body"><div class="lr-t">Steckbrief-Fragebogen</div><div class="lr-s">Profil ausfüllen oder aktualisieren</div></div><span class="lr-arrow">${IC.ext}</span></a>`;
+  openSheet(body);
+}
+function openHelp(){
+  let body = `<h3 class="sh-title">Hilfe & Guides</h3><div class="sh-sub">Kein Vorwissen nötig — hier lernst du alles, was du brauchst.</div>`;
+  body += GUIDES.map(g=>`<div class="link-row" onclick="openGuide('${g.id}')">
+    <div class="tool-ico" style="background:var(--acc-dim);color:var(--acc)">${IC[g.icon]||IC.book}</div>
+    <div class="lr-body"><div class="lr-t">${esc(g.title)}</div><div class="lr-s">${esc(g.sub)}</div></div>
+    <span class="lr-arrow">${IC.arrow}</span></div>`).join("");
+  openSheet(body);
+}
+function openGuide(id){
+  const g = GUIDES.find(x=>x.id===id); if(!g) return;
+  const steps = g.steps.map((st,idx)=>`<div class="tut-step"><div class="tut-num num">${idx+1}</div><div class="tut-text">${esc(st)}</div></div>`).join("");
+  openSheet(`<div class="sh-crumb num">Einsteiger-Guide</div><h3 class="sh-title">${esc(g.title)}</h3><div class="sh-sub">${esc(g.sub)}</div>${steps}
+    <div class="sh-actions" style="margin-top:16px"><button class="btn btn-g" onclick="openHelp()">Alle Guides</button><button class="btn btn-p" onclick="closeSheet()">Verstanden</button></div>`);
+}
+
+/* ---- Onboarding (einmal pro Profil) ---- */
+const OB_SLIDES = [
+  { icon:"rocket", t:"Willkommen im Team", s:"Das ist eure Kommandozentrale — hier läuft alles zusammen, was ihr für eure Projekte braucht. In 20 Sekunden bist du startklar." },
+  { icon:"layers", t:"Wähle dein Venture", s:"10 startklare Business-Ideen mit komplettem Fahrplan. Such dir eins aus, das zu dir passt, und tippe auf „Übernehmen“." },
+  { icon:"book", t:"Folge der Anleitung", s:"Jeder Schritt hat ein klares Ziel, eine Erklärung und einen fertigen Claude-Prompt zum Kopieren. Du bist nie verloren." },
+  { icon:"live", t:"Ihr arbeitet zusammen", s:"Hakst du einen Schritt ab, sieht es das ganze Team sofort — live. Gemeinsam kommt ihr schneller ans Ziel." },
+];
+let obIndex = 0;
+function maybeOnboard(){
+  if(localStorage.getItem("sq_onboarded_"+activeProfile)==="1") return;
+  obIndex = 0; renderOnboard();
+  $("#onboard").classList.add("show");
+}
+function renderOnboard(){
+  const s = OB_SLIDES[obIndex];
+  const last = obIndex===OB_SLIDES.length-1;
+  const dots = OB_SLIDES.map((_,i)=>`<span class="ob-dot ${i===obIndex?'on':''}"></span>`).join("");
+  $("#onboard").innerHTML = `<div class="ob-card">
+    <div class="ob-ico">${IC[s.icon]||IC.rocket}</div>
+    <div class="ob-t">${esc(s.t)}</div>
+    <div class="ob-s">${esc(s.s)}</div>
+    <div class="ob-dots">${dots}</div>
+    <button class="btn btn-p" style="width:100%" onclick="${last?'finishOnboard()':'nextOnboard()'}">${last?"Los geht's":'Weiter'}</button>
+    ${last?'':'<div class="ob-skip" onclick="finishOnboard()">Überspringen</div>'}
+  </div>`;
+}
+function nextOnboard(){ obIndex++; renderOnboard(); }
+function finishOnboard(){ localStorage.setItem("sq_onboarded_"+activeProfile,"1"); $("#onboard").classList.remove("show"); }
 
 /* ============================================================
    FX
